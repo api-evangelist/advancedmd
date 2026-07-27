@@ -1,0 +1,148 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  https://fhir.advancedmd.com/fhir/launch-and-authorization,
+  https://fhir.advancedmd.com/getting-started, https://fhir.advancedmd.com/fhir/base-urls,
+  https://fhir.advancedmd.com/fhir/bulk-api, https://fhir.advancedmd.com/terms-of-service,
+  plus derivation from the three specs in openapi/ and the HL7 FHIR R4 / SMART App Launch /
+  FHIR Bulk Data Access specifications those APIs implement.
+description: >-
+  Cross-cutting request/response semantics that apply across every AdvancedMD operation
+  rather than to any single endpoint. Two very different contracts coexist: the certified
+  FHIR estate follows HL7 FHIR R4 + SMART conventions almost entirely by reference, while
+  the legacy Application Access APIs use a bespoke key + token + date-window contract.
+surfaces:
+  fhir:
+    base_url: https://providerapi.advancedmd.com/v1/r4/{orgId}
+    api_style: HL7 FHIR R4 REST over HTTPS, JSON (application/fhir+json)
+  bulk:
+    base_url: https://providerapi.advancedmd.com
+    api_style: FHIR Bulk Data Access (Flat FHIR) — async kickoff, status polling, NDJSON-style entity retrieval
+  application_access:
+    base_url: https://ptapi.advancedmd.com/pt-api
+    api_style: REST over HTTPS, JSON (XML for the C-CDA endpoint)
+
+authentication:
+  fhir:
+    scheme: SMART-on-FHIR OAuth 2.0 bearer token
+    flows: [authorization_code (+PKCE S256), client_credentials (private_key_jwt, Bulk only)]
+    token_lifetime: expires_in 3599 seconds (published example); refresh_token_expires_in 7775999 seconds
+    authorization_code_lifetime: "short-lived — 'usually expiring within around one minute'"
+    client_secret_auth: HTTP Basic — B64(client_id:client_secret) on the token endpoint
+    docs: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  application_access:
+    scheme: apikey header + Authorization bearer token from POST /authenticate
+    note: The Swagger models the bearer as a second apiKey scheme named "Bearer Token" in the Authorization header.
+  detail: authentication/advancedmd-authentication.yml
+  scopes: scopes/advancedmd-scopes.yml
+
+tenancy:
+  model: organization-scoped base URL
+  mechanism: >-
+    Every FHIR resource path is prefixed with the customer organization id —
+    /v1/r4/{orgId}/{Resource}. The full directory of organization base URLs is published
+    at /v1/r4/endpoints and as CSV, refreshed quarterly. The Bulk export and the
+    Application Access APIs use the practice "office key" / OfficeKey instead.
+  discovery: https://fhir.advancedmd.com/fhir/base-urls
+
+idempotency:
+  supported: true
+  mechanism: >-
+    Inherent — not an Idempotency-Key contract. No AdvancedMD API publishes an
+    idempotency-key header or parameter, and none appears in any spec. What AdvancedMD
+    does publish is a hard read-only guarantee: the certified FHIR APIs implement only the
+    FHIR `read` and `search-type` interactions (CapabilityStatement declares no
+    create/update/delete), and the FAQ states plainly that "Writing back to AdvancedMD
+    using FHIR is not supported" because 170.315(g)(10) requires read-only functionality.
+  safe_to_retry:
+    - All 58 FHIR Single API operations — GET reads/searches and POST _search, which is
+      the FHIR-standard safe search transport, not a mutation.
+    - GET /v1/fhir-bulk/status and GET /v1/fhir-bulk/fhir-resource/{batchId}/{fhirEntity}.
+    - All 15 /clinical/* and /demographics/* reads on the Application Access APIs.
+  not_idempotent:
+    - GET /v1/r4/Group/{groupId}/$export — repeating the kickoff starts a NEW export job
+      (202 Accepted with a fresh job); there is no request key to deduplicate on.
+    - POST /v1/oauth2/token and POST /v1/fhir-jwks/token — each call mints a new token.
+      The Bulk client_assertion JWT is explicitly one-time-use.
+    - POST /authenticate on the Application Access APIs — mints a new session token.
+  retry_guidance: >-
+    Reads may be retried freely. Back off ~1 minute on 429 QuotaViolation. On 503 from the
+    export kickoff, retry — but poll /v1/fhir-bulk/status before re-kicking so you do not
+    stack duplicate export jobs.
+  docs: https://fhir.advancedmd.com/faq-s
+
+pagination:
+  style: fhir-bundle-links
+  request_params: >-
+    Standard FHIR R4 search parameters (_count and the per-resource search params declared
+    in the CapabilityStatement). AdvancedMD publishes no vendor page-size limit.
+  response_fields: >-
+    Search results are FHIR Bundles; paging follows Bundle.link with relation self / next /
+    previous per HL7 FHIR R4. Follow Bundle.link[relation=next] verbatim.
+  post_search: >-
+    Every resource type also exposes POST /{Resource}/_search with an
+    application/x-www-form-urlencoded body — the FHIR-standard way to send long or
+    sensitive search criteria off the URL. These are the only 17 operations in the Single
+    API spec that carry operationIds.
+  application_access:
+    style: date-window
+    note: >-
+      No paging. Every /clinical/* operation requires patientid, startDate and endDate
+      (m/d/yyyy); narrow the window to bound the response.
+
+field_expansion:
+  supported: partial
+  note: >-
+    No vendor expansion syntax. FHIR _include/_revinclude behaviour is whatever the
+    CapabilityStatement declares per resource; the $docref operation on DocumentReference
+    and Patient/$everything, Observation/$lastn and ConceptMap/$translate are the declared
+    operations.
+
+metadata:
+  supported: false
+  note: No customer-writable metadata surface — the estate is read-only.
+
+request_tracing:
+  request_id_header: null
+  note: >-
+    No request-id or correlation header is documented in any spec or on the portal.
+    Support escalation is by app name and office key via InterOps@advancedmd.com.
+
+versioning:
+  scheme: uri-path (/v1/) with the FHIR release pinned separately (/v1/r4/)
+  header: null
+  detail: lifecycle/advancedmd-lifecycle.yml
+
+error_envelope:
+  fhir: FHIR OperationOutcome — {resourceType, text{status,div}, issue[]{severity,code,diagnostics}}
+  oauth: '{error, error_description}'
+  application_access: '{title, detail} (JSON) or <error title="…" detail="…"/> (XML)'
+  problem_json: false
+  detail: errors/advancedmd-problem-types.yml
+
+rate_limit_signaling:
+  status_code: 429
+  body: '{"title": "QuotaViolation", "detail": "Too many requests: Please wait and try your request again in about a minute."}'
+  headers: none published (no X-RateLimit-*, no Retry-After documented)
+  scope: Declared on all 18 Application Access API operations; not declared in either FHIR spec.
+  policy: >-
+    The Developer Terms of Service place no pre-set limit but reserve the right to throttle
+    "in consideration of overall system performance".
+  detail: rate-limits/advancedmd-rate-limits.yml
+
+transport_security:
+  tls_minimum: TLS 1.2 (Getting Started); TLSv1.3 observed live on all hosts
+  detail: security/advancedmd-domain-security.yml
+
+async:
+  pattern: FHIR Bulk Data Access async request pattern
+  kickoff: GET /v1/r4/Group/{groupId}/$export with Prefer=respond-async → 202 Accepted
+  poll: GET /v1/fhir-bulk/status → 202 while running, 200 with the completion manifest when done
+  cancel: DELETE /v1/fhir-bulk/status
+  retrieve: GET /v1/fhir-bulk/fhir-resource/{batchId}/{fhirEntity}
+
+content_types:
+  fhir: application/fhir+json (CapabilityStatement.format); application/json in the OpenAPI
+  post_search: application/x-www-form-urlencoded
+  token: application/x-www-form-urlencoded
+  c_cda: application/xml (GET /clinical/episodesummaries)

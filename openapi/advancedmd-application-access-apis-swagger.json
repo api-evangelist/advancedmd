@@ -1,0 +1,1497 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.1",
+    "title": "AdvancedMD Application Access APIs",
+    "description": "A collection of RESTful APIs that can be used to interact with AdvancedMD data. All APIs return JSON, with the exception of       the Episode Summaries API, which returns an HL7 C-CDA v3 (XML) document.\n\nSupported Version: AdvancedMD v12.6\n"
+  },
+  "schemes": [
+    "https"
+  ],
+  "host": "ptapi.advancedmd.com",
+  "basePath": "/pt-api",
+  "paths": {
+    "/authenticate": {
+      "post": {
+        "security": [
+          {
+            "API Key": []
+          }
+        ],
+        "tags": [
+          "Authentication"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "description": "Log in using AdvancedMD credentials (username, password, office key)\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "User Credentials",
+            "description": "The username (email address) and password that the user would use\nto log in to the practice's Patient Portal, along with the practice's\noffice key.\n",
+            "schema": {
+              "type": "object",
+              "required": [
+                "username",
+                "password",
+                "officekey"
+              ],
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "john.aagard.5555@gmail.com",
+                  "description": "The user's username (email address).\n"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "Password!1",
+                  "description": "The user's password.\n"
+                },
+                "officekey": {
+                  "type": "string",
+                  "example": "970024",
+                  "description": "The office key of the practice that holds the patient's data.\n"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful authentication will contain a list of patients that the logged in user has access to, as well as the token that can be used for other APIs.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "patientdata": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "patientid": {
+                        "type": "integer",
+                        "x-example": 12345
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "DOE,JOHN Q"
+                      },
+                      "address1": {
+                        "type": "string",
+                        "example": "APARTMENT 3G"
+                      },
+                      "address2": {
+                        "type": "string",
+                        "example": "1234 E 6TH ST"
+                      },
+                      "city": {
+                        "type": "string",
+                        "example": "SPRINGFIELD"
+                      },
+                      "state": {
+                        "type": "string",
+                        "example": "MO"
+                      },
+                      "zipcode": {
+                        "type": "string",
+                        "example": "12345-6789"
+                      },
+                      "dateofbirth": {
+                        "type": "string",
+                        "description": "Patient's date of birth",
+                        "example": "1961-05-24T00:00:00"
+                      }
+                    }
+                  }
+                },
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/responses/Too_many_requests"
+          }
+        }
+      }
+    },
+    "/clinical/allergies": {
+      "get": {
+        "security": [
+          {
+            "API Key": [],
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Clinical"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/patientId"
+          },
+          {
+            "$ref": "#/parameters/startDate"
+          },
+          {
+            "$ref": "#/parameters/endDate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful API call. Contains the patient's Allergies.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Allergy"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/responses/Too_many_requests"
+          }
+        }
+      }
+    },
+    "/clinical/assessments": {
+      "get": {
+        "security": [
+          {
+            "API Key": [],
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Clinical"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/patientId"
+          },
+          {
+            "$ref": "#/parameters/startDate"
+          },
+          {
+            "$ref": "#/parameters/endDate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful API call. Contains the patient's assessments.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Assessment"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/responses/Too_many_requests"
+          }
+        }
+      }
+    },
+    "/clinical/episodesummaries": {
+      "get": {
+        "description": "This API returns a C-CDA document in HL7 v3 (XML) format. If the Accept header is set to \"application/xml\", it will return raw XML instead of JSON. Otherwise, it will wrap the XML document in a JSON wrapper.",
+        "security": [
+          {
+            "API Key": [],
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "C-CDA"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/patientId"
+          },
+          {
+            "$ref": "#/parameters/startDate"
+          },
+          {
+            "$ref": "#/parameters/endDate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/CcdaXmlSuccess"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized_Xml"
+          },
+          "429": {
+            "$ref": "#/responses/Too_many_requests_Xml"
+          }
+        }
+      }
+    },
+    "/clinical/goals": {
+      "get": {
+        "security": [
+          {
+            "API Key": [],
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Clinical"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/patientId"
+          },
+          {
+            "$ref": "#/parameters/startDate"
+          },
+          {
+            "$ref": "#/parameters/endDate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful API call. Contains the patient's goals.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Goal"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/responses/Too_many_requests"
+          }
+        }
+      }
+    },
+    "/clinical/healthconcerns": {
+      "get": {
+        "security": [
+          {
+            "API Key": [],
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Clinical"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/patientId"
+          },
+          {
+            "$ref": "#/parameters/startDate"
+          },
+          {
+            "$ref": "#/parameters/endDate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful API call. Contains the patient's health concerns.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/HealthConcern"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/responses/Too_many_requests"
+          }
+        }
+      }
+    },
+    "/clinical/immunizations": {
+      "get": {
+        "security": [
+          {
+            "API Key": [],
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Clinical"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/patientId"
+          },
+          {
+            "$ref": "#/parameters/startDate"
+          },
+          {
+            "$ref": "#/parameters/endDate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful API call. Contains the patient's immunizations.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Immunization"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/responses/Too_many_requests"
+          }
+        }
+      }
+    },
+    "/clinical/implanteddevices": {
+      "get": {
+        "security": [
+          {
+            "API Key": [],
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Clinical"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/patientId"
+          },
+          {
+            "$ref": "#/parameters/startDate"
+          },
+          {
+            "$ref": "#/parameters/endDate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful API call. Contains the patient's implanted devices.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ImplantedDevice"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/responses/Too_many_requests"
+          }
+        }
+      }
+    },
+    "/clinical/medications": {
+      "get": {
+        "security": [
+          {
+            "API Key": [],
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Clinical"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/patientId"
+          },
+          {
+            "$ref": "#/parameters/startDate"
+          },
+          {
+            "$ref": "#/parameters/endDate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful API call. Contains the patient's medications.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Medication"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/responses/Too_many_requests"
+          }
+        }
+      }
+    },
+    "/clinical/orders": {
+      "get": {
+        "security": [
+          {
+            "API Key": [],
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Clinical"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/patientId"
+          },
+          {
+            "$ref": "#/parameters/startDate"
+          },
+          {
+            "$ref": "#/parameters/endDate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful API call. Contains the patient's orders.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Order"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/responses/Too_many_requests"
+          }
+        }
+      }
+    },
+    "/clinical/plans": {
+      "get": {
+        "security": [
+          {
+            "API Key": [],
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Clinical"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/patientId"
+          },
+          {
+            "$ref": "#/parameters/startDate"
+          },
+          {
+            "$ref": "#/parameters/endDate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful API call. Contains the patient's plans.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Plan"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/responses/Too_many_requests"
+          }
+        }
+      }
+    },
+    "/clinical/problems": {
+      "get": {
+        "security": [
+          {
+            "API Key": [],
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Clinical"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/patientId"
+          },
+          {
+            "$ref": "#/parameters/startDate"
+          },
+          {
+            "$ref": "#/parameters/endDate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful API call. Contains the patient's Problem List.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Problem"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/responses/Too_many_requests"
+          }
+        }
+      }
+    },
+    "/clinical/procedures": {
+      "get": {
+        "security": [
+          {
+            "API Key": [],
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Clinical"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/patientId"
+          },
+          {
+            "$ref": "#/parameters/startDate"
+          },
+          {
+            "$ref": "#/parameters/endDate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful API call. Contains the patient's procedures.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Procedure"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/responses/Too_many_requests"
+          }
+        }
+      }
+    },
+    "/clinical/providers": {
+      "get": {
+        "security": [
+          {
+            "API Key": [],
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Clinical"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/patientId"
+          },
+          {
+            "$ref": "#/parameters/startDate"
+          },
+          {
+            "$ref": "#/parameters/endDate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful API call. Contains the patient's care team.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Provider"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/responses/Too_many_requests"
+          }
+        }
+      }
+    },
+    "/clinical/results": {
+      "get": {
+        "security": [
+          {
+            "API Key": [],
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Clinical"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/patientId"
+          },
+          {
+            "$ref": "#/parameters/startDate"
+          },
+          {
+            "$ref": "#/parameters/endDate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful API call. Contains the patient's Results.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ResultSet"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/responses/Too_many_requests"
+          }
+        }
+      }
+    },
+    "/clinical/smokingstatus": {
+      "get": {
+        "security": [
+          {
+            "API Key": [],
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Clinical"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/patientId"
+          },
+          {
+            "$ref": "#/parameters/startDate"
+          },
+          {
+            "$ref": "#/parameters/endDate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful API call. Contains the patient's smoking status.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SmokingStatus"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/responses/Too_many_requests"
+          }
+        }
+      }
+    },
+    "/clinical/vitalsigns": {
+      "get": {
+        "security": [
+          {
+            "API Key": [],
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Clinical"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/patientId"
+          },
+          {
+            "$ref": "#/parameters/startDate"
+          },
+          {
+            "$ref": "#/parameters/endDate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful API call. Contains the patient's vital signs.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/VitalSign"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/responses/Too_many_requests"
+          }
+        }
+      }
+    },
+    "/demographics/patients/{patientid}": {
+      "get": {
+        "security": [
+          {
+            "API Key": [],
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Patient Demographics"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "patientid",
+            "description": "The patient's unique identifier (\"patientid\") returned by the authenticate API.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "32745"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful API call. Contains the patient's detailed demographic information.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "The internal AdvancedMD identifier for the patient"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "The patient's full name"
+                  },
+                  "dob": {
+                    "type": "string",
+                    "description": "The patients date of birth"
+                  },
+                  "sex": {
+                    "type": "string",
+                    "description": "The patient's gender (M = male, F = female, U = unknown)"
+                  },
+                  "language": {
+                    "type": "string",
+                    "description": "The patient's preferred language"
+                  },
+                  "ethnicity": {
+                    "type": "string",
+                    "description": "The patient's ethnicity"
+                  },
+                  "races": {
+                    "type": "string",
+                    "description": "The patient's race (or races)"
+                  },
+                  "address": {
+                    "type": "object",
+                    "properties": {
+                      "address1": {
+                        "type": "string"
+                      },
+                      "address2": {
+                        "type": "string"
+                      },
+                      "city": {
+                        "type": "string"
+                      },
+                      "state": {
+                        "type": "string"
+                      },
+                      "zip": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/responses/Too_many_requests"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Authentication"
+    },
+    {
+      "name": "C-CDA"
+    },
+    {
+      "name": "Patient Demographics"
+    },
+    {
+      "name": "Clinical"
+    }
+  ],
+  "securityDefinitions": {
+    "API Key": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "apikey"
+    },
+    "Bearer Token": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization"
+    }
+  },
+  "parameters": {
+    "patientId": {
+      "name": "patientid",
+      "description": "The patient's unique identifier (\"patientid\") returned by the authenticate API.",
+      "in": "query",
+      "required": true,
+      "type": "string",
+      "x-example": "32745"
+    },
+    "startDate": {
+      "name": "startDate",
+      "description": "The beginning (m/d/yyyy) of the date range to return data for.",
+      "in": "query",
+      "required": true,
+      "type": "string",
+      "x-example": "1/1/2017 or 01/01/2017"
+    },
+    "endDate": {
+      "name": "endDate",
+      "description": "The end (m/d/yyyy) of the date range to return data for.",
+      "in": "query",
+      "required": true,
+      "type": "string",
+      "x-example": "5/16/2018 or 05/16/2018"
+    }
+  },
+  "responses": {
+    "Unauthorized": {
+      "description": "Unauthorized: More details are provided in the response.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Unauthorized"
+          },
+          "detail": {
+            "type": "string",
+            "example": "Invalid API key or bearer token."
+          }
+        }
+      }
+    },
+    "Forbidden": {
+      "description": "Forbidden: Generally returned when  invalid credentials are supplied when attempting to authorize the user."
+    },
+    "Too_many_requests": {
+      "description": "Too many requests: More details are provided in the response.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "QuotaViolation"
+          },
+          "detail": {
+            "type": "string",
+            "example": "Too many requests: Please wait and try your request again in about a minute."
+          }
+        }
+      }
+    },
+    "Unauthorized_Xml": {
+      "description": "Unauthorized: More details are provided in the response.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Unauthorized"
+          },
+          "detail": {
+            "type": "string",
+            "example": "Invalid API key or bearer token."
+          }
+        }
+      },
+      "examples": {
+        "application/xml": "<error title=\"Unauthorized\" detail=\"Invalid API key or bearer token.\"/>\n",
+        "application/json": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Invalid API key or bearer token.\"\n}\n"
+      }
+    },
+    "Too_many_requests_Xml": {
+      "description": "Too many requests: More details are provided in the response.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "QuotaViolation"
+          },
+          "detail": {
+            "type": "string",
+            "example": {
+              "Too many requests": "Please wait and try your request again in about a minute."
+            }
+          }
+        }
+      },
+      "examples": {
+        "application/xml": "<error title=\"QuotaViolation\" detail=\"Too many requests: Please wait and try your request again in about a minute.\"/>\n",
+        "application/json": "{\n  \"title\": \"QuotaViolation\",\n  \"detail\": \"Too many requests: Please wait and try your request again in about a minute.\"\n}\n"
+      }
+    },
+    "CcdaXmlSuccess": {
+      "description": "Successful API call. Contains the patient\u2019s episode summaries (C-CDA document) for the specified date range.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "xml": {
+            "type": "string"
+          }
+        }
+      },
+      "examples": {
+        "application/xml": "<ClinicalDocument xmlns=\"urn:hl7-org:v3\" ...>\n    <realmCode code=\"US\" />\n    <typeId root=\"2.16.840.1.113883.1.3\" extension=\"POCD_HD000040\" />\n    <templateId root=\"2.16.840.1.113883.10.20.22.1.1\" extension=\"2015-08-01\" />\n    ...\n</ClinicalDocument>\n",
+        "application/json": "{\n    \"xml\": \"<ClinicalDocument xmlns=\\\"urn:hl7-org:v3\\\" ...>\n        <realmCode code=\"US\" />\n        <typeId root=\\\"2.16.840.1.113883.1.3\\\" extension=\\\"POCD_HD000040\\\" />\n        <templateId root=\\\"2.16.840.1.113883.10.20.22.1.1\\\" extension=\\\"2015-08-01\\\" />\n        ...\n      </ClinicalDocument>\"\n}\n"
+      }
+    }
+  },
+  "definitions": {
+    "Allergy": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "allergyDate": {
+          "type": "string"
+        },
+        "reaction": {
+          "type": "string"
+        },
+        "rxNormId": {
+          "type": "string"
+        }
+      }
+    },
+    "Assessment": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string"
+        },
+        "assessment": {
+          "type": "string"
+        }
+      }
+    },
+    "Goal": {
+      "type": "object",
+      "properties": {
+        "goalText": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        }
+      }
+    },
+    "HealthConcern": {
+      "type": "object",
+      "properties": {
+        "concern": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        }
+      }
+    },
+    "Immunization": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "lotNumber": {
+          "type": "string"
+        },
+        "cvxCode": {
+          "type": "string"
+        },
+        "details": {
+          "type": "string"
+        }
+      }
+    },
+    "ImplantedDevice": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "deviceId": {
+          "type": "string"
+        },
+        "issuingAgency": {
+          "type": "string"
+        },
+        "siteName": {
+          "type": "string"
+        },
+        "siteCode": {
+          "type": "string"
+        },
+        "deviceName": {
+          "type": "string"
+        },
+        "deviceDescription": {
+          "type": "string"
+        },
+        "manufacturer": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "serialNumber": {
+          "type": "string"
+        },
+        "lot": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        }
+      }
+    },
+    "Medication": {
+      "type": "object",
+      "properties": {
+        "rxNormId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "instructions": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "string"
+        },
+        "doseForm": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "expirationDate": {
+          "type": "string"
+        },
+        "currentStatus": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "Order": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string"
+        },
+        "testDescription": {
+          "type": "string"
+        },
+        "loincCode": {
+          "type": "string"
+        }
+      }
+    },
+    "Plan": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "plan": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "Problem": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "The ICD or SNOMED code representing the problem.",
+          "example": "219376002"
+        },
+        "codeSystem": {
+          "type": "string",
+          "description": "The codeset (ICD-9/ICD-10/SNOMED) that the code comes from.",
+          "example": "SNOMED"
+        },
+        "name": {
+          "type": "string",
+          "description": "The full name of the problem.",
+          "example": "219427009-War injury due to lasers"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the problem.",
+          "example": "War injury due to lasers"
+        },
+        "status": {
+          "type": "string",
+          "description": "Problem status (current/historical).",
+          "example": "Current"
+        },
+        "date": {
+          "type": "string",
+          "description": "The codeset (ICD-9/ICD-10/SNOMED) that the code comes from.",
+          "example": "20180510"
+        }
+      }
+    },
+    "Procedure": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "Provider": {
+      "type": "object",
+      "properties": {
+        "npiNumber": {
+          "type": "string"
+        },
+        "address1": {
+          "type": "string"
+        },
+        "address2": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "zip": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "middleName": {
+          "type": "string"
+        }
+      }
+    },
+    "ResultSet": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Result"
+          }
+        }
+      }
+    },
+    "Result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "interpretationCode": {
+          "type": "string"
+        },
+        "range": {
+          "type": "string"
+        },
+        "rangeFrom": {
+          "type": "string"
+        },
+        "rangeTo": {
+          "type": "string"
+        }
+      }
+    },
+    "SmokingStatus": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        }
+      }
+    },
+    "VitalSign": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string"
+        },
+        "measurements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VitalMeasurment"
+          }
+        }
+      }
+    },
+    "VitalMeasurment": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "metricValue": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

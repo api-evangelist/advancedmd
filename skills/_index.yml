@@ -1,0 +1,48 @@
+generated: '2026-07-27'
+method: generated
+source: >-
+  Packaged Agent Skills generated from the three specs in openapi/ plus the AdvancedMD
+  FHIR developer portal documentation. Every operation named in a skill was verified
+  verbatim in the referenced spec — AdvancedMD declares operationIds on only 17 of its 81
+  published operations, so operations without one are addressed by method + path exactly
+  as the spec publishes them. Cross-cutting rules cite ../conventions/, ../errors/,
+  ../scopes/, ../rate-limits/ and ../sandbox/. No provider-published AGENTS.md or skill
+  files were found on either portal.
+skills:
+  - file: advancedmd-smart-patient-launch.md
+    name: Launch a SMART app and read a patient's record
+    api: openapi/advancedmd-fhir-single-api-openapi.json
+    operations:
+      - 'GET /Patient/{id}'
+      - 'Patients Search using POST'
+      - 'GET /Condition'
+      - 'GET /AllergyIntolerance'
+      - 'GET /MedicationRequest'
+      - 'Observations Search using POST'
+      - 'DocumentReferenceFetchDocref'
+  - file: advancedmd-bulk-group-export.md
+    name: Export a patient group with FHIR Bulk Data
+    api: openapi/advancedmd-fhir-bulk-api-openapi.json
+    operations:
+      - 'POST /v1/oauth2/token'
+      - 'GET /v1/r4/Group/{groupId}/$export'
+      - 'GET /v1/fhir-bulk/status'
+      - 'DELETE /v1/fhir-bulk/status'
+      - 'GET /v1/fhir-bulk/fhir-resource/{batchId}/{fhirEntity}'
+  - file: advancedmd-application-access-clinical-pull.md
+    name: Pull a patient's clinical record with the Application Access APIs
+    api: openapi/advancedmd-application-access-apis-swagger.json
+    operations:
+      - 'POST /authenticate'
+      - 'GET /demographics/patients/{patientid}'
+      - 'GET /clinical/allergies'
+      - 'GET /clinical/medications'
+      - 'GET /clinical/problems'
+      - 'GET /clinical/results'
+      - 'GET /clinical/vitalsigns'
+      - 'GET /clinical/episodesummaries'
+not_covered:
+  - api: advancedmd:advancedmd-connect-apis
+    reason: Gated behind a signed Certified API Developer Agreement; no public specification to ground a skill in.
+  - api: advancedmd:advancedmd-fhir-bulk-jwks-api
+    reason: Test-only helper endpoint; covered inline in the Bulk export skill rather than as its own skill.

@@ -1,0 +1,102 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  https://fhir.advancedmd.com/fhir/test-data, https://fhir.advancedmd.com/fhir/base-urls,
+  https://fhir.advancedmd.com/fhir/single-api, https://fhir.advancedmd.com/fhir/bulk-api,
+  https://fhir.advancedmd.com/getting-started — fetched 2026-07-27. Every value below is
+  published verbatim by AdvancedMD on its public FHIR developer portal as test-only data;
+  nothing here was invented.
+description: >-
+  AdvancedMD runs its sandbox as two named test organizations inside the production FHIR
+  service rather than as a separate host or key prefix. Test and live are separated by
+  organization id in the base URL and by the office key ("license key") supplied at login,
+  not by credential format — there is no sk_test/sk_live style distinction. A hosted SMART
+  App Launch simulator on the portal lets a developer complete the whole authorization
+  dance and copy out a real bearer token without writing an app.
+docs:
+  - https://fhir.advancedmd.com/fhir/test-data
+  - https://fhir.advancedmd.com/fhir/base-urls
+  - https://fhir.advancedmd.com/fhir/single-api
+  - https://fhir.advancedmd.com/fhir/bulk-api
+separation:
+  model: organization-scoped
+  note: >-
+    Test data lives in the production FHIR service under dedicated test organizations.
+    The same authorization endpoints, token endpoint and API host serve test and live
+    traffic; the office key and org id select the dataset.
+test_organizations:
+  - name: FHIR PRACTICE GROUP TEST
+    base_url: https://providerapi.advancedmd.com/v1/r4/174
+    office_key: '991900'
+  - name: FHIR PRACTICE GROUP TEST 2
+    base_url: https://providerapi.advancedmd.com/v1/r4/175
+    office_key: '991901'
+example_requests:
+  - https://providerapi.advancedmd.com/v1/r4/174/AllergyIntolerance
+  - https://providerapi.advancedmd.com/v1/r4/174/CarePlan
+hosted_tools:
+  smart_app_launch:
+    url: https://providerapi.advancedmd.com/v1/fhir-smartapp-launch?aud=https%3A%2F%2Fproviderapi.advancedmd.com%2Fv1%2Fr4&scope=openid%20fhirUser%20offline_access%20online_access%20patient%2F*.read
+    description: >-
+      Portal-hosted SMART app simulator. Pick scopes, Run, sign in as a test patient or
+      test provider, consent, then expand the "Access token response" block and copy the
+      bearer token into the Try-this-API console on any spec page.
+    default_scopes: [openid, fhirUser, offline_access, online_access, 'patient/*.read']
+  try_this_api:
+    description: Each Apigee spec page has a "Try this API" panel; click Authorize, paste the bearer token, then Execute an operation.
+  bulk_jwks_helper:
+    endpoint: POST https://providerapi.advancedmd.com/v1/fhir-jwks/token
+    body: grant_type=client_credentials&alg=rsa
+    auth: HTTP Basic — Bulk application key as username, Bulk application secret as password
+    description: >-
+      Test-only JWT minting endpoint. AdvancedMD states production Bulk applications must
+      generate and register their own JWTs and should not call this endpoint.
+test_patients:
+  note: >-
+    Published on https://fhir.advancedmd.com/fhir/test-data as credentials "used solely
+    for test purposes". Patient credentials are the same email/password/license-key triple
+    a patient uses on the AdvancedMD Patient Portal.
+  shared_password: Fhirtest123!
+  accounts:
+    - {name: John Doe, dob: '1980-01-01', gender: M, user: fhirtest.john@gmail.com, office_key: '991900'}
+    - {name: Jane Doe, dob: '1985-02-02', gender: F, user: fhirtest.jane@gmail.com, office_key: '991900'}
+    - {name: Thomas Jr Anderson, dob: '1975-03-03', gender: M, user: fhirtest.thomas@gmail.com, office_key: ['991900', '991901']}
+    - {name: Brenda Li Anderson, dob: '1977-04-04', gender: F, user: fhirtest.brenda@gmail.com, office_key: ['991900', '991901']}
+    - {name: Jimmy Anderson, dob: '2010-05-05', gender: M, user: fhirtest.jimmy@gmail.com, office_key: ['991900', '991901']}
+    - {name: Jenny Anderson, dob: '2020-06-06', gender: F, user: fhirtest.jenny@gmail.com, office_key: '991900'}
+test_providers:
+  note: Provider credentials are username/password/license-key, the same triple used to sign in to AdvancedMD applications.
+  accounts:
+    - user: FHIRTEST
+      password: Amdsfhir1234!
+      office_key: '991900'
+      description: Assigned provider with access to all test patients and patient groups in org 174.
+    - user: FHIRTEST2
+      password: Amdsfhir123!
+      office_key: '991901'
+      description: Assigned provider with access to all test patients and patient groups in org 175.
+bulk_test_data:
+  group_ids: ['991900', '991901']
+  note: These test groups contain the clinical data for all published test patients.
+  kickoff_example:
+    request: GET https://providerapi.advancedmd.com/v1/r4/Group/991900/$export
+    parameters:
+      required: {OfficeKey: '991900', groupId: '991900', prefer: respond-async}
+      optional: [_type, _since]
+    expected: HTTP 202 Accepted — export job started
+application_access_api_examples:
+  note: Example values published in openapi/advancedmd-application-access-apis-swagger.json (Swagger x-example fields), not live test credentials.
+  patientid: '32745'
+  officekey: '970024'
+  startDate: 1/1/2017
+  endDate: 5/16/2018
+approval_gate:
+  note: >-
+    Portal registration and sandbox access are self-service, but an application only
+    becomes usable after AdvancedMD Interoperability Support approves it — email
+    InterOps@advancedmd.com with subject "FHIR App Approval Request for Appname: [Your
+    Appname]" and the redirect URL. AdvancedMD states this "can take a few days". One
+    product per application: a Single app must not also request the Bulk or non-FHIR products.
+  custom_sandbox: >-
+    Practices that want testing against their own organization can request a sandbox base
+    URL through the InterOps Support page.

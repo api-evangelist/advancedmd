@@ -1,0 +1,130 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  Derived from the securityDefinitions/securitySchemes in
+  openapi/advancedmd-application-access-apis-swagger.json,
+  openapi/advancedmd-fhir-bulk-api-openapi.json and
+  openapi/advancedmd-fhir-single-api-openapi.json, then upgraded from the provider's own
+  documentation: https://fhir.advancedmd.com/fhir/launch-and-authorization,
+  https://fhir.advancedmd.com/getting-started, https://fhir.advancedmd.com/fhir/bulk-api,
+  and the live discovery documents at /v1/r4/.well-known/smart-configuration and
+  /v1/r4/.well-known/openid-configuration.
+docs: https://fhir.advancedmd.com/fhir/launch-and-authorization
+description: >-
+  The specs are thin — every FHIR document declares only a bare `bearerAuth` (http/bearer/JWT)
+  scheme and says nothing about how that JWT is obtained. The real model is SMART-on-FHIR
+  OAuth 2.0: three-legged authorization_code (with PKCE) for patient and practitioner apps,
+  and SMART Backend Services client_credentials with an RS384 private_key_jwt assertion for
+  Bulk Data. The legacy Application Access APIs use a separate api-key + session-token model.
+summary:
+  types: [oauth2, openIdConnect, apiKey, http]
+  api_key_in: [header]
+  oauth2_flows: [authorizationCode, clientCredentials]
+  mtls: false
+  two_legged_oauth_for_general_access: false
+schemes:
+  - name: SMART-on-FHIR OAuth 2.0 (three-legged)
+    type: oauth2
+    flow: authorizationCode
+    authorizationUrl: https://providerapi.advancedmd.com/v1/oauth2/authorize
+    tokenUrl: https://providerapi.advancedmd.com/v1/oauth2/token
+    pkce: S256
+    client_authentication: [client_secret_basic, private_key_jwt]
+    token_lifetime_seconds: 3599
+    refresh_token_lifetime_seconds: 7775999
+    authorization_code_lifetime: about one minute
+    context_returned: [patient, fhirUser, userId, aud, scope, need_patient_banner, smart_style_url]
+    applies_to:
+      - advancedmd:advancedmd-fhir-single-api
+    sources:
+      - fhir/advancedmd-smart-configuration.json
+      - https://fhir.advancedmd.com/fhir/launch-and-authorization
+    note: >-
+      Used for patient- and provider-facing apps. Both standalone launch and EHR launch are
+      supported (capabilities launch-standalone, launch-ehr, context-ehr-patient,
+      context-ehr-encounter, authorize-post).
+  - name: SMART Backend Services (two-legged, Bulk only)
+    type: oauth2
+    flow: clientCredentials
+    tokenUrl: https://providerapi.advancedmd.com/v1/oauth2/token
+    client_authentication: private_key_jwt
+    assertion:
+      client_assertion_type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+      signing_alg: RS384
+      header_claims: [alg, kid, typ, jku]
+      body_claims: [iss, sub, aud, exp, jti]
+      one_time_use: true
+    additional_parameters: [username, password, officekey]
+    scope: system/*.read
+    token_lifetime: one hour
+    applies_to:
+      - advancedmd:advancedmd-fhir-bulk-api
+    sources:
+      - https://fhir.advancedmd.com/fhir/launch-and-authorization
+    note: >-
+      AdvancedMD states it does "not support two-legged OAuth for system-to-system
+      interactions" generally — this flow exists only for FHIR Bulk Data Access.
+  - name: OpenID Connect
+    type: openIdConnect
+    openIdConnectUrl: https://providerapi.advancedmd.com/v1/r4/.well-known/openid-configuration
+    issuer: https://providerapi.advancedmd.com/v1/r4
+    id_token_signing_alg_values_supported: [RS384, RS256]
+    scopes: [openid, fhirUser]
+    sources:
+      - fhir/advancedmd-openid-configuration.json
+  - name: bearerAuth
+    type: http
+    scheme: bearer
+    bearerFormat: JWT
+    sources:
+      - openapi/advancedmd-fhir-bulk-api-openapi.json
+      - openapi/advancedmd-fhir-single-api-openapi.json
+    note: How the specs model the SMART access token. It is the transport, not the grant.
+  - name: API Key
+    type: apiKey
+    in: header
+    parameter: apikey
+    applies_to:
+      - advancedmd:advancedmd-application-access-apis
+    sources:
+      - openapi/advancedmd-application-access-apis-swagger.json
+  - name: Bearer Token
+    type: apiKey
+    in: header
+    parameter: Authorization
+    applies_to:
+      - advancedmd:advancedmd-application-access-apis
+    sources:
+      - openapi/advancedmd-application-access-apis-swagger.json
+    note: >-
+      Session token minted by POST /authenticate from a Patient Portal username, password
+      and practice office key. Modelled as an apiKey rather than http/bearer in the Swagger.
+  - name: HTTP Basic (Bulk JWKS helper)
+    type: http
+    scheme: basic
+    applies_to:
+      - advancedmd:advancedmd-fhir-bulk-jwks-api
+    sources:
+      - https://fhir.advancedmd.com/fhir/bulk-api
+    note: Bulk application Key as username and Secret as password, for the test-only POST /v1/fhir-jwks/token endpoint.
+endpoints:
+  authorization: https://providerapi.advancedmd.com/v1/oauth2/authorize
+  token: https://providerapi.advancedmd.com/v1/oauth2/token
+  introspection: https://providerapi.advancedmd.com/v1/oauth2/introspect
+  revocation: https://providerapi.advancedmd.com/v1/oauth2/revoke
+  management: https://providerapi.advancedmd.com/v1/oauth2/manage
+  jwks: https://providerapi.advancedmd.com/v1/oauth2/.well-known/jwks.json
+  smart_configuration: https://providerapi.advancedmd.com/v1/r4/.well-known/smart-configuration
+  openid_configuration: https://providerapi.advancedmd.com/v1/r4/.well-known/openid-configuration
+onboarding:
+  registration: Self-service developer + app registration at https://fhir.advancedmd.com
+  approval: >-
+    Manual — email InterOps@advancedmd.com with subject "FHIR App Approval Request for
+    Appname: [Your Appname]" and your redirect URL. "It can take a few days."
+  constraint: One product per application — a Single-patient app must not also request the Bulk or non-FHIR products.
+  credentials: The app's Key is the client_id and its Secret is the client_secret.
+  cost: Free for the certified FHIR APIs (Developer Terms of Service, last updated 2022-11-28).
+scopes: scopes/advancedmd-scopes.yml
+gated_surfaces:
+  - name: Connect APIs (REST + XML-RPC) and ODBC driver
+    auth: Not publicly documented — credentials issued under a signed Certified API Developer Agreement with licensing and support fees.

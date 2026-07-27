@@ -1,0 +1,57 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+provider: AdvancedMD
+providerId: advancedmd
+generated: '2026-07-27'
+method: searched
+created: '2026-07-27'
+modified: '2026-07-27'
+tags:
+  - Rate Limiting
+  - Healthcare
+  - FHIR
+description: >-
+  AdvancedMD publishes no numeric rate limit for any API. What it publishes is the
+  throttle signal and the policy: every operation in the Application Access API Swagger
+  declares a 429 "QuotaViolation" response whose published example tells the caller to
+  "wait and try your request again in about a minute", and the Developer Terms of Service
+  reserve a discretionary throttle. Neither FHIR spec declares a 429 at all. Recorded as
+  a signal-only rate-limit profile: absence of a published number is the finding.
+sources:
+  - https://fhir.advancedmd.com/terms-of-service
+  - openapi/advancedmd-application-access-apis-swagger.json
+responseCodes:
+  throttled: 429
+headers:
+  retryAfter: null
+  rateLimitRemaining: null
+  requestId: null
+  note: No rate-limit or Retry-After headers are documented or present in any spec.
+envelope:
+  title: QuotaViolation
+  detail: 'Too many requests: Please wait and try your request again in about a minute.'
+  media_types: [application/json, application/xml]
+policy:
+  quote: >-
+    "While these Terms do not place any pre-set restrictions on frequency or nature of
+    application calls via the Certified FHIR APIs, AdvancedMD may, in consideration of
+    overall system performance, limit the frequency or nature of application calls by
+    Developer for a period of time no longer than necessary to resolve any negative
+    impacts caused by excessive application calls."
+  source: https://fhir.advancedmd.com/terms-of-service
+  interpretation: Discretionary, incident-driven throttling rather than a published quota.
+limits: []
+coverage:
+  - api: advancedmd:advancedmd-application-access-apis
+    throttled: true
+    operations_declaring_429: 18
+  - api: advancedmd:advancedmd-fhir-single-api
+    throttled: unknown
+    operations_declaring_429: 0
+  - api: advancedmd:advancedmd-fhir-bulk-api
+    throttled: unknown
+    operations_declaring_429: 0
+    note: The export kickoff declares 503 Service Temporarily Unavailable, which may serve as the load-shedding signal.
+backoff_guidance: >-
+  On 429, sleep ~60 seconds and retry. All read operations are safe to retry
+  (see conventions/advancedmd-conventions.yml); do not blindly re-kick a Bulk export.

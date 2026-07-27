@@ -1,0 +1,145 @@
+generated: '2026-07-27'
+method: derived
+source: >-
+  Derived from the 4xx/5xx responses in openapi/advancedmd-fhir-single-api-openapi.json,
+  openapi/advancedmd-fhir-bulk-api-openapi.json and
+  openapi/advancedmd-application-access-apis-swagger.json, enriched from the response
+  examples and descriptions those specs publish and from
+  https://fhir.advancedmd.com/fhir/bulk-api.
+format: hl7-fhir-operationoutcome
+description: >-
+  AdvancedMD does not use RFC 9457 problem+json. Three distinct error envelopes are in
+  play across the estate: FHIR OperationOutcome on the FHIR resource surface, an
+  OAuth 2.0 {error, error_description} object on the token endpoint, and a bespoke
+  {title, detail} object on the legacy Application Access APIs. AdvancedMD publishes no
+  named error-code registry, so problems below are keyed by HTTP status and envelope
+  rather than by a vendor error code.
+envelopes:
+  - id: fhir-operationoutcome
+    media_type: application/json
+    schema: openapi/advancedmd-fhir-single-api-openapi.json#/components/schemas/Error
+    shape:
+      resourceType: OperationOutcome
+      text: {status: string, div: xhtml narrative}
+      issue: [{severity: string, code: string, diagnostics: string}]
+    used_by: FHIR Single API (all resource operations), FHIR Bulk API (export/status/resource operations)
+    note: >-
+      The Bulk API additionally publishes OperationOutcomeWithID, which carries an `id`
+      holding the export jobId and an issue[].details.text message.
+  - id: oauth2-error
+    media_type: application/json
+    schema: openapi/advancedmd-fhir-bulk-api-openapi.json#/components/schemas/Error400oAuth2
+    shape: {error: string, error_description: string}
+    used_by: POST /v1/oauth2/token
+  - id: application-access-error
+    media_type: application/json (application/xml for the C-CDA endpoint)
+    shape: {title: string, detail: string}
+    used_by: All 18 Application Access API operations
+    note: The XML variant serialises as <error title="…" detail="…"/>.
+problems:
+  - status: 401
+    envelope: fhir-operationoutcome
+    title: Unauthorized
+    detail: Missing, expired or invalid SMART bearer token.
+    remediation: >-
+      Re-run the SMART authorization flow (authorization_code + PKCE for patient/provider
+      apps) or refresh with the refresh_token issued alongside the access token. Access
+      tokens are issued with expires_in 3599 seconds.
+    source_operations:
+      - openapi/advancedmd-fhir-single-api-openapi.json# all 58 operations
+      - openapi/advancedmd-fhir-bulk-api-openapi.json#GET /v1/r4/Group/{groupId}/$export
+      - openapi/advancedmd-fhir-bulk-api-openapi.json#GET /v1/fhir-bulk/status
+      - openapi/advancedmd-fhir-bulk-api-openapi.json#DELETE /v1/fhir-bulk/status
+      - openapi/advancedmd-fhir-bulk-api-openapi.json#GET /v1/fhir-bulk/fhir-resource/{batchId}/{fhirEntity}
+  - status: 403
+    envelope: fhir-operationoutcome
+    title: Forbidden
+    detail: >-
+      The token is valid but the granted scope or patient context does not cover the
+      requested resource. Declared on 35 of the 58 Single API operations and on the Bulk
+      status operations.
+    remediation: >-
+      Request the matching granular scope (patient/<Resource>.read or .rs). Remember that
+      a user/*.read token still carries a fixed patient context — a request with no
+      explicit patient parameter is answered for the launch patient only.
+    source_operations:
+      - openapi/advancedmd-fhir-single-api-openapi.json# 35 operations
+      - openapi/advancedmd-fhir-bulk-api-openapi.json#GET /v1/fhir-bulk/status
+      - openapi/advancedmd-fhir-bulk-api-openapi.json#DELETE /v1/fhir-bulk/status
+  - status: 400
+    envelope: oauth2-error
+    title: Bad request
+    detail: >-
+      Malformed token request — bad or expired client_assertion JWT, wrong
+      client_assertion_type, unsupported scope, or missing username/password/officekey.
+    remediation: >-
+      The Bulk token request requires grant_type=client_credentials, scope=system/*.read,
+      client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer, an
+      RS384-signed one-time client_assertion, plus username, password and officekey.
+    source_operations:
+      - openapi/advancedmd-fhir-bulk-api-openapi.json#POST /v1/oauth2/token
+  - status: 400
+    envelope: fhir-operationoutcome
+    title: Bad request
+    detail: Invalid export parameters — unknown groupId, malformed _type/_since, or missing Prefer.
+    remediation: Send Prefer=respond-async and a valid group id; test groups are 991900 and 991901.
+    source_operations:
+      - openapi/advancedmd-fhir-bulk-api-openapi.json#GET /v1/r4/Group/{groupId}/$export
+      - openapi/advancedmd-fhir-bulk-api-openapi.json#GET /v1/fhir-bulk/status
+      - openapi/advancedmd-fhir-bulk-api-openapi.json#DELETE /v1/fhir-bulk/status
+      - openapi/advancedmd-fhir-bulk-api-openapi.json#GET /v1/fhir-bulk/fhir-resource/{batchId}/{fhirEntity}
+  - status: 404
+    envelope: fhir-operationoutcome
+    title: Not found
+    detail: Unknown export job (jobId/batchId) or unknown FHIR entity in the export manifest.
+    remediation: Poll /v1/fhir-bulk/status until the manifest lists the entity before fetching it.
+    source_operations:
+      - openapi/advancedmd-fhir-bulk-api-openapi.json#DELETE /v1/fhir-bulk/status
+      - openapi/advancedmd-fhir-bulk-api-openapi.json#GET /v1/fhir-bulk/fhir-resource/{batchId}/{fhirEntity}
+  - status: 500
+    envelope: fhir-operationoutcome
+    title: Export operation failed
+    detail: The asynchronous export job failed server-side; returned from the status endpoint.
+    remediation: Re-kick the export; contact InterOps Support if it recurs.
+    source_operations:
+      - openapi/advancedmd-fhir-bulk-api-openapi.json#GET /v1/fhir-bulk/status
+  - status: 503
+    envelope: fhir-operationoutcome
+    title: Service temporarily unavailable
+    detail: Export kickoff refused because the service is busy or throttling.
+    remediation: Retry after a delay. The kickoff is safe to repeat — it creates a new job.
+    source_operations:
+      - openapi/advancedmd-fhir-bulk-api-openapi.json#GET /v1/r4/Group/{groupId}/$export
+  - status: 401
+    envelope: application-access-error
+    title: Unauthorized
+    detail: 'Published example: {"title": "Unauthorized", "detail": "Invalid API key or bearer token."}'
+    remediation: >-
+      Send both the apikey header and the Authorization bearer token returned by
+      POST /authenticate.
+    source_operations:
+      - openapi/advancedmd-application-access-apis-swagger.json# all 18 operations
+  - status: 403
+    envelope: application-access-error
+    title: Forbidden
+    detail: >-
+      "Generally returned when invalid credentials are supplied when attempting to
+      authorize the user." Declared on POST /authenticate only.
+    remediation: Verify the patient-portal username, password and practice office key.
+    source_operations:
+      - openapi/advancedmd-application-access-apis-swagger.json#POST /authenticate
+  - status: 429
+    envelope: application-access-error
+    title: QuotaViolation
+    detail: >-
+      'Published example: {"title": "QuotaViolation", "detail": "Too many requests: Please
+      wait and try your request again in about a minute."}'
+    remediation: >-
+      Back off for approximately one minute and retry. No Retry-After header or numeric
+      quota is published — see rate-limits/advancedmd-rate-limits.yml.
+    source_operations:
+      - openapi/advancedmd-application-access-apis-swagger.json# all 18 operations
+gaps:
+  - No named/enumerated error-code registry is published for any AdvancedMD API.
+  - The FHIR Single API declares only 401 and 403; 400/404/429/5xx behaviour on FHIR resource reads is undocumented in the spec.
+  - No application/problem+json (RFC 9457) anywhere in the estate.

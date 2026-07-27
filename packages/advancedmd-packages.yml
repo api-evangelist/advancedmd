@@ -1,0 +1,43 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  Registry and repository search on 2026-07-27 across npm, PyPI, RubyGems, NuGet,
+  Packagist and the github.com/AdvancedMD organization, plus the AdvancedMD FHIR
+  developer portal (fhir.advancedmd.com) and the developer-solutions page.
+description: >-
+  AdvancedMD publishes no first-party client libraries or SDKs for any of its APIs.
+  The FHIR portal's Getting Started page states only that "any software language that
+  can make RESTful API calls can access the AdvancedMD FHIR APIs" and points developers
+  at generic SMART-on-FHIR tooling; the gated Connect API estate distributes whatever
+  tooling it has under the Certified API Developer Agreement, outside public registries.
+  This is a recorded negative result, not a gap in the search.
+registries_probed:
+  - {registry: npm, query: advancedmd, first_party_hits: 0}
+  - {registry: pypi, query: advancedmd, first_party_hits: 0, status: 404}
+  - {registry: rubygems, query: advancedmd, first_party_hits: 0}
+  - {registry: nuget, query: advancedmd, first_party_hits: 0}
+  - {registry: packagist, query: advancedmd, first_party_hits: 0}
+  - {registry: maven-central, query: advancedmd, first_party_hits: 0}
+  - {registry: pkg.go.dev, query: advancedmd, first_party_hits: 0}
+  - {registry: crates.io, query: advancedmd, first_party_hits: 0}
+github_organization:
+  url: https://github.com/AdvancedMD
+  public_repositories: 3
+  note: >-
+    All three public repos are forks of unrelated third-party Objective-C iOS
+    utilities (TPKeyboardAvoiding, SignalR-ObjC, SFHFKeychainUtils) with no
+    AdvancedMD API code. No SDK, no CLI, no .proto, no published spec.
+packages: []
+third_party:
+  - name: AdvancedMD API (Postman collection)
+    url: https://www.postman.com/ravi-gosai/workspace/my-workspace
+    publisher: ravi-gosai (unverified community publisher)
+    official: false
+    note: >-
+      Community Postman collection targeting the legacy Application Access APIs.
+      Recorded for completeness only — not an AdvancedMD-published artifact, so no
+      Postman pointer is wired in apis.yml.
+  - name: advancedmd-mcp
+    url: https://github.com/aaronblatnoy/advancedmd-mcp
+    official: false
+    note: Third-party MCP experiment. Not an AdvancedMD product.

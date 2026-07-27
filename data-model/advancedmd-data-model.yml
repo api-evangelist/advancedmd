@@ -1,0 +1,124 @@
+generated: '2026-07-27'
+method: derived
+source: >-
+  Derived from the component schemas and reference fields in
+  openapi/advancedmd-fhir-single-api-openapi.json (patient / subject / encounter /
+  managingOrganization / performer / requester / payor …), the resource list in
+  fhir/advancedmd-fhir-r4-capabilitystatement.json, and the definitions in
+  openapi/advancedmd-application-access-apis-swagger.json. Semantics follow HL7 FHIR R4
+  and US Core 6.1.0 — AdvancedMD does not publish its own object reference.
+docs: https://fhir.advancedmd.com/fhir/conformance
+notation: >-
+  relationships use has_one / has_many / belongs_to with the reference field name; the
+  direction is from the entity that carries the reference. FHIR references are typed
+  strings of the form "<ResourceType>/<id>", not embedded objects.
+identifiers:
+  scheme: >-
+    Opaque server-assigned FHIR logical ids. No id prefixes. Every resource is addressed
+    as {orgId}/{ResourceType}/{id} beneath
+    https://providerapi.advancedmd.com/v1/r4 — the organization id is part of the identity
+    of every record, so ids are only unique within an organization.
+  tenant_key: orgId (FHIR path segment) / office key ("license key") on the auth and Bulk surfaces
+
+entities:
+  - {name: Organization, domain: administrative, description: An AdvancedMD customer practice. 6048 are published in the endpoint directory with their own FHIR base URL.}
+  - {name: Endpoint, domain: administrative, description: The FHIR service base URL for an Organization; published in the public endpoint Bundle.}
+  - {name: Location, domain: administrative, description: A physical place of service, managed by an Organization.}
+  - {name: Practitioner, domain: administrative, description: A clinician or staff member.}
+  - {name: Patient, domain: clinical-core, description: The subject of care and the anchor of every patient-scoped read.}
+  - {name: RelatedPerson, domain: clinical-core, description: A person related to the patient (guardian, next of kin).}
+  - {name: Group, domain: bulk, description: A cohort of patients; the unit a Bulk Data $export is kicked off against.}
+  - {name: Coverage, domain: financial, description: A patient's insurance coverage.}
+  - {name: Encounter, domain: clinical-core, description: An interaction between patient and provider that contextualises most clinical records.}
+  - {name: Condition, domain: clinical, description: A problem or diagnosis.}
+  - {name: AllergyIntolerance, domain: clinical, description: A recorded allergy or intolerance.}
+  - {name: Immunization, domain: clinical, description: An administered vaccination.}
+  - {name: Observation, domain: clinical, description: Vitals, labs, smoking status and other measurements.}
+  - {name: DiagnosticReport, domain: clinical, description: A grouped report of diagnostic findings.}
+  - {name: Specimen, domain: clinical, description: A sample the diagnostic results were produced from.}
+  - {name: Procedure, domain: clinical, description: A performed procedure.}
+  - {name: ServiceRequest, domain: clinical, description: An order for a service, procedure or diagnostic.}
+  - {name: MedicationRequest, domain: medication, description: A prescription.}
+  - {name: MedicationDispense, domain: medication, description: A dispensing event against a prescription.}
+  - {name: Device, domain: clinical, description: An implanted or personal device.}
+  - {name: CarePlan, domain: care-coordination, description: A plan of care for a patient.}
+  - {name: CareTeam, domain: care-coordination, description: The team participating in a patient's care.}
+  - {name: Goal, domain: care-coordination, description: A care goal, addressed by a CarePlan.}
+  - {name: DocumentReference, domain: documents, description: An indexed clinical document (the $docref operation returns these).}
+  - {name: Provenance, domain: platform, description: Who recorded or asserted a target resource and when.}
+
+relationships:
+  - {from: Organization, to: Endpoint, kind: has_one, via: endpoint}
+  - {from: Organization, to: Location, kind: has_many, via: managingOrganization}
+  - {from: Location, to: Organization, kind: belongs_to, via: managingOrganization}
+  - {from: Patient, to: Organization, kind: belongs_to, via: managingOrganization}
+  - {from: Patient, to: Patient, kind: has_many, via: link}
+  - {from: RelatedPerson, to: Patient, kind: belongs_to, via: patient}
+  - {from: Group, to: Patient, kind: has_many, via: member}
+  - {from: Coverage, to: Patient, kind: belongs_to, via: beneficiary}
+  - {from: Coverage, to: Organization, kind: belongs_to, via: payor}
+  - {from: Encounter, to: Patient, kind: belongs_to, via: subject}
+  - {from: Condition, to: Patient, kind: belongs_to, via: subject}
+  - {from: AllergyIntolerance, to: Patient, kind: belongs_to, via: patient}
+  - {from: AllergyIntolerance, to: Practitioner, kind: belongs_to, via: recorder}
+  - {from: Immunization, to: Patient, kind: belongs_to, via: patient}
+  - {from: Immunization, to: Encounter, kind: belongs_to, via: encounter}
+  - {from: Immunization, to: Location, kind: belongs_to, via: location}
+  - {from: Observation, to: Patient, kind: belongs_to, via: subject}
+  - {from: Observation, to: Encounter, kind: belongs_to, via: encounter}
+  - {from: DiagnosticReport, to: Patient, kind: belongs_to, via: subject}
+  - {from: DiagnosticReport, to: Observation, kind: has_many, via: result}
+  - {from: DiagnosticReport, to: Specimen, kind: has_many, via: specimen}
+  - {from: Procedure, to: Patient, kind: belongs_to, via: subject}
+  - {from: Procedure, to: Practitioner, kind: belongs_to, via: performer}
+  - {from: ServiceRequest, to: Patient, kind: belongs_to, via: subject}
+  - {from: MedicationRequest, to: Patient, kind: belongs_to, via: subject}
+  - {from: MedicationRequest, to: Encounter, kind: belongs_to, via: encounter}
+  - {from: MedicationRequest, to: Practitioner, kind: belongs_to, via: requester}
+  - {from: MedicationDispense, to: Patient, kind: belongs_to, via: subject}
+  - {from: MedicationDispense, to: MedicationRequest, kind: belongs_to, via: authorizingPrescription}
+  - {from: MedicationDispense, to: Practitioner, kind: belongs_to, via: performer}
+  - {from: CarePlan, to: Patient, kind: belongs_to, via: subject}
+  - {from: CarePlan, to: Encounter, kind: belongs_to, via: encounter}
+  - {from: CarePlan, to: CareTeam, kind: has_many, via: careTeam}
+  - {from: CarePlan, to: Goal, kind: has_many, via: goal}
+  - {from: CarePlan, to: Condition, kind: has_many, via: addresses}
+  - {from: CareTeam, to: Patient, kind: belongs_to, via: subject}
+  - {from: CareTeam, to: Practitioner, kind: has_many, via: participant}
+  - {from: CareTeam, to: Organization, kind: belongs_to, via: managingOrganization}
+  - {from: Goal, to: Patient, kind: belongs_to, via: subject}
+  - {from: Goal, to: Practitioner, kind: belongs_to, via: expressedBy}
+  - {from: DocumentReference, to: Patient, kind: belongs_to, via: subject}
+  - {from: DocumentReference, to: Practitioner, kind: belongs_to, via: author}
+  - {from: DocumentReference, to: Organization, kind: belongs_to, via: custodian}
+  - {from: Provenance, to: Patient, kind: belongs_to, via: target}
+  - {from: Device, to: Patient, kind: belongs_to, via: patient}
+
+legacy_application_access_model:
+  note: >-
+    The legacy Application Access APIs expose a flat, non-FHIR projection of the same
+    data. POST /authenticate returns patientdata[] (patientid, name, address, city, state,
+    zipcode, dateofbirth) plus a token; every /clinical/* read is then keyed by that
+    patientid over a required startDate/endDate window. There are no cross-references
+    between the returned objects.
+  root: {entity: Patient, key: patientid, tenant_key: officekey}
+  objects:
+    - Allergy
+    - Assessment
+    - Goal
+    - HealthConcern
+    - Immunization
+    - ImplantedDevice
+    - Medication
+    - Order
+    - Plan
+    - Problem
+    - Procedure
+    - Provider
+    - ResultSet
+    - Result
+    - SmokingStatus
+    - VitalSign
+    - VitalMeasurment
+  documents:
+    - {name: Episode Summary, format: HL7 C-CDA v3 (XML), operation: GET /clinical/episodesummaries}

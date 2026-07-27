@@ -152,7 +152,8 @@ findings:
     - RS256
   openapiHarvest:
     harvested: true
-    count: 2
+    count: 3
+    reharvested: '2026-07-27 (enrichment round) — the two FHIR snapshots were refetched and are byte-identical; a third, previously unlisted product "Legacy Patient APIs" (apiId advancedmd-patient-apis) was found in the portal API list and its Swagger 2.0 snapshot saved.'
     source: >-
       Apigee integrated-portal spec snapshot endpoint
       https://fhir.advancedmd.com/portals/api/sites/prj-prod-apigeex-advancedmdfhirportal/liveportal/apis/{apiId}/spec
@@ -179,6 +180,22 @@ findings:
       tags: 5
       securityScheme: bearerAuth (http bearer, JWT)
       parsed: true
+    - apiId: advancedmd-patient-apis
+      portalTitle: Legacy Patient APIs
+      savedAs: openapi/advancedmd-application-access-apis-swagger.json
+      swagger: '2.0'
+      title: AdvancedMD Application Access APIs
+      version: 1.0.1
+      host: ptapi.advancedmd.com
+      basePath: /pt-api
+      paths: 18
+      tags: 4
+      securityDefinitions: API Key (apiKey header apikey), Bearer Token (apiKey header Authorization)
+      parsed: true
+      note: >-
+        Non-FHIR patient API family. The portal description reads "Non-FHIR legacy patient
+        APIs (do not select)."; the spec declares support for AdvancedMD v12.6. Every
+        operation declares a 429 QuotaViolation response.
     - apiId: fhirbulkjwksr4
       title: FHIR Bulk Jwks API
       savedAs: null
@@ -287,8 +304,8 @@ sources:
   note: Drupal 10 Apigee developer portal returning a scheduled-maintenance page at review time.
 actions:
   apisYmlCreated: true
-  apisListed: 5
-  specsSaved: 2
+  apisListed: 6
+  specsSaved: 3
   fhirArtifactsSaved: 3
   fabricated: false
   reason: >-

@@ -1,0 +1,679 @@
+generated: '2026-07-27'
+method: derived
+source: Derived by binding every candidate MCP tool in mcp/advancedmd-mcp.yml to its backing operation
+  in openapi/.
+description: 'Tool-to-operation crosswalk for AdvancedMD. AdvancedMD publishes no MCP server and no GraphQL
+  surface, so there are no mcp_only or graphql_only rows: the candidate tool set is a complete 1:1 projection
+  of the published REST surface. Recorded so the agent-facing view stays bound to the machine-readable
+  contract.'
+surfaces:
+  openapi:
+  - openapi/advancedmd-fhir-single-api-openapi.json
+  - openapi/advancedmd-fhir-bulk-api-openapi.json
+  - openapi/advancedmd-application-access-apis-swagger.json
+  graphql:
+    endpoint: null
+    note: No GraphQL surface is published or advertised by AdvancedMD.
+  mcp:
+    url: null
+    note: No hosted MCP server; tools/list could not be probed because no server exists.
+  gated:
+  - Connect APIs (REST + XML-RPC) and the ODBC driver are behind a signed Certified API Developer Agreement
+    and publish no specification, so they cannot be crosswalked.
+crosswalk:
+- tool: get_patient
+  category: Patient
+  rest:
+  - GET /Patient
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_patient_id
+  category: Patient
+  rest:
+  - GET /Patient/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: search_patient_search
+  category: Patient
+  rest:
+  - Patients Search using POST
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding — the tool is generated from this operation, so it inherits its parameters/requestBody
+    verbatim.
+- tool: get_allergyintolerance
+  category: AllergyIntolerance
+  rest:
+  - GET /AllergyIntolerance
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_allergyintolerance_id
+  category: AllergyIntolerance
+  rest:
+  - GET /AllergyIntolerance/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: search_allergyintolerance_search
+  category: AllergyIntolerance
+  rest:
+  - AllergyIntolerances Search using POST
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding — the tool is generated from this operation, so it inherits its parameters/requestBody
+    verbatim.
+- tool: get_careplan
+  category: CarePlan
+  rest:
+  - GET /CarePlan
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_careplan_id
+  category: CarePlan
+  rest:
+  - GET /CarePlan/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: search_careplan_search
+  category: CarePlan
+  rest:
+  - CarePlans Search using POST
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding — the tool is generated from this operation, so it inherits its parameters/requestBody
+    verbatim.
+- tool: get_careteam
+  category: CareTeam
+  rest:
+  - GET /CareTeam
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_careteam_id
+  category: CareTeam
+  rest:
+  - GET /CareTeam/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: search_careteam_search
+  category: CareTeam
+  rest:
+  - CareTeam Search using POST
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding — the tool is generated from this operation, so it inherits its parameters/requestBody
+    verbatim.
+- tool: get_condition
+  category: Condition
+  rest:
+  - GET /Condition
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_condition_id
+  category: Condition
+  rest:
+  - GET /Condition/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: search_condition_search
+  category: Condition
+  rest:
+  - Conditions Search using POST
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding — the tool is generated from this operation, so it inherits its parameters/requestBody
+    verbatim.
+- tool: get_diagnosticreport
+  category: DiagnosticReport
+  rest:
+  - GET /DiagnosticReport
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_diagnosticreport_id
+  category: DiagnosticReport
+  rest:
+  - GET /DiagnosticReport/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: search_diagnosticreport_search
+  category: DiagnosticReport
+  rest:
+  - DiagnosticReports Search using POST
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding — the tool is generated from this operation, so it inherits its parameters/requestBody
+    verbatim.
+- tool: get_device
+  category: Device
+  rest:
+  - GET /Device
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_device_id
+  category: Device
+  rest:
+  - GET /Device/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: search_device_search
+  category: Device
+  rest:
+  - Device Search using POST
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding — the tool is generated from this operation, so it inherits its parameters/requestBody
+    verbatim.
+- tool: get_documentreference
+  category: DocumentReference
+  rest:
+  - GET /DocumentReference
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_documentreference_id
+  category: DocumentReference
+  rest:
+  - GET /DocumentReference/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_documentreference_docref
+  category: DocumentReference
+  rest:
+  - DocumentReferenceFetchDocref
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding — the tool is generated from this operation, so it inherits its parameters/requestBody
+    verbatim.
+- tool: search_documentreference_search
+  category: DocumentReference
+  rest:
+  - DocumentReferences Search using POST
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding — the tool is generated from this operation, so it inherits its parameters/requestBody
+    verbatim.
+- tool: get_encounter
+  category: Encounter
+  rest:
+  - GET /Encounter
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_encounter_id
+  category: Encounter
+  rest:
+  - GET /Encounter/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_goal
+  category: Goal
+  rest:
+  - GET /Goal
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_goal_id
+  category: Goal
+  rest:
+  - GET /Goal/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: search_goal_search
+  category: Goal
+  rest:
+  - Goal Search using POST
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding — the tool is generated from this operation, so it inherits its parameters/requestBody
+    verbatim.
+- tool: get_immunization
+  category: Immunization
+  rest:
+  - GET /Immunization
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_immunization_id
+  category: Immunization
+  rest:
+  - GET /Immunization/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: search_immunization_search
+  category: Immunization
+  rest:
+  - Immunizations Search using POST
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding — the tool is generated from this operation, so it inherits its parameters/requestBody
+    verbatim.
+- tool: get_location
+  category: Location
+  rest:
+  - GET /Location
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_location_id
+  category: Location
+  rest:
+  - GET /Location/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_medicationrequest
+  category: MedicationRequest
+  rest:
+  - GET /MedicationRequest
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_medicationrequest_id
+  category: MedicationRequest
+  rest:
+  - GET /MedicationRequest/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: search_medicationrequest_search
+  category: MedicationRequest
+  rest:
+  - MedicationRequest Search using POST
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding — the tool is generated from this operation, so it inherits its parameters/requestBody
+    verbatim.
+- tool: get_observation
+  category: Observation
+  rest:
+  - GET /Observation
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_observation_id
+  category: Observation
+  rest:
+  - GET /Observation/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: search_observation_search
+  category: Observation
+  rest:
+  - Observations Search using POST
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding — the tool is generated from this operation, so it inherits its parameters/requestBody
+    verbatim.
+- tool: get_organization
+  category: Organization
+  rest:
+  - GET /Organization
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_organization_id
+  category: Organization
+  rest:
+  - GET /Organization/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_practitioner
+  category: Practitioner
+  rest:
+  - GET /Practitioner
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_practitioner_id
+  category: Practitioner
+  rest:
+  - GET /Practitioner/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_procedure
+  category: Procedure
+  rest:
+  - GET /Procedure
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_procedure_id
+  category: Procedure
+  rest:
+  - GET /Procedure/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: search_procedure_search
+  category: Procedure
+  rest:
+  - Procedures Search using POST
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding — the tool is generated from this operation, so it inherits its parameters/requestBody
+    verbatim.
+- tool: get_provenance_id
+  category: Provenance
+  rest:
+  - GET /Provenance/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_medicationdispense
+  category: MedicationDispense
+  rest:
+  - GET /MedicationDispense
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_medicationdispense_id
+  category: MedicationDispense
+  rest:
+  - GET /MedicationDispense/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: search_medicationdispense_search
+  category: MedicationDispense
+  rest:
+  - MedicationDispense Search using POST
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding — the tool is generated from this operation, so it inherits its parameters/requestBody
+    verbatim.
+- tool: get_relatedperson
+  category: RelatedPerson
+  rest:
+  - GET /RelatedPerson
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_relatedperson_id
+  category: RelatedPerson
+  rest:
+  - GET /RelatedPerson/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: search_relatedperson_search
+  category: RelatedPerson
+  rest:
+  - RelatedPerson Search using POST
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding — the tool is generated from this operation, so it inherits its parameters/requestBody
+    verbatim.
+- tool: get_coverage
+  category: Coverage
+  rest:
+  - GET /Coverage
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_coverage_id
+  category: Coverage
+  rest:
+  - GET /Coverage/{id}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: search_coverage_search
+  category: Coverage
+  rest:
+  - Coverage Search using POST
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding — the tool is generated from this operation, so it inherits its parameters/requestBody
+    verbatim.
+- tool: post_v1_oauth2_token
+  category: Obtain Access Token
+  rest:
+  - POST /v1/oauth2/token
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_v1_r4_group_group_export
+  category: Start Bulk Data Export
+  rest:
+  - GET /v1/r4/Group/{groupId}/$export
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_v1_fhir_bulk_status
+  category: Check Data Export Status
+  rest:
+  - GET /v1/fhir-bulk/status
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: cancel_v1_fhir_bulk_status
+  category: Cancel Bulk Data Export
+  rest:
+  - DELETE /v1/fhir-bulk/status
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_v1_fhir_bulk_fhir_resource_batch_entity
+  category: Get FHIR Entity
+  rest:
+  - GET /v1/fhir-bulk/fhir-resource/{batchId}/{fhirEntity}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: post_authenticate
+  category: Authentication
+  rest:
+  - POST /authenticate
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_clinical_allergies
+  category: Clinical
+  rest:
+  - GET /clinical/allergies
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_clinical_assessments
+  category: Clinical
+  rest:
+  - GET /clinical/assessments
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_clinical_episodesummaries
+  category: C-CDA
+  rest:
+  - GET /clinical/episodesummaries
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_clinical_goals
+  category: Clinical
+  rest:
+  - GET /clinical/goals
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_clinical_healthconcerns
+  category: Clinical
+  rest:
+  - GET /clinical/healthconcerns
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_clinical_immunizations
+  category: Clinical
+  rest:
+  - GET /clinical/immunizations
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_clinical_implanteddevices
+  category: Clinical
+  rest:
+  - GET /clinical/implanteddevices
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_clinical_medications
+  category: Clinical
+  rest:
+  - GET /clinical/medications
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_clinical_orders
+  category: Clinical
+  rest:
+  - GET /clinical/orders
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_clinical_plans
+  category: Clinical
+  rest:
+  - GET /clinical/plans
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_clinical_problems
+  category: Clinical
+  rest:
+  - GET /clinical/problems
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_clinical_procedures
+  category: Clinical
+  rest:
+  - GET /clinical/procedures
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_clinical_providers
+  category: Clinical
+  rest:
+  - GET /clinical/providers
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_clinical_results
+  category: Clinical
+  rest:
+  - GET /clinical/results
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_clinical_smokingstatus
+  category: Clinical
+  rest:
+  - GET /clinical/smokingstatus
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_clinical_vitalsigns
+  category: Clinical
+  rest:
+  - GET /clinical/vitalsigns
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+- tool: get_demographics_patients_patient
+  category: Patient Demographics
+  rest:
+  - GET /demographics/patients/{patientid}
+  binding: rest
+  confidence: high
+  note: 1:1 derived binding; the spec declares no operationId for this operation, so it is addressed by
+    method + path.
+mcp_only: []
+rest_only: []
+coverage:
+  tools_named: 81
+  tools_bound: 81
+  mcp_only: 0
+  rest_operations_total: 81
+  rest_operations_with_tool: 81

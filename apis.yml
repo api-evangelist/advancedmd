@@ -54,6 +54,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/advancedmd-fhir-single-api-openapi.json
+  - type: Overlay
+    url: overlays/advancedmd-fhir-single-api-overlay.yaml
   - type: CapabilityStatement
     url: fhir/advancedmd-fhir-r4-capabilitystatement.json
   - type: Documentation
@@ -88,6 +90,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/advancedmd-fhir-bulk-api-openapi.json
+  - type: Overlay
+    url: overlays/advancedmd-fhir-bulk-api-overlay.yaml
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: APIReference
@@ -133,6 +137,40 @@ apis:
     url: https://fhir.advancedmd.com/fhir/base-urls
   - type: APIReference
     url: https://providerapi.advancedmd.com/v1/r4/endpoints
+- aid: advancedmd:advancedmd-application-access-apis
+  name: AdvancedMD Application Access APIs (Legacy Patient APIs)
+  description: >-
+    Non-FHIR REST API family published on the AdvancedMD FHIR portal as "Legacy Patient
+    APIs" and titled "AdvancedMD Application Access APIs" in its own Swagger 2.0
+    definition (version 1.0.1, supported AdvancedMD v12.6). Eighteen operations over
+    https://ptapi.advancedmd.com/pt-api: POST /authenticate exchanges a patient-portal
+    username, password and practice office key for a bearer token and the list of
+    patients the caller may read, then fifteen read-only /clinical/* endpoints return
+    allergies, assessments, goals, health concerns, immunizations, implanted devices,
+    medications, orders, plans, problems, procedures, providers, results, smoking status
+    and vital signs for a patientid over a required start/end date range. GET
+    /clinical/episodesummaries returns an HL7 C-CDA v3 XML document and GET
+    /demographics/patients/{patientid} returns demographics. Every call carries an
+    `apikey` header alongside the bearer token, and every operation documents a 429
+    QuotaViolation response.
+  humanURL: https://fhir.advancedmd.com/fhir/apis
+  baseURL: https://ptapi.advancedmd.com/pt-api
+  tags:
+  - Patient Data
+  - C-CDA
+  - Clinical
+  - Healthcare
+  properties:
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: OpenAPI
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Overlay
+    url: overlays/advancedmd-application-access-apis-overlay.yaml
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-connect-apis
   name: AdvancedMD Connect APIs
   description: >-
@@ -159,6 +197,12 @@ apis:
   - type: SignUp
     url: https://www.advancedmd.com/api-connection-request/
 common:
+- type: AgenticAccess
+  url: agentic-access/advancedmd-agentic-access.yml
+- type: DomainSecurity
+  url: security/advancedmd-domain-security.yml
+- type: Authentication
+  url: authentication/advancedmd-authentication.yml
 - type: Website
   url: https://www.advancedmd.com/
 - type: DeveloperPortal
@@ -203,6 +247,42 @@ common:
   url: https://www.advancedmd.com/privacy-notice/
 - type: Security
   url: https://www.advancedmd.com/medical-office-software/security/
+- type: HelpCenter
+  url: https://www.advancedmd.com/support/
+- type: Compliance
+  url: https://www.advancedmd.com/ai-information
+- type: Conformance
+  url: conformance/advancedmd-conformance.yml
+- type: OAuthScopes
+  url: scopes/advancedmd-scopes.yml
+- type: Conventions
+  url: conventions/advancedmd-conventions.yml
+- type: Idempotency
+  url: conventions/advancedmd-conventions.yml
+- type: ErrorCatalog
+  url: errors/advancedmd-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/advancedmd-lifecycle.yml
+- type: RateLimits
+  url: rate-limits/advancedmd-rate-limits.yml
+- type: Sandbox
+  url: sandbox/advancedmd-sandbox.yml
+- type: DataModel
+  url: data-model/advancedmd-data-model.yml
+- type: WellKnown
+  url: well-known/advancedmd-well-known.yml
+- type: JSONWebKeySet
+  url: well-known/advancedmd-jwks.json
+- type: Packages
+  url: packages/advancedmd-packages.yml
+- type: LLMsTxt
+  url: llms/advancedmd-llms.txt
+- type: MCPServer
+  url: mcp/advancedmd-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/advancedmd-tool-crosswalk.yml
+- type: AgentSkill
+  url: skills/_index.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

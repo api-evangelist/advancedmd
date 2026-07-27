@@ -1,0 +1,321 @@
+generated: '2026-07-27'
+method: derived
+status: candidate
+source: Derived from the three OpenAPI/Swagger documents in openapi/. Searched for an official AdvancedMD
+  MCP server on 2026-07-27 (docs, npm, GitHub, MCP registries) and found none; the only match, github.com/aaronblatnoy/advancedmd-mcp,
+  is a third-party project and is not catalogued as first-party.
+description: Candidate MCP tool surface for AdvancedMD, one tool per published REST operation across the
+  FHIR Single API, the FHIR Bulk Data API and the legacy Application Access APIs. AdvancedMD publishes
+  no hosted or packaged MCP server; nothing here is an AdvancedMD product claim. Every tool inherits its
+  real input schema from the backing OpenAPI operation.
+server:
+  name: advancedmd
+  transport: null
+  url: null
+  note: No official AdvancedMD MCP server exists as of 2026-07-27.
+auth:
+  fhir: SMART-on-FHIR OAuth 2.0 bearer token (authorization_code + PKCE for patient/provider apps, client_credentials
+    with private_key_jwt for Bulk). See authentication/advancedmd-authentication.yml.
+  application_access: apikey header plus a bearer token minted by POST /authenticate.
+tools:
+- name: get_patient
+  description: This interaction searches a set of Patients based on some filter criteria. Search interactions
+    take a series of query parameters for a GET.<p><a href='https://h
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Patient
+- name: get_patient_id
+  description: This interaction searches Patient based on patient id. Search interactions take patient
+    id in path for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/Str
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Patient/{id}
+- name: search_patient_search
+  description: This interaction searches a set of Patients based on some filter criteria. Search interactions
+    take a series of parameters of name''=''value pairs encoded as an
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#Patients Search using POST
+- name: get_allergyintolerance
+  description: This interaction searches a set of AllergyIntolerances based on some filter criteria. Search
+    interactions take a series of query parameters for a GET.<p><a href
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /AllergyIntolerance
+- name: get_allergyintolerance_id
+  description: This interaction searches AllergyIntolerance based on allergy intolerance id.Search interactions
+    take allergy intolerance id in path for a GET.<p><a href='https
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /AllergyIntolerance/{id}
+- name: search_allergyintolerance_search
+  description: This interaction searches a set of AllergyIntolerances based on some filter criteria. Search
+    interactions take a series of parameters of name''=''value pairs en
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#AllergyIntolerances Search using POST
+- name: get_careplan
+  description: This interaction searches a set of CarePlans based on some filter criteria. Search interactions
+    take a series of query parameters for a GET.<p><a href='https://
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /CarePlan
+- name: get_careplan_id
+  description: This interaction searches Careplan based on care plan id.Search interactions take careplan
+    id in path for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /CarePlan/{id}
+- name: search_careplan_search
+  description: This interaction searches a set of CarePlans based on some filter criteria. Search interactions
+    take a series of parameters of name''=''value pairs encoded as a
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#CarePlans Search using POST
+- name: get_careteam
+  description: This interaction searches a set of CareTeams based on some filter criteria. Search interactions
+    take a series of query parameters for a GET.<p><a href='https://
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /CareTeam
+- name: get_careteam_id
+  description: This interaction searches CareTeam based on careteam id.Search interactions take care  team
+    id in path for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /CareTeam/{id}
+- name: search_careteam_search
+  description: This interaction searches a set of CareTeam based on some filter criteria. Search interactions
+    take a series of parameters of name''=''value pairs encoded as an
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#CareTeam Search using POST
+- name: get_condition
+  description: This interaction searches a set of Conditions based on some filter criteria. Search interactions
+    take a series of query parameters for a GET.<p><a href='https:/
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Condition
+- name: get_condition_id
+  description: This interaction searche Condition based on condition id.Search interactions take condition
+    id in path for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Condition/{id}
+- name: search_condition_search
+  description: 'This interaction searches a set of Conditions based on some filter criteria. Search interactions
+    take a series of parameters of name''''=''''value pairs encoded as '
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#Conditions Search using POST
+- name: get_diagnosticreport
+  description: This interaction searches a set of DiagnosticReports based on some filter criteria. Search
+    interactions take a series of query parameters for a GET.<p><a href='
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /DiagnosticReport
+- name: get_diagnosticreport_id
+  description: This interaction searches DiagnosticReport based on diagnostic report id.Search interactions
+    take diagnostic report id in path for a GET.<p><a href='https://hl7
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /DiagnosticReport/{id}
+- name: search_diagnosticreport_search
+  description: This interaction searches a set of DiagnosticReports based on some filter criteria. Search
+    interactions take a series of parameters of name''=''value pairs enco
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#DiagnosticReports Search using POST
+- name: get_device
+  description: This interaction searches a set of Devices based on some filter criteria. Search interactions
+    take a series of query parameters for a GET.<p><a href='https://hl
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Device
+- name: get_device_id
+  description: This interaction searches Device based on device id.Search interactions take device id
+    in path for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/Structu
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Device/{id}
+- name: search_device_search
+  description: This interaction searches a set of Device based on some filter criteria. Search interactions
+    take a series of parameters of name''=''value pairs encoded as an a
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#Device Search using POST
+- name: get_documentreference
+  description: This interaction searches a set of DocumentReferences based on some filter criteria. Search
+    interactions take a series of query parameters for a GET.<p><a href=
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /DocumentReference
+- name: get_documentreference_id
+  description: This interaction searches DocumentReference based on document reference id.Search interactions
+    take document reference id in path for a GET.<p><a href='https://
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /DocumentReference/{id}
+- name: get_documentreference_docref
+  description: This operation returns references to documents related to a patient and aligns to the US
+    Core Fetch DocumentReference operation.<p><a href='https://hl7.org/fhir
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#DocumentReferenceFetchDocref
+- name: search_documentreference_search
+  description: This interaction searches a set of DocumentReferences based on some filter criteria. Search
+    interactions take a series of parameters of name''=''value pairs enc
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#DocumentReferences Search using POST
+- name: get_encounter
+  description: This interaction searches a set of Encounters based on some filter criteria. Search interactions
+    take a series of query parameters for a GET.<p><a href='https:/
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Encounter
+- name: get_encounter_id
+  description: This interaction searches Encounter based on encounter id.Search interactions take encounter
+    id in path for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Encounter/{id}
+- name: get_goal
+  description: This interaction searches a set of Goals based on some filter criteria. Search interactions
+    take a series of query parameters for a GET.<p><a href='https://hl7.
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Goal
+- name: get_goal_id
+  description: This interaction searches Goal based on goal id.Search interactions take goal id in path
+    for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefi
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Goal/{id}
+- name: search_goal_search
+  description: This interaction searches a set of Goal based on some filter criteria. Search interactions
+    take a series of parameters of name''=''value pairs encoded as an app
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#Goal Search using POST
+- name: get_immunization
+  description: This interaction searches a set of Immunizations based on some filter criteria. Search
+    interactions take a series of query parameters for a GET.<p><a href='http
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Immunization
+- name: get_immunization_id
+  description: This interaction searches Immunization based on immunization id.Search interactions take
+    immunization id in path for a GET.<p><a href='https://hl7.org/fhir/us/c
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Immunization/{id}
+- name: search_immunization_search
+  description: 'This interaction searches a set of Immunizations based on some filter criteria. Search
+    interactions take a series of parameters of name''''=''''value pairs encoded '
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#Immunizations Search using POST
+- name: get_location
+  description: This interaction searches a set of Locations based on some filter criteria. Search interactions
+    take a series of query parameters for a GET.<p><a href='https://
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Location
+- name: get_location_id
+  description: This interaction searches Location based on location id.Search interactions take location
+    id in path for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/S
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Location/{id}
+- name: get_medicationrequest
+  description: This interaction searches a set of MedicationRequests based on some filter criteria. Search
+    interactions take a series of query parameters for a GET.<p><a href=
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /MedicationRequest
+- name: get_medicationrequest_id
+  description: This interaction searches MedicationRequest based on medication request id.Search interactions
+    take medication request id in path for a GET.<p><a href='https://
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /MedicationRequest/{id}
+- name: search_medicationrequest_search
+  description: This interaction searches a set of MedicationRequest based on some filter criteria. Search
+    interactions take a series of parameters of name''=''value pairs enco
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#MedicationRequest Search using POST
+- name: get_observation
+  description: This interaction searches a set of Observations based on some filter criteria. Search interactions
+    take a series of query parameters for a GET.<p><a href='https
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Observation
+- name: get_observation_id
+  description: This interaction searches Observation based on observation id.Search interactions take
+    observation id in path for a GET.<p><a href='https://hl7.org/fhir/us/core
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Observation/{id}
+- name: search_observation_search
+  description: This interaction searches a set of Observations based on some filter criteria. Search interactions
+    take a series of parameters of name''=''value pairs encoded a
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#Observations Search using POST
+- name: get_organization
+  description: This interaction searches a set of Organizations based on some filter criteria. Search
+    interactions take a series of query parameters for a GET.<p><a href='http
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Organization
+- name: get_organization_id
+  description: This interaction searches Organization based on organization id.Search interactions take
+    organization id in path for a GET.<p><a href='https://hl7.org/fhir/us/c
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Organization/{id}
+- name: get_practitioner
+  description: This interaction searches a set of Practitioners based on some filter criteria. Search
+    interactions take a series of query parameters for a GET.<p><a href='http
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Practitioner
+- name: get_practitioner_id
+  description: This interaction searches Practitioner based on practitioner id.Search interactions take
+    practitioner id in path for a GET.<p><a href='https://hl7.org/fhir/us/c
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Practitioner/{id}
+- name: get_procedure
+  description: This interaction searches a set of Procedures based on some filter criteria. Search interactions
+    take a series of query parameters for a GET.<p><a href='https:/
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Procedure
+- name: get_procedure_id
+  description: This interaction searches Procedure based on procedure id.Search interactions take procedure
+    id in path for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Procedure/{id}
+- name: search_procedure_search
+  description: 'This interaction searches a set of Procedures based on some filter criteria. Search interactions
+    take a series of parameters of name''''=''''value pairs encoded as '
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#Procedures Search using POST
+- name: get_provenance_id
+  description: This interaction searches Provenance based on provenance id.Search interactions take provenance
+    id in path for a GET.<p><a href='https://hl7.org/fhir/us/core/ST
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Provenance/{id}
+- name: get_medicationdispense
+  description: This interaction searches a set of MedicationDispenses based on some filter criteria. Search
+    interactions take a series of query parameters for a GET.<p><a href
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /MedicationDispense
+- name: get_medicationdispense_id
+  description: This interaction retrieves a MedicationDispense resource by id.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-medicationdispense.ht
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /MedicationDispense/{id}
+- name: search_medicationdispense_search
+  description: This interaction searches a set of MedicationDispenses based on some filter criteria encoded
+    as an application/x-www-form-urlencoded submission for a POST.<p><a
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#MedicationDispense Search using POST
+- name: get_relatedperson
+  description: This interaction searches a set of RelatedPersons based on some filter criteria. Search
+    interactions take a series of query parameters for a GET.<p><a href='htt
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /RelatedPerson
+- name: get_relatedperson_id
+  description: This interaction retrieves a RelatedPerson resource by id.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-relatedperson.html'>📘
+    US C
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /RelatedPerson/{id}
+- name: search_relatedperson_search
+  description: This interaction searches a set of RelatedPersons based on some filter criteria encoded
+    as an application/x-www-form-urlencoded submission for a POST.<p><a href
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#RelatedPerson Search using POST
+- name: get_coverage
+  description: This interaction searches a set of Coverage resources based on some filter criteria. Search
+    interactions take a series of query parameters for a GET.<p><a href=
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Coverage
+- name: get_coverage_id
+  description: This interaction retrieves a Coverage resource by id.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-coverage.html'>📘
+    US Core Covera
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#GET /Coverage/{id}
+- name: search_coverage_search
+  description: 'This interaction searches a set of Coverage resources based on some filter criteria encoded
+    as an application/x-www-form-urlencoded submission for a POST.<p><a '
+  source_operation: openapi/advancedmd-fhir-single-api-openapi.json#Coverage Search using POST
+- name: post_v1_oauth2_token
+  description: Request Backend Services Access Token
+  source_operation: openapi/advancedmd-fhir-bulk-api-openapi.json#POST /v1/oauth2/token
+- name: get_v1_r4_group_group_export
+  description: Start Bulk Data Export Job
+  source_operation: openapi/advancedmd-fhir-bulk-api-openapi.json#GET /v1/r4/Group/{groupId}/$export
+- name: get_v1_fhir_bulk_status
+  description: Check "In progress", "Done" and "Cancel" statuses
+  source_operation: openapi/advancedmd-fhir-bulk-api-openapi.json#GET /v1/fhir-bulk/status
+- name: cancel_v1_fhir_bulk_status
+  description: Cancel (DELETE) existing Bulk Data Export
+  source_operation: openapi/advancedmd-fhir-bulk-api-openapi.json#DELETE /v1/fhir-bulk/status
+- name: get_v1_fhir_bulk_fhir_resource_batch_entity
+  description: Get Single FHIR Entity data
+  source_operation: openapi/advancedmd-fhir-bulk-api-openapi.json#GET /v1/fhir-bulk/fhir-resource/{batchId}/{fhirEntity}
+- name: post_authenticate
+  description: Log in using AdvancedMD credentials (username, password, office key)
+  source_operation: openapi/advancedmd-application-access-apis-swagger.json#POST /authenticate
+- name: get_clinical_allergies
+  description: GET /clinical/allergies
+  source_operation: openapi/advancedmd-application-access-apis-swagger.json#GET /clinical/allergies
+- name: get_clinical_assessments
+  description: GET /clinical/assessments
+  source_operation: openapi/advancedmd-application-access-apis-swagger.json#GET /clinical/assessments
+- name: get_clinical_episodesummaries
+  description: This API returns a C-CDA document in HL7 v3 (XML) format. If the Accept header is set to
+    "application/xml", it will return raw XML instead of JSON. Otherwise, i
+  source_operation: openapi/advancedmd-application-access-apis-swagger.json#GET /clinical/episodesummaries
+- name: get_clinical_goals
+  description: GET /clinical/goals
+  source_operation: openapi/advancedmd-application-access-apis-swagger.json#GET /clinical/goals
+- name: get_clinical_healthconcerns
+  description: GET /clinical/healthconcerns
+  source_operation: openapi/advancedmd-application-access-apis-swagger.json#GET /clinical/healthconcerns
+- name: get_clinical_immunizations
+  description: GET /clinical/immunizations
+  source_operation: openapi/advancedmd-application-access-apis-swagger.json#GET /clinical/immunizations
+- name: get_clinical_implanteddevices
+  description: GET /clinical/implanteddevices
+  source_operation: openapi/advancedmd-application-access-apis-swagger.json#GET /clinical/implanteddevices
+- name: get_clinical_medications
+  description: GET /clinical/medications
+  source_operation: openapi/advancedmd-application-access-apis-swagger.json#GET /clinical/medications
+- name: get_clinical_orders
+  description: GET /clinical/orders
+  source_operation: openapi/advancedmd-application-access-apis-swagger.json#GET /clinical/orders
+- name: get_clinical_plans
+  description: GET /clinical/plans
+  source_operation: openapi/advancedmd-application-access-apis-swagger.json#GET /clinical/plans
+- name: get_clinical_problems
+  description: GET /clinical/problems
+  source_operation: openapi/advancedmd-application-access-apis-swagger.json#GET /clinical/problems
+- name: get_clinical_procedures
+  description: GET /clinical/procedures
+  source_operation: openapi/advancedmd-application-access-apis-swagger.json#GET /clinical/procedures
+- name: get_clinical_providers
+  description: GET /clinical/providers
+  source_operation: openapi/advancedmd-application-access-apis-swagger.json#GET /clinical/providers
+- name: get_clinical_results
+  description: GET /clinical/results
+  source_operation: openapi/advancedmd-application-access-apis-swagger.json#GET /clinical/results
+- name: get_clinical_smokingstatus
+  description: GET /clinical/smokingstatus
+  source_operation: openapi/advancedmd-application-access-apis-swagger.json#GET /clinical/smokingstatus
+- name: get_clinical_vitalsigns
+  description: GET /clinical/vitalsigns
+  source_operation: openapi/advancedmd-application-access-apis-swagger.json#GET /clinical/vitalsigns
+- name: get_demographics_patients_patient
+  description: GET /demographics/patients/{patientid}
+  source_operation: openapi/advancedmd-application-access-apis-swagger.json#GET /demographics/patients/{patientid}

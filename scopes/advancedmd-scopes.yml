@@ -1,0 +1,938 @@
+generated: '2026-07-27'
+method: searched
+source: https://providerapi.advancedmd.com/v1/r4/.well-known/smart-configuration (HTTP 200, saved verbatim
+  at fhir/advancedmd-smart-configuration.json) — scopes_supported enumerated live on 2026-07-27.
+docs: https://fhir.advancedmd.com/fhir/launch-and-authorization
+description: SMART-on-FHIR OAuth 2.0 scope surface for the AdvancedMD certified FHIR APIs. The three OpenAPI
+  documents in openapi/ declare only a bare bearerAuth scheme and carry no oauth2 flows, so the scope
+  set is taken from the provider's published SMART discovery document and the portal authorization page
+  rather than derived from the specs.
+standard: SMART App Launch — SMART v1 (.read) and SMART v2 granular (.rs) scope syntax, both advertised
+  via the permission-v1 and permission-v2 capabilities.
+schemes:
+- name: SMART-on-FHIR OAuth 2.0
+  issuer: https://providerapi.advancedmd.com/v1/r4
+  source: fhir/advancedmd-smart-configuration.json
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://providerapi.advancedmd.com/v1/oauth2/authorize
+    tokenUrl: https://providerapi.advancedmd.com/v1/oauth2/token
+    pkce: S256 (code_challenge_methods_supported)
+    used_by: Patient and practitioner SMART apps against the FHIR Single API (3-legged OAuth).
+  - flow: clientCredentials
+    tokenUrl: https://providerapi.advancedmd.com/v1/oauth2/token
+    client_authentication: private_key_jwt — RS384-signed client_assertion with client_assertion_type
+      urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+    used_by: SMART Backend Services authorization for the FHIR Bulk Data API.
+  jwks_uri: https://providerapi.advancedmd.com/v1/oauth2/.well-known/jwks.json
+  introspection_endpoint: https://providerapi.advancedmd.com/v1/oauth2/introspect
+  revocation_endpoint: https://providerapi.advancedmd.com/v1/oauth2/revoke
+  management_endpoint: https://providerapi.advancedmd.com/v1/oauth2/manage
+notes:
+- 'The portal documents a default requested scope set of: openid fhirUser offline_access online_access
+  patient/*.read.'
+- The FHIR Launch and Authorization page states that user-level scopes are advertised but "not yet supported"
+  in practice, and that the scope set will be extended with FHIR v6 clinical-data scopes; the discovery
+  document nonetheless enumerates the full user/* set, so both are recorded here.
+- Two-legged OAuth for general system-to-system access is explicitly NOT supported; system/*.read exists
+  only for the Bulk Data backend-services flow.
+- 'With a user/*.read token the access token still carries a fixed patient context: a request without
+  an explicit patient parameter is answered for the launch patient only.'
+- The Bulk token request additionally requires username, password and officekey form parameters alongside
+  the standard client_credentials parameters.
+scope_groups:
+  patient: 58
+  user: 58
+  system: 6
+  identity_and_launch: 6
+scopes:
+- scope: fhirUser
+  description: Returns the FHIR resource (Patient/… or Practitioner/…) representing the authorized user.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: launch
+  description: EHR launch context — the app is launched from within AdvancedMD and inherits its context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: launch/patient
+  description: Standalone launch requesting a patient context be selected during authorization.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: offline_access
+  description: Issues a refresh token usable while the user is offline.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: online_access
+  description: Issues a refresh token usable only while the user remains online.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: openid
+  description: OpenID Connect authentication; returns an id_token identifying the authorized user.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/*.read
+  description: read + search (SMART v1 style) access to all supported FHIR resource types for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/*.rs
+  description: read + search (SMART v2 granular style) access to all supported FHIR resource types for
+    the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/AllergyIntolerance.read
+  description: read + search (SMART v1 style) access to the AllergyIntolerance FHIR resource type for
+    the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/AllergyIntolerance.rs
+  description: read + search (SMART v2 granular style) access to the AllergyIntolerance FHIR resource
+    type for the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/CarePlan.read
+  description: read + search (SMART v1 style) access to the CarePlan FHIR resource type for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/CarePlan.rs
+  description: read + search (SMART v2 granular style) access to the CarePlan FHIR resource type for the
+    single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/CareTeam.read
+  description: read + search (SMART v1 style) access to the CareTeam FHIR resource type for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/CareTeam.rs
+  description: read + search (SMART v2 granular style) access to the CareTeam FHIR resource type for the
+    single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Condition.read
+  description: read + search (SMART v1 style) access to the Condition FHIR resource type for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Condition.rs
+  description: read + search (SMART v2 granular style) access to the Condition FHIR resource type for
+    the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Consent.read
+  description: read + search (SMART v1 style) access to the Consent FHIR resource type for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Consent.rs
+  description: read + search (SMART v2 granular style) access to the Consent FHIR resource type for the
+    single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Coverage.read
+  description: read + search (SMART v1 style) access to the Coverage FHIR resource type for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Coverage.rs
+  description: read + search (SMART v2 granular style) access to the Coverage FHIR resource type for the
+    single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Device.read
+  description: read + search (SMART v1 style) access to the Device FHIR resource type for the single patient
+    in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Device.rs
+  description: read + search (SMART v2 granular style) access to the Device FHIR resource type for the
+    single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/DiagnosticReport.read
+  description: read + search (SMART v1 style) access to the DiagnosticReport FHIR resource type for the
+    single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/DiagnosticReport.rs
+  description: read + search (SMART v2 granular style) access to the DiagnosticReport FHIR resource type
+    for the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/DocumentReference.read
+  description: read + search (SMART v1 style) access to the DocumentReference FHIR resource type for the
+    single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/DocumentReference.rs
+  description: read + search (SMART v2 granular style) access to the DocumentReference FHIR resource type
+    for the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Encounter.read
+  description: read + search (SMART v1 style) access to the Encounter FHIR resource type for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Encounter.rs
+  description: read + search (SMART v2 granular style) access to the Encounter FHIR resource type for
+    the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Endpoint.read
+  description: read + search (SMART v1 style) access to the Endpoint FHIR resource type for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Endpoint.rs
+  description: read + search (SMART v2 granular style) access to the Endpoint FHIR resource type for the
+    single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/ExplanationOfBenefit.read
+  description: read + search (SMART v1 style) access to the ExplanationOfBenefit FHIR resource type for
+    the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/ExplanationOfBenefit.rs
+  description: read + search (SMART v2 granular style) access to the ExplanationOfBenefit FHIR resource
+    type for the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Goal.read
+  description: read + search (SMART v1 style) access to the Goal FHIR resource type for the single patient
+    in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Goal.rs
+  description: read + search (SMART v2 granular style) access to the Goal FHIR resource type for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Immunization.read
+  description: read + search (SMART v1 style) access to the Immunization FHIR resource type for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Immunization.rs
+  description: read + search (SMART v2 granular style) access to the Immunization FHIR resource type for
+    the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Location.read
+  description: read + search (SMART v1 style) access to the Location FHIR resource type for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Location.rs
+  description: read + search (SMART v2 granular style) access to the Location FHIR resource type for the
+    single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Medication.read
+  description: read + search (SMART v1 style) access to the Medication FHIR resource type for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Medication.rs
+  description: read + search (SMART v2 granular style) access to the Medication FHIR resource type for
+    the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/MedicationRequest.read
+  description: read + search (SMART v1 style) access to the MedicationRequest FHIR resource type for the
+    single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/MedicationRequest.rs
+  description: read + search (SMART v2 granular style) access to the MedicationRequest FHIR resource type
+    for the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/MedicationDispense.read
+  description: read + search (SMART v1 style) access to the MedicationDispense FHIR resource type for
+    the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/MedicationDispense.rs
+  description: read + search (SMART v2 granular style) access to the MedicationDispense FHIR resource
+    type for the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Observation.read
+  description: read + search (SMART v1 style) access to the Observation FHIR resource type for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Observation.rs
+  description: read + search (SMART v2 granular style) access to the Observation FHIR resource type for
+    the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Organization.read
+  description: read + search (SMART v1 style) access to the Organization FHIR resource type for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Organization.rs
+  description: read + search (SMART v2 granular style) access to the Organization FHIR resource type for
+    the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Patient.read
+  description: read + search (SMART v1 style) access to the Patient FHIR resource type for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Patient.rs
+  description: read + search (SMART v2 granular style) access to the Patient FHIR resource type for the
+    single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Practitioner.read
+  description: read + search (SMART v1 style) access to the Practitioner FHIR resource type for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Practitioner.rs
+  description: read + search (SMART v2 granular style) access to the Practitioner FHIR resource type for
+    the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/PractitionerRole.read
+  description: read + search (SMART v1 style) access to the PractitionerRole FHIR resource type for the
+    single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/PractitionerRole.rs
+  description: read + search (SMART v2 granular style) access to the PractitionerRole FHIR resource type
+    for the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Procedure.read
+  description: read + search (SMART v1 style) access to the Procedure FHIR resource type for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Procedure.rs
+  description: read + search (SMART v2 granular style) access to the Procedure FHIR resource type for
+    the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Provenance.read
+  description: read + search (SMART v1 style) access to the Provenance FHIR resource type for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Provenance.rs
+  description: read + search (SMART v2 granular style) access to the Provenance FHIR resource type for
+    the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/ServiceRequest.read
+  description: read + search (SMART v1 style) access to the ServiceRequest FHIR resource type for the
+    single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/ServiceRequest.rs
+  description: read + search (SMART v2 granular style) access to the ServiceRequest FHIR resource type
+    for the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/RelatedPerson.read
+  description: read + search (SMART v1 style) access to the RelatedPerson FHIR resource type for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/RelatedPerson.rs
+  description: read + search (SMART v2 granular style) access to the RelatedPerson FHIR resource type
+    for the single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Specimen.read
+  description: read + search (SMART v1 style) access to the Specimen FHIR resource type for the single
+    patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: patient/Specimen.rs
+  description: read + search (SMART v2 granular style) access to the Specimen FHIR resource type for the
+    single patient in context.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: system/*.read
+  description: read + search (SMART v1 style) access to all supported FHIR resource types for the whole
+    system (backend services / Bulk Data).
+  flows:
+  - clientCredentials
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: system/*.rs
+  description: read + search (SMART v2 granular style) access to all supported FHIR resource types for
+    the whole system (backend services / Bulk Data).
+  flows:
+  - clientCredentials
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: system/Consent.read
+  description: read + search (SMART v1 style) access to the Consent FHIR resource type for the whole system
+    (backend services / Bulk Data).
+  flows:
+  - clientCredentials
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: system/Consent.rs
+  description: read + search (SMART v2 granular style) access to the Consent FHIR resource type for the
+    whole system (backend services / Bulk Data).
+  flows:
+  - clientCredentials
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: system/ExplanationOfBenefit.read
+  description: read + search (SMART v1 style) access to the ExplanationOfBenefit FHIR resource type for
+    the whole system (backend services / Bulk Data).
+  flows:
+  - clientCredentials
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: system/ExplanationOfBenefit.rs
+  description: read + search (SMART v2 granular style) access to the ExplanationOfBenefit FHIR resource
+    type for the whole system (backend services / Bulk Data).
+  flows:
+  - clientCredentials
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/*.read
+  description: read + search (SMART v1 style) access to all supported FHIR resource types for every record
+    the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/*.rs
+  description: read + search (SMART v2 granular style) access to all supported FHIR resource types for
+    every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/AllergyIntolerance.read
+  description: read + search (SMART v1 style) access to the AllergyIntolerance FHIR resource type for
+    every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/AllergyIntolerance.rs
+  description: read + search (SMART v2 granular style) access to the AllergyIntolerance FHIR resource
+    type for every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/CarePlan.read
+  description: read + search (SMART v1 style) access to the CarePlan FHIR resource type for every record
+    the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/CarePlan.rs
+  description: read + search (SMART v2 granular style) access to the CarePlan FHIR resource type for every
+    record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/CareTeam.read
+  description: read + search (SMART v1 style) access to the CareTeam FHIR resource type for every record
+    the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/CareTeam.rs
+  description: read + search (SMART v2 granular style) access to the CareTeam FHIR resource type for every
+    record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Condition.read
+  description: read + search (SMART v1 style) access to the Condition FHIR resource type for every record
+    the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Condition.rs
+  description: read + search (SMART v2 granular style) access to the Condition FHIR resource type for
+    every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Consent.read
+  description: read + search (SMART v1 style) access to the Consent FHIR resource type for every record
+    the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Consent.rs
+  description: read + search (SMART v2 granular style) access to the Consent FHIR resource type for every
+    record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Coverage.read
+  description: read + search (SMART v1 style) access to the Coverage FHIR resource type for every record
+    the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Coverage.rs
+  description: read + search (SMART v2 granular style) access to the Coverage FHIR resource type for every
+    record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Device.read
+  description: read + search (SMART v1 style) access to the Device FHIR resource type for every record
+    the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Device.rs
+  description: read + search (SMART v2 granular style) access to the Device FHIR resource type for every
+    record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/DiagnosticReport.read
+  description: read + search (SMART v1 style) access to the DiagnosticReport FHIR resource type for every
+    record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/DiagnosticReport.rs
+  description: read + search (SMART v2 granular style) access to the DiagnosticReport FHIR resource type
+    for every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/DocumentReference.read
+  description: read + search (SMART v1 style) access to the DocumentReference FHIR resource type for every
+    record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/DocumentReference.rs
+  description: read + search (SMART v2 granular style) access to the DocumentReference FHIR resource type
+    for every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Encounter.read
+  description: read + search (SMART v1 style) access to the Encounter FHIR resource type for every record
+    the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Encounter.rs
+  description: read + search (SMART v2 granular style) access to the Encounter FHIR resource type for
+    every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Endpoint.read
+  description: read + search (SMART v1 style) access to the Endpoint FHIR resource type for every record
+    the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Endpoint.rs
+  description: read + search (SMART v2 granular style) access to the Endpoint FHIR resource type for every
+    record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/ExplanationOfBenefit.read
+  description: read + search (SMART v1 style) access to the ExplanationOfBenefit FHIR resource type for
+    every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/ExplanationOfBenefit.rs
+  description: read + search (SMART v2 granular style) access to the ExplanationOfBenefit FHIR resource
+    type for every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Goal.read
+  description: read + search (SMART v1 style) access to the Goal FHIR resource type for every record the
+    authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Goal.rs
+  description: read + search (SMART v2 granular style) access to the Goal FHIR resource type for every
+    record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Immunization.read
+  description: read + search (SMART v1 style) access to the Immunization FHIR resource type for every
+    record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Immunization.rs
+  description: read + search (SMART v2 granular style) access to the Immunization FHIR resource type for
+    every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Location.read
+  description: read + search (SMART v1 style) access to the Location FHIR resource type for every record
+    the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Location.rs
+  description: read + search (SMART v2 granular style) access to the Location FHIR resource type for every
+    record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Medication.read
+  description: read + search (SMART v1 style) access to the Medication FHIR resource type for every record
+    the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Medication.rs
+  description: read + search (SMART v2 granular style) access to the Medication FHIR resource type for
+    every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/MedicationRequest.read
+  description: read + search (SMART v1 style) access to the MedicationRequest FHIR resource type for every
+    record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/MedicationRequest.rs
+  description: read + search (SMART v2 granular style) access to the MedicationRequest FHIR resource type
+    for every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/MedicationDispense.read
+  description: read + search (SMART v1 style) access to the MedicationDispense FHIR resource type for
+    every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/MedicationDispense.rs
+  description: read + search (SMART v2 granular style) access to the MedicationDispense FHIR resource
+    type for every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Observation.read
+  description: read + search (SMART v1 style) access to the Observation FHIR resource type for every record
+    the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Observation.rs
+  description: read + search (SMART v2 granular style) access to the Observation FHIR resource type for
+    every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Organization.read
+  description: read + search (SMART v1 style) access to the Organization FHIR resource type for every
+    record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Organization.rs
+  description: read + search (SMART v2 granular style) access to the Organization FHIR resource type for
+    every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Patient.read
+  description: read + search (SMART v1 style) access to the Patient FHIR resource type for every record
+    the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Patient.rs
+  description: read + search (SMART v2 granular style) access to the Patient FHIR resource type for every
+    record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Practitioner.read
+  description: read + search (SMART v1 style) access to the Practitioner FHIR resource type for every
+    record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Practitioner.rs
+  description: read + search (SMART v2 granular style) access to the Practitioner FHIR resource type for
+    every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/PractitionerRole.read
+  description: read + search (SMART v1 style) access to the PractitionerRole FHIR resource type for every
+    record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/PractitionerRole.rs
+  description: read + search (SMART v2 granular style) access to the PractitionerRole FHIR resource type
+    for every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Procedure.read
+  description: read + search (SMART v1 style) access to the Procedure FHIR resource type for every record
+    the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Procedure.rs
+  description: read + search (SMART v2 granular style) access to the Procedure FHIR resource type for
+    every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Provenance.read
+  description: read + search (SMART v1 style) access to the Provenance FHIR resource type for every record
+    the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Provenance.rs
+  description: read + search (SMART v2 granular style) access to the Provenance FHIR resource type for
+    every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/ServiceRequest.read
+  description: read + search (SMART v1 style) access to the ServiceRequest FHIR resource type for every
+    record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/ServiceRequest.rs
+  description: read + search (SMART v2 granular style) access to the ServiceRequest FHIR resource type
+    for every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/RelatedPerson.read
+  description: read + search (SMART v1 style) access to the RelatedPerson FHIR resource type for every
+    record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/RelatedPerson.rs
+  description: read + search (SMART v2 granular style) access to the RelatedPerson FHIR resource type
+    for every record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Specimen.read
+  description: read + search (SMART v1 style) access to the Specimen FHIR resource type for every record
+    the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json
+- scope: user/Specimen.rs
+  description: read + search (SMART v2 granular style) access to the Specimen FHIR resource type for every
+    record the authorized user may see.
+  flows:
+  - authorizationCode
+  sources:
+  - fhir/advancedmd-smart-configuration.json

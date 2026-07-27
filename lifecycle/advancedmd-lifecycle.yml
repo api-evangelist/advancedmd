@@ -1,0 +1,101 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  https://fhir.advancedmd.com/getting-started, https://fhir.advancedmd.com/terms-of-service,
+  https://fhir.advancedmd.com/faq-s, https://fhir.advancedmd.com/fhir/base-urls,
+  https://status.advancedmd.com/api/v2/summary.json, plus the version fields in the
+  OpenAPI documents under openapi/.
+description: >-
+  Versioning, deprecation, support and availability posture for the AdvancedMD API
+  estate. AdvancedMD publishes no dated API changelog, no deprecation policy and no
+  numeric uptime SLA; what it does publish is a URI-path major version, per-document
+  spec versions tied to AdvancedMD product releases, and a public Statuspage.
+versioning:
+  scheme: uri-path
+  current: v1
+  docs: https://fhir.advancedmd.com/getting-started
+  notes: >-
+    Every FHIR and Bulk endpoint lives under /v1/ on providerapi.advancedmd.com; the FHIR
+    release is pinned separately in the path (/v1/r4/) and by the CapabilityStatement
+    (fhirVersion 4.0.1, statement version 20220520). The FHIR portal's Getting Started
+    page carries its own "API Version 2.0.0 / Supported Version: AdvancedMD v25" header,
+    and the Application Access Swagger declares version 1.0.1 for "AdvancedMD v12.6" —
+    so spec versions track AdvancedMD product releases rather than an API version train.
+    There is no version request header and no per-account version pinning.
+  documents:
+    - {file: openapi/advancedmd-fhir-single-api-openapi.json, version: 6.1.0, note: tracks the US Core IG version, not an AdvancedMD version}
+    - {file: openapi/advancedmd-fhir-bulk-api-openapi.json, version: '1.1'}
+    - {file: openapi/advancedmd-application-access-apis-swagger.json, version: 1.0.1, supported_product_version: AdvancedMD v12.6}
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  notes: >-
+    No deprecation or sunset policy is published on either portal, and no RFC 8594
+    Sunset/Deprecation header support is documented. The only forward-looking commitments
+    found are prose on the Launch and Authorization page ("Currently supported by AMD
+    version 2.2 of Smart App Launch; it's planned to be updated to version 2.0 by the end
+    of 2025" and a note that scopes "will be enhanced by the end of 2025 with the FHIR v6
+    clinical data scopes and user scopes") and the FAQ's "We will continue to release
+    additional FHIR APIs and upgrade existing FHIR APIs as the HL7 FHIR standard grows."
+    No Deprecation pointer is wired in apis.yml because no policy exists to point at.
+changelog:
+  published: false
+  notes: >-
+    No dated API changelog or release-notes page exists. https://www.advancedmd.com/release-notes/
+    returns 404; the Apigee portal exposes no changelog page in its menu tree.
+deprecated_operations: []
+deprecated_products:
+  - name: AdvancedMD Application Access APIs (Legacy Patient APIs)
+    aid: advancedmd:advancedmd-application-access-apis
+    status: legacy
+    evidence: >-
+      The Apigee portal lists this product as "Legacy Patient APIs" with the description
+      "Non-FHIR legacy patient APIs (do not select)." and the Getting Started page
+      instructs developers to request exactly one product per application and not to
+      select the non-FHIR product alongside a FHIR one. Superseded in practice by the
+      FHIR Single API.
+    superseded_by: advancedmd:advancedmd-fhir-single-api
+write_access:
+  supported: false
+  evidence: >-
+    FAQ: "Writing back to AdvancedMD using FHIR is not supported." The (g)(10) criterion
+    requires read-only functionality; write access is only available through the gated
+    Connect/Partner API estate under a Certified API Developer Agreement.
+sla:
+  url: null
+  uptime_target: null
+  notes: >-
+    No numeric uptime SLA is published for the developer APIs. The Developer Terms of
+    Service state that AdvancedMD "may, in consideration of overall system performance,
+    limit the frequency or nature of application calls by Developer for a period of time
+    no longer than necessary to resolve any negative impacts caused by excessive
+    application calls", and that "no additional support services are provided to
+    Developer as part of these Terms".
+status_page:
+  url: https://status.advancedmd.com/
+  platform: Atlassian Statuspage
+  page_id: qhx0jvljyb5m
+  api: https://status.advancedmd.com/api/v2/summary.json
+  incident_feed: https://status.advancedmd.com/history.rss
+  probed: '2026-07-27'
+  note: Live and component-level (e.g. Patient Portal), covering the AdvancedMD platform rather than the FHIR APIs specifically.
+terms:
+  developer_terms: https://fhir.advancedmd.com/terms-of-service
+  last_updated: '2022-11-28'
+  fees: >-
+    "Certified FHIR APIs are provided to Developer free of charge… AdvancedMD may, at its
+    sole discretion, introduce reasonable fees to continue using the Certified FHIR APIs."
+  audit_right: AdvancedMD may audit a developer's use on not less than three business days' notice.
+support:
+  interoperability: https://www.advancedmd.com/support/interoperability/
+  email: InterOps@advancedmd.com
+  app_approval: >-
+    Registered applications require manual approval — email InterOps with subject
+    "FHIR App Approval Request for Appname: [Your Appname]" and the redirect URL. The
+    portal states approval "can take a few days".
+endpoint_directory:
+  url: https://providerapi.advancedmd.com/v1/r4/endpoints
+  csv: https://fhir.advancedmd.com/files/baseurl_organizations.csv
+  refresh_cadence: quarterly
+  note: ONC service base URL publication; the cadence is the one lifecycle commitment AdvancedMD states explicitly.

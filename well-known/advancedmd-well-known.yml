@@ -1,0 +1,114 @@
+generated: '2026-07-27'
+method: searched
+description: >-
+  Results of probing the /.well-known/ discovery surface on every host in apis.yml
+  and every OpenAPI servers[] host on 2026-07-27. AdvancedMD serves no host-root
+  /.well-known/ documents; the real discovery surface is FHIR-scoped and lives
+  under the R4 base path (/v1/r4/.well-known/*) plus the OAuth base path
+  (/v1/oauth2/.well-known/jwks.json). fhir.advancedmd.com is a Google Apigee X
+  integrated portal that answers HTTP 200 with an Angular SPA shell for every
+  path, including every /.well-known/ path and /llms.txt, so those are recorded
+  as present-but-not-a-real-document and were not saved.
+hosts:
+  - host: https://providerapi.advancedmd.com
+    note: FHIR API host. Discovery is path-scoped, not host-root.
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/smart-configuration
+        status: 404
+      - path: /v1/r4/.well-known/smart-configuration
+        status: 200
+        type: application/json
+        standard: SMART App Launch discovery
+        file: ../fhir/advancedmd-smart-configuration.json
+      - path: /v1/r4/.well-known/openid-configuration
+        status: 200
+        type: application/json
+        standard: OpenID Connect Discovery 1.0
+        file: ../fhir/advancedmd-openid-configuration.json
+      - path: /v1/r4/.well-known/oauth-authorization-server
+        status: 404
+        note: Answers a FHIR OperationOutcome "Invalid resource" rather than RFC 8414 metadata.
+      - path: /v1/oauth2/.well-known/jwks.json
+        status: 200
+        type: application/json
+        standard: RFC 7517 JSON Web Key Set
+        file: advancedmd-jwks.json
+      - path: /v1/oauth2/.well-known/oauth-authorization-server
+        status: 404
+  - host: https://fhir.advancedmd.com
+    note: >-
+      Apigee X integrated developer portal (site id prj-prod-apigeex-advancedmdfhirportal).
+      Returns HTTP 200 with a text/html SPA shell for every path probed, so a 200 here
+      is not evidence a document exists. Nothing was saved from this host.
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        real_document: false
+        note: HTML SPA shell.
+      - path: /.well-known/openid-configuration
+        status: 200
+        real_document: false
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        real_document: false
+      - path: /.well-known/api-catalog
+        status: 200
+        real_document: false
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        real_document: false
+      - path: /llms.txt
+        status: 200
+        real_document: false
+  - host: https://www.advancedmd.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /llms.txt
+        status: 200
+        type: text/plain
+        standard: llms.txt
+        real_document: true
+        file: ../llms/advancedmd-llms.txt
+      - path: /llms-full.txt
+        status: 404
+  - host: https://ptapi.advancedmd.com
+    note: Application Access API host (Swagger 2.0 basePath /pt-api). Not probed anonymously beyond TLS; no discovery documents advertised.
+    documents: []
+  - host: https://developer.advancedmd.com
+    note: >-
+      Gated Drupal/Apigee developer portal for the Connect APIs and ODBC driver.
+      Returned HTTP 503 "Site under maintenance" for every path probed on 2026-07-27,
+      unchanged from the initial review.
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 503
+      - path: /.well-known/oauth-authorization-server
+        status: 503
+      - path: /.well-known/api-catalog
+        status: 503
+      - path: /.well-known/ai-plugin.json
+        status: 503
+security_txt:
+  published: false
+  note: No RFC 9116 security.txt is served on any AdvancedMD host.
