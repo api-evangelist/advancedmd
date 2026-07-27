@@ -1,0 +1,747 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "FHIR Bulk API",
+    "description": "HealthAPIx OAuth v2.0 API Specs for Backend Services Token Generation and Bulk Data Export Procedure",
+    "version": "1.1"
+  },
+  "servers": [
+    {
+      "url": "https://providerapi.advancedmd.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Obtain Access Token"
+    },
+    {
+      "name": "Start Bulk Data Export"
+    },
+    {
+      "name": "Check Data Export Status"
+    },
+    {
+      "name": "Cancel Bulk Data Export"
+    },
+    {
+      "name": "Get FHIR Entity"
+    }
+  ],
+  "paths": {
+    "/v1/oauth2/token": {
+      "post": {
+        "tags": [
+          "Obtain Access Token"
+        ],
+        "summary": "Request Backend Services Access Token",
+        "description": "Trusted B2B Partner makes a request to the token endpoint by adding the following parameters describerd below",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "client_assertion": {
+                    "type": "string",
+                    "example": "jwt_token"
+                  },
+                  "client_assertion_type": {
+                    "type": "string",
+                    "example": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer"
+                  },
+                  "scope": {
+                    "type": "string",
+                    "example": "system/*.read"
+                  },
+                  "grant_type": {
+                    "type": "string",
+                    "example": "client_credentials"
+                  },
+                  "username": {
+                    "type": "string",
+                    "example": "your_username"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "your_password"
+                  },
+                  "officekey": {
+                    "type": "integer",
+                    "example": "your_officekey"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Authorisation token (Bearer)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Token"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error. Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error400oAuth2"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/r4/Group/{groupId}/$export": {
+      "get": {
+        "tags": [
+          "Start Bulk Data Export"
+        ],
+        "summary": "Start Bulk Data Export Job",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "OfficeKey",
+            "description": "OfficeKey",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 991900
+          },
+          {
+            "in": "header",
+            "name": "prefer",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "respond-async"
+          },
+          {
+            "in": "path",
+            "name": "groupId",
+            "description": "groupId",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 12345
+          },
+          {
+            "in": "query",
+            "name": "_type",
+            "description": "Specifies a comma-separated list of resource types to include. If this parameter is absent, all resource types the user has authorization to access.\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Patient,CareTeam"
+          },
+          {
+            "in": "query",
+            "name": "_since",
+            "description": "Only resources that were last updated on or after the given time will be included.\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "2019-10-25T11:14:00Z"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/fhir+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExportInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error. Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationOutcome"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationOutcome"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Temporarily Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationOutcome"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/fhir-bulk/status": {
+      "get": {
+        "tags": [
+          "Check Data Export Status"
+        ],
+        "summary": "Check \"In progress\", \"Done\" and \"Cancel\" statuses",
+        "description": "To reach status \"Done\" request execution might take some time, so please be patient",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "OfficeKey",
+            "description": "OfficeKey",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 991900
+          },
+          {
+            "in": "query",
+            "name": "groupId",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 12345
+          },
+          {
+            "in": "query",
+            "name": "jobId",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 3739
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExportStatus"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExportIsReady"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error. Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationOutcome"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationOutcome"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationOutcomeWithID"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Export operation fails",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationOutcomeWithID"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Cancel Bulk Data Export"
+        ],
+        "description": "Cancel (DELETE) existing Bulk Data Export",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "OfficeKey",
+            "description": "OfficeKey",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 991900
+          },
+          {
+            "in": "query",
+            "name": "groupId",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 12345
+          },
+          {
+            "in": "query",
+            "name": "jobId",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 3739
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExportIsCanceled"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error. Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationOutcome"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationOutcome"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationOutcomeWithID"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationOutcome"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/fhir-bulk/fhir-resource/{batchId}/{fhirEntity}": {
+      "get": {
+        "tags": [
+          "Get FHIR Entity"
+        ],
+        "summary": "Get Single FHIR Entity data",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "OfficeKey",
+            "description": "OfficeKey",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 991900
+          },
+          {
+            "in": "path",
+            "name": "batchId",
+            "description": "batchId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "61333c76-14a6-4e48-9fb1-1129fd7967f2"
+          },
+          {
+            "in": "path",
+            "name": "fhirEntity",
+            "description": "fhirEntity",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Patient"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/fhir+ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExportFhirEntity"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error. Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationOutcome"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationOutcome"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationOutcome"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Token": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "description": "The access token value"
+          },
+          "token_type": {
+            "type": "string",
+            "description": "Type of the token is set to \"Bearer\"",
+            "enum": [
+              "Bearer"
+            ]
+          },
+          "expires_in": {
+            "type": "integer",
+            "description": "The lifetime in seconds of the access token"
+          },
+          "scope": {
+            "type": "string",
+            "description": "authorized scopes based on apps registered scopes"
+          }
+        }
+      },
+      "ExportIsReady": {
+        "type": "object",
+        "properties": {
+          "transactionTime": {
+            "type": "string"
+          },
+          "request": {
+            "type": "string"
+          },
+          "requiresAccessToken": {
+            "type": "boolean"
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "error": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "count": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ExportInfo": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "groupId": {
+            "type": "integer"
+          },
+          "jobId": {
+            "type": "integer"
+          }
+        }
+      },
+      "ExportStatus": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "ExportFhirEntity": {
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "versionId": {
+                "type": "string"
+              },
+              "lastUpdated": {
+                "type": "string"
+              },
+              "profile": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "code": {
+            "type": "object",
+            "properties": {
+              "coding": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "system": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "display": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "text": {
+                "type": "string"
+              }
+            }
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "ExportIsCanceled": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "groupId": {
+            "type": "integer"
+          },
+          "jobId": {
+            "type": "integer"
+          }
+        }
+      },
+      "Error400oAuth2": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "error_description": {
+            "type": "string"
+          }
+        }
+      },
+      "OperationOutcomeWithID": {
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string"
+          },
+          "id": {
+            "description": "jobId",
+            "type": "string"
+          },
+          "issue": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "string"
+                },
+                "details": {
+                  "type": "object",
+                  "properties": {
+                    "text": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "OperationOutcome": {
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string"
+          },
+          "text": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string"
+              },
+              "div": {
+                "type": "string"
+              }
+            }
+          },
+          "issue": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "string"
+                },
+                "diagnostics": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

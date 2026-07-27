@@ -1,0 +1,208 @@
+aid: advancedmd
+url: https://raw.githubusercontent.com/api-evangelist/advancedmd/refs/heads/main/apis.yml
+name: AdvancedMD
+kind: company
+description: >-
+  AdvancedMD is a cloud practice-management, medical-billing and electronic health
+  record (EHR) software company founded in 1999 and headquartered in South Jordan,
+  Utah, serving independent ambulatory practices, mental-health and physical-medicine
+  clinics, med spas and medical-billing services across the United States. A standalone
+  company again since Francisco Partners acquired it from Global Payments in December
+  2024, AdvancedMD operates two clearly separated developer surfaces. The first is a
+  public, no-cost HL7 FHIR R4 (4.0.1) read-only API estate published for ONC (g)(10)
+  Cures Act certification at fhir.advancedmd.com, aligned to the US Core 6.1.0
+  Implementation Guide, authorized with SMART-on-FHIR OAuth 2.0 and covering both
+  single-patient access and FHIR Bulk Data Access group export. The second is a gated
+  proprietary Connect API estate (REST and XML-RPC) plus an ODBC data-access driver,
+  which require a signed Certified API Developer Agreement with licensing and support
+  fees before sandbox or production credentials are issued.
+image: https://www.advancedmd.com/wp-content/uploads/2025/06/cropped-bird_solid_5121-300x300.png
+tags:
+- Healthcare
+- United States
+- EHR
+- EMR
+- Practice Management
+- Medical Billing
+- FHIR
+- HL7
+- SMART on FHIR
+- US Core
+- Interoperability
+- Revenue Cycle Management
+- Scheduling
+created: '2026-07-27'
+modified: '2026-07-27'
+specificationVersion: '0.19'
+apis:
+- aid: advancedmd:advancedmd-fhir-single-api
+  name: AdvancedMD FHIR Single API (US Core 6.1.0)
+  description: >-
+    Read-only HL7 FHIR R4 (4.0.1) API for single-patient data access, aligned to the
+    HL7 FHIR US Core Implementation Guide STU 6.1.0 and published for ONC (g)(10)
+    Cures Act certification. Supports both standalone and EHR launch for patient and
+    practitioner SMART apps, with 58 documented paths across 21 FHIR resource types
+    (read, search-type, and POST _search), plus the $docref operation. Base URLs are
+    organization-specific under https://providerapi.advancedmd.com/v1/r4/{orgId}.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - FHIR
+  - US Core
+  - SMART on FHIR
+  - Healthcare
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-fhir-single-api-openapi.json
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+- aid: advancedmd:advancedmd-fhir-bulk-api
+  name: AdvancedMD FHIR Bulk API
+  description: >-
+    HL7 FHIR Bulk Data Access (Flat FHIR) API for exporting a patient group's data
+    from AdvancedMD. Documented operations cover backend-services token acquisition
+    (POST /v1/oauth2/token with client_assertion JWT and system/*.read scope), kicking
+    off an export (GET /v1/r4/Group/{groupId}/$export), checking and cancelling export
+    status (/v1/fhir-bulk/status), and retrieving exported FHIR entities
+    (/v1/fhir-bulk/fhir-resource/{batchId}/{fhirEntity}).
+  humanURL: https://fhir.advancedmd.com/fhir/bulk-api
+  baseURL: https://providerapi.advancedmd.com
+  tags:
+  - FHIR
+  - Bulk Data
+  - Healthcare
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-fhir-bulk-api-openapi.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+- aid: advancedmd:advancedmd-fhir-bulk-jwks-api
+  name: AdvancedMD FHIR Bulk JWKS API
+  description: >-
+    Developer-portal helper API that mints JWT client assertions for testing the FHIR
+    Bulk Data workflow. Documented as POST /v1/fhir-jwks/token with a
+    grant_type=client_credentials&alg=rsa body, authorized with the Bulk application's
+    key and secret over HTTP Basic. AdvancedMD documents this endpoint as test-only —
+    production Bulk applications generate and register their own JWTs. No OpenAPI
+    snapshot is published for this API on the portal.
+  humanURL: https://fhir.advancedmd.com/fhir/bulk-api
+  baseURL: https://providerapi.advancedmd.com
+  tags:
+  - FHIR
+  - Bulk Data
+  - Authentication
+  properties:
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+- aid: advancedmd:advancedmd-fhir-endpoint-directory
+  name: AdvancedMD FHIR Endpoint Directory
+  description: >-
+    Public, unauthenticated service base URL publication required of ONC-certified API
+    suppliers. GET https://providerapi.advancedmd.com/v1/r4/endpoints returns a FHIR
+    Bundle of Endpoint and Organization resources for every AdvancedMD customer
+    organization with a FHIR service base URL; the same list is also published as a
+    downloadable CSV. Updated quarterly.
+  humanURL: https://fhir.advancedmd.com/fhir/base-urls
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - FHIR
+  - Endpoint Directory
+  - Interoperability
+  properties:
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: APIReference
+    url: https://providerapi.advancedmd.com/v1/r4/endpoints
+- aid: advancedmd:advancedmd-connect-apis
+  name: AdvancedMD Connect APIs
+  description: >-
+    AdvancedMD's proprietary partner API family, published in both XML-RPC and REST
+    formats, which lets developers build companion applications that replicate
+    functionality available in the AdvancedMD user interface — patient engagement,
+    appointment scheduling, clinical forms, payment tools and revenue-cycle management.
+    Access is gated: developers must sign a Certified API Developer Agreement (with
+    licensing and support fees), then receive sandbox access and documentation on the
+    AdvancedMD Developer Portal before production credentials are granted. No endpoints
+    or machine-readable specification are published outside that agreement, so none are
+    catalogued here.
+  humanURL: https://www.advancedmd.com/group-practice/developer-solutions/
+  tags:
+  - Practice Management
+  - Scheduling
+  - Revenue Cycle Management
+  - Patient Engagement
+  properties:
+  - type: Documentation
+    url: https://www.advancedmd.com/group-practice/developer-solutions/
+  - type: Portal
+    url: https://developer.advancedmd.com/
+  - type: SignUp
+    url: https://www.advancedmd.com/api-connection-request/
+common:
+- type: Website
+  url: https://www.advancedmd.com/
+- type: DeveloperPortal
+  url: https://fhir.advancedmd.com/
+- type: Portal
+  url: https://developer.advancedmd.com/
+- type: Documentation
+  url: https://www.advancedmd.com/group-practice/developer-solutions/
+- type: APIReference
+  url: https://fhir.advancedmd.com/fhir/apis
+- type: GettingStarted
+  url: https://fhir.advancedmd.com/getting-started
+- type: Authentication
+  url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+- type: CapabilityStatement
+  url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+- type: SMARTConfiguration
+  url: fhir/advancedmd-smart-configuration.json
+- type: OpenIDConfiguration
+  url: fhir/advancedmd-openid-configuration.json
+- type: FAQ
+  url: https://fhir.advancedmd.com/faq-s
+- type: SignUp
+  url: https://www.advancedmd.com/api-connection-request/
+- type: Login
+  url: https://login.advancedmd.com/
+- type: Support
+  url: https://www.advancedmd.com/support/interoperability/
+- type: StatusPage
+  url: https://status.advancedmd.com/
+- type: Pricing
+  url: https://www.advancedmd.com/software-pricing/
+- type: Blog
+  url: https://www.advancedmd.com/blog/
+- type: BlogRSS
+  url: https://www.advancedmd.com/blog/feed/
+- type: GitHubOrganization
+  url: https://github.com/AdvancedMD
+- type: TermsOfService
+  url: https://fhir.advancedmd.com/terms-of-service
+- type: PrivacyPolicy
+  url: https://www.advancedmd.com/privacy-notice/
+- type: Security
+  url: https://www.advancedmd.com/medical-office-software/security/
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,20 @@
+
+            {
+            	"authorization_endpoint": "https://providerapi.advancedmd.com/v1/oauth2/authorize",
+            	"token_endpoint": "https://providerapi.advancedmd.com/v1/oauth2/token",
+            	"response_types_supported": [
+            		"code",
+            		"refresh_token",
+            		"id_token"
+            	],
+            	"issuer": "https://providerapi.advancedmd.com/v1/r4",
+            	"jwks_uri": "https://providerapi.advancedmd.com/v1/oauth2/.well-known/jwks.json",
+            	"subject_types_supported": [
+            		"public"
+            	],
+            	"id_token_signing_alg_values_supported": [
+            		"RS384",
+            		"RS256"
+            	]
+            }
+      

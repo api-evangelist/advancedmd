@@ -1,0 +1,302 @@
+aid: advancedmd
+name: AdvancedMD
+review:
+  question: >-
+    Does AdvancedMD expose a real, publicly documented healthcare API surface, and is
+    a machine-readable contract (FHIR CapabilityStatement and/or OpenAPI) available
+    without a partner agreement?
+  answer: true
+  date: '2026-07-27'
+  reviewer: API Evangelist
+  homeMarket: United States
+  tier: practice-management
+findings:
+  summary: |
+    AdvancedMD runs a split API estate. The regulatory half is genuinely public: a
+    Google Apigee X integrated developer portal at https://fhir.advancedmd.com (HTTP
+    200, site id prj-prod-apigeex-advancedmdfhirportal) publishes the ONC (g)(10)
+    Cures Act FHIR APIs at no cost, and both the FHIR R4 CapabilityStatement and two
+    OpenAPI 3.0.1 documents are retrievable anonymously. The commercial half is gated:
+    the proprietary Connect APIs (REST and XML-RPC) and the ODBC driver sit behind the
+    Drupal/Apigee developer portal at https://developer.advancedmd.com, which requires
+    a signed Certified API Developer Agreement with licensing and support fees. At
+    review time that portal returned HTTP 503 with a "Site under maintenance" page, so
+    no Connect API endpoints were confirmed and none were invented.
+  developerPortals:
+  - url: https://fhir.advancedmd.com/
+    name: AdvancedMD FHIR Portal
+    status: 200
+    confirmed: true
+    platform: Google Apigee X integrated portal
+    note: Public regulatory FHIR portal. Menu, page and spec content served from /portals/api/sites/prj-prod-apigeex-advancedmdfhirportal/liveportal/*.
+  - url: https://developer.advancedmd.com/
+    name: AdvancedMD Developer Portal (Connect APIs, ODBC)
+    status: 503
+    confirmed: false
+    platform: Drupal 10 / Apigee developer portal
+    note: >-
+      Returned HTTP 503 "Site under maintenance" on 2026-07-27 for every path probed
+      (/, /fhir, /get-started, /faq). Existence corroborated by an outbound link from
+      the FHIR portal home page. Content behind a developer agreement regardless.
+  - url: https://devportal.advancedmd.com/
+    status: null
+    confirmed: false
+    note: Referenced by third-party search results but no longer resolves in DNS (NXDOMAIN) as of 2026-07-27.
+  fhirCapabilityStatement:
+    captured: true
+    url: https://providerapi.advancedmd.com/v1/r4/metadata
+    status: 200
+    contentType: application/json
+    savedAs: fhir/advancedmd-fhir-r4-capabilitystatement.json
+    resourceType: CapabilityStatement
+    fhirVersion: 4.0.1
+    kind: requirements
+    version: '20220520'
+    publisher: AdvancedMD
+    format:
+    - application/fhir+json
+    instantiates:
+    - http://hl7.org/fhir/us/core/CapabilityStatement/us-core-server
+    - http://hl7.org/fhir/uv/bulkdata/CapabilityStatement/bulk-data
+    resourceCount: 25
+    resources:
+    - AllergyIntolerance
+    - CarePlan
+    - CareTeam
+    - Condition
+    - Device
+    - DiagnosticReport
+    - DocumentReference
+    - Encounter
+    - Endpoint
+    - Goal
+    - Group
+    - Immunization
+    - Location
+    - MedicationRequest
+    - Observation
+    - Organization
+    - Patient
+    - ServiceRequest
+    - Specimen
+    - Coverage
+    - MedicationDispense
+    - Practitioner
+    - RelatedPerson
+    - Procedure
+    - Provenance
+    interactions:
+    - read
+    - search-type
+    operations:
+    - name: everything
+      definition: http://hl7.org/fhir/OperationDefinition/Patient-everything
+    - name: lastn
+      definition: http://hl7.org/fhir/OperationDefinition/Observation-lastn
+    - name: translate
+      definition: http://hl7.org/fhir/OperationDefinition/ConceptMap-translate
+    note: >-
+      Read-only surface — only read and search-type interactions are declared. No
+      create/update/delete is advertised on the regulatory FHIR API.
+  smartConfiguration:
+    captured: true
+    url: https://providerapi.advancedmd.com/v1/r4/.well-known/smart-configuration
+    status: 200
+    savedAs: fhir/advancedmd-smart-configuration.json
+    issuer: https://providerapi.advancedmd.com/v1/r4
+    authorization_endpoint: https://providerapi.advancedmd.com/v1/oauth2/authorize
+    token_endpoint: https://providerapi.advancedmd.com/v1/oauth2/token
+    introspection_endpoint: https://providerapi.advancedmd.com/v1/oauth2/introspect
+    revocation_endpoint: https://providerapi.advancedmd.com/v1/oauth2/revoke
+    management_endpoint: https://providerapi.advancedmd.com/v1/oauth2/manage
+    jwks_uri: https://providerapi.advancedmd.com/v1/oauth2/.well-known/jwks.json
+    grant_types_supported:
+    - authorization_code
+    - client_credentials
+    token_endpoint_auth_methods_supported:
+    - client_secret_basic
+    - private_key_jwt
+    code_challenge_methods_supported:
+    - S256
+    capabilities:
+    - launch-standalone
+    - launch-ehr
+    - client-public
+    - client-confidential-symmetric
+    - client-confidential-asymmetric
+    - sso-openid-connect
+    - context-standalone-patient
+    - context-ehr-patient
+    - context-ehr-encounter
+    - context-banner
+    - context-style
+    - permission-offline
+    - permission-patient
+    - permission-user
+    - permission-v1
+    - permission-v2
+    - authorize-post
+    scopesNote: >-
+      scopes_supported enumerates the SMART v1 and v2 patient-level scope set —
+      openid, fhirUser, launch, launch/patient, online_access, offline_access,
+      patient/*.read, patient/*.rs and per-resource patient/<Resource>.read and
+      patient/<Resource>.rs variants. The portal documents user-level scopes as not
+      yet supported; system/*.read is used for the Bulk backend-services flow.
+  openidConfiguration:
+    captured: true
+    url: https://providerapi.advancedmd.com/v1/r4/.well-known/openid-configuration
+    status: 200
+    savedAs: fhir/advancedmd-openid-configuration.json
+    id_token_signing_alg_values_supported:
+    - RS384
+    - RS256
+  openapiHarvest:
+    harvested: true
+    count: 2
+    source: >-
+      Apigee integrated-portal spec snapshot endpoint
+      https://fhir.advancedmd.com/portals/api/sites/prj-prod-apigeex-advancedmdfhirportal/liveportal/apis/{apiId}/spec
+      (anonymous, HTTP 200). The JSON envelope's `data` string was parsed and written
+      out verbatim.
+    specs:
+    - apiId: prodr4
+      savedAs: openapi/advancedmd-fhir-single-api-openapi.json
+      openapi: 3.0.1
+      title: FHIR Single API - US Core 6.1.0
+      version: 6.1.0
+      server: https://providerapi.advancedmd.com/v1/r4
+      paths: 58
+      tags: 21
+      securityScheme: bearerAuth (http bearer, JWT)
+      parsed: true
+    - apiId: bulkprodr4
+      savedAs: openapi/advancedmd-fhir-bulk-api-openapi.json
+      openapi: 3.0.1
+      title: FHIR Bulk API
+      version: '1.1'
+      server: https://providerapi.advancedmd.com
+      paths: 4
+      tags: 5
+      securityScheme: bearerAuth (http bearer, JWT)
+      parsed: true
+    - apiId: fhirbulkjwksr4
+      title: FHIR Bulk Jwks API
+      savedAs: null
+      status: 404
+      note: >-
+        Listed on https://fhir.advancedmd.com/fhir/apis but the portal returns
+        "Cannot find snapshot for api fhirbulkjwksr4" for both /spec and
+        /download_spec. Its POST /v1/fhir-jwks/token endpoint is documented in prose
+        on the Bulk API page only.
+  endpointDirectory:
+    url: https://providerapi.advancedmd.com/v1/r4/endpoints
+    status: 200
+    contentType: application/json
+    resourceType: Bundle
+    bundleType: collection
+    entries: 12096
+    sizeBytes: 13472106
+    note: >-
+      ONC service base URL publication — 6,048 Organization plus 6,048 Endpoint
+      resources, one pair per AdvancedMD customer organization, each with an
+      organization-specific base URL of the form
+      https://providerapi.advancedmd.com/v1/r4/{orgId}. Also published as CSV at
+      https://fhir.advancedmd.com/files/baseurl_organizations.csv. Not committed to
+      this repo because of its 13 MB size; the live URL is catalogued in apis.yml.
+  authModel:
+    fhirRegulatory: SMART-on-FHIR OAuth 2.0 authorization-code with PKCE (S256); standalone and EHR launch; patient-level scopes only (user-level documented as unsupported)
+    fhirBulk: OAuth 2.0 client-credentials backend services with private_key_jwt client assertion (RS384) and system/*.read scope
+    connectApis: Not publicly documented — gated behind a signed Certified API Developer Agreement
+    odbc: Custom read-only ODBC driver, credentialed under the same developer agreement
+    mTLS: false
+  standardsConformance:
+    hl7FhirVersion: 4.0.1 (R4)
+    usCore: 'yes — US Core Implementation Guide STU 6.1.0; CapabilityStatement instantiates http://hl7.org/fhir/us/core/CapabilityStatement/us-core-server'
+    bulkData: 'yes — instantiates http://hl7.org/fhir/uv/bulkdata/CapabilityStatement/bulk-data'
+    smartAppLaunch: 'yes — .well-known/smart-configuration served, SMART v1 and v2 permission capabilities advertised'
+    uscdi: 'yes — published as the ONC (g)(10) Standardized API for Patient and Population Services'
+    ukCore: 'no — not applicable (United States home market)'
+    auCore: 'no — not applicable (United States home market)'
+    daVinci: 'not advertised — no Da Vinci payer implementation guide is referenced'
+    carinBlueButton: 'not advertised — no CARIN Blue Button implementation guide is referenced'
+    tefcaQhin: 'not advertised on the developer portal'
+  accessPosture:
+    regulatoryFhir: self-serve documentation and specs, free of charge; production app approval requires emailing InterOps@advancedmd.com and can take several days
+    connectApis: gated — Certified API Developer Agreement with licensing and support fees precedes sandbox access
+    sandbox: 'yes — test organizations FHIR PRACTICE GROUP TEST (https://providerapi.advancedmd.com/v1/r4/174) and FHIR PRACTICE GROUP TEST 2 (https://providerapi.advancedmd.com/v1/r4/175) with published test patient/provider credentials'
+  transports:
+  - protocol: REST
+    scheme: https
+    baseURL: https://providerapi.advancedmd.com/v1/r4
+    documented: true
+    note: HL7 FHIR R4 REST, read and search only, organization-scoped base URLs.
+  - protocol: REST
+    scheme: https
+    baseURL: https://providerapi.advancedmd.com
+    documented: true
+    note: FHIR Bulk Data Access (async kickoff plus status polling on /v1/fhir-bulk/status).
+  - protocol: XML-RPC
+    scheme: https
+    documented: false
+    note: Connect APIs are described publicly as available in XML-RPC and REST formats, but no endpoint or specification is published outside the developer agreement.
+  - protocol: ODBC
+    scheme: odbc
+    documented: false
+    note: Read-only ODBC driver for data warehousing; credentials issued under the developer agreement.
+  - protocol: WebSocket
+    scheme: wss
+    documented: false
+    note: No WebSocket surface is documented on either portal.
+sources:
+- url: https://fhir.advancedmd.com/
+  type: DeveloperPortal
+  status: 200
+  note: Apigee X integrated portal; /siteid returns prj-prod-apigeex-advancedmdfhirportal.
+- url: https://fhir.advancedmd.com/fhir/apis
+  type: APIReference
+  status: 200
+  note: Lists FHIR Single API (US Core 6.1.0), FHIR Bulk API, FHIR Bulk Jwks API.
+- url: https://fhir.advancedmd.com/fhir/base-urls
+  type: Documentation
+  status: 200
+  note: Service base URL form, test organization base URLs, CSV and FHIR Bundle endpoint lists.
+- url: https://fhir.advancedmd.com/fhir/single-api
+  type: Documentation
+  status: 200
+  note: SMART App Launch test flows; documents the default scope set openid, fhirUser, offline_access, online_access, patient/*.read and notes user scopes are unsupported.
+- url: https://fhir.advancedmd.com/fhir/bulk-api
+  type: Documentation
+  status: 200
+  note: Bulk flow — JWKS token, POST /v1/oauth2/token with client_assertion and system/*.read, then GET /v1/r4/Group/{groupId}/$export.
+- url: https://providerapi.advancedmd.com/v1/r4/metadata
+  type: CapabilityStatement
+  status: 200
+- url: https://providerapi.advancedmd.com/v1/r4/.well-known/smart-configuration
+  type: SMARTConfiguration
+  status: 200
+- url: https://providerapi.advancedmd.com/v1/r4/.well-known/openid-configuration
+  type: OpenIDConfiguration
+  status: 200
+- url: https://www.advancedmd.com/group-practice/developer-solutions/
+  type: Documentation
+  status: 200
+  note: Names the Connect APIs (XML-RPC and REST), ODBC, read-only FHIR APIs and partner lab/imaging interfaces; states the Certified API Developer Agreement requirement.
+- url: https://developer.advancedmd.com/
+  type: Portal
+  status: 503
+  note: Drupal 10 Apigee developer portal returning a scheduled-maintenance page at review time.
+actions:
+  apisYmlCreated: true
+  apisListed: 5
+  specsSaved: 2
+  fhirArtifactsSaved: 3
+  fabricated: false
+  reason: >-
+    Only artifacts fetched live on 2026-07-27 were saved. The two OpenAPI documents
+    and the CapabilityStatement, smart-configuration and openid-configuration
+    documents were written verbatim. The Connect APIs are catalogued as a gated,
+    documented-but-unspecified product with no invented endpoints, and the
+    unreachable developer portal is recorded with its actual HTTP status.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
