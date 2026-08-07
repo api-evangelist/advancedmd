@@ -32,8 +32,60 @@ tags:
 - Revenue Cycle Management
 - Scheduling
 created: '2026-07-27'
-modified: '2026-07-27'
+modified: '2026-08-06'
 specificationVersion: '0.19'
+x-capabilities:
+  reviewed: '2026-08-06'
+  source: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  write_access: commercial-tier-only
+  note: >-
+    IMPORTANT for anyone evaluating AdvancedMD for agent or integration work. AdvancedMD runs
+    THREE distinct API surfaces and they do not have the same capability, so a conclusion drawn
+    from one of them is wrong about the others.
+    1. FHIR (US Core 6.1.0, ONC (g)(10) certified) — read-only. Their own CapabilityStatement
+    declares 25 resources supporting exactly two interactions, read and search-type. ZERO
+    resources accept create, update, patch or delete.
+    2. Application Access APIs / "Legacy Patient APIs" — also read-only. Every operation in the
+    published Swagger 2.0 is a GET except POST /authenticate, which is the token call.
+    3. Connect APIs — THIS is where writes live. AdvancedMD's own description covers appointment
+    scheduling, patient engagement, clinical forms, payment tools and revenue-cycle management,
+    in XML-RPC and REST. It is gated behind a signed Certified API Developer Agreement with
+    licensing and support fees, and no endpoints or machine-readable specification are published
+    outside that agreement — so nothing is catalogued for it here, and its absence from this repo
+    is a publication gap, NOT evidence that the capability is missing.
+  cross_vendor_note: >-
+    Read against MEDITECH and Epic on the same day, the pattern is that the ONC-mandated
+    compliance surface is read-only almost everywhere and write capability sits in a commercial
+    programme. AdvancedMD gates it behind a paid developer agreement; MEDITECH gates the
+    equivalent (Expanse Argo-Scheduling) behind customer-sponsored or formal-partner
+    integration. Epic is the outlier — it exposes 13 write-capable resources, including
+    Patient create, on the FHIR surface itself.
+  surfaces:
+  - name: FHIR Single API (US Core 6.1.0)
+    access: read-only
+    evidence: CapabilityStatement declares 25 resources, interactions read and search-type only
+    resources: 25
+    write_capable_resources: 0
+  - name: Application Access APIs (Legacy Patient APIs)
+    access: read-only
+    evidence: Swagger 2.0 declares 18 operations, all GET except POST /authenticate
+  - name: Connect APIs
+    access: read-write
+    gated_by: Certified API Developer Agreement (licensing and support fees)
+    covers: patient engagement, appointment scheduling, clinical forms, payment tools, RCM
+    formats: [XML-RPC, REST]
+    machine_readable_spec: none published outside the agreement
+    portal: https://developer.advancedmd.com/
+    portal_status: >-
+      HTTP 503 on every path including a control path, 2026-08-06 — the portal did not answer
+      us at all, so nothing about its contents is claimed here.
+x-evidence:
+  verified: '2026-08-06'
+  method: >-
+    FHIR interaction counts read from the harvested CapabilityStatement in fhir/, not inferred.
+    Application Access counts read from the published Swagger in openapi/. Connect API capability
+    taken from AdvancedMD's own public description of the programme; no endpoint was reached and
+    none is asserted.
 apis:
 - aid: advancedmd:advancedmd-fhir-single-api
   name: AdvancedMD FHIR Single API (US Core 6.1.0)
