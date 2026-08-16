@@ -32,7 +32,7 @@ tags:
 - Revenue Cycle Management
 - Scheduling
 created: '2026-07-27'
-modified: '2026-08-06'
+modified: '2026-08-15'
 specificationVersion: '0.19'
 x-capabilities:
   reviewed: '2026-08-06'
@@ -317,6 +317,8 @@ common:
   url: lifecycle/advancedmd-lifecycle.yml
 - type: RateLimits
   url: rate-limits/advancedmd-rate-limits.yml
+- type: Plans
+  url: plans/advancedmd-plans-pricing.yml
 - type: Sandbox
   url: sandbox/advancedmd-sandbox.yml
 - type: DataModel
@@ -338,3 +340,8 @@ common:
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-15'
+  status: enriched
+  artifacts_added: 1
+  pass: local-v1
