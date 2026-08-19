@@ -33,7 +33,7 @@ tags:
 - Scheduling
 created: '2026-07-27'
 modified: '2026-08-15'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 x-capabilities:
   reviewed: '2026-08-06'
   source: fhir/advancedmd-fhir-r4-capabilitystatement.json
