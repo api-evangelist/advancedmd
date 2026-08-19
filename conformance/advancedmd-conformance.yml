@@ -162,4 +162,20 @@ certifications:
     source: https://www.advancedmd.com/ai-information
 unverified:
   - id: soc2
-    note: No SOC 2 report, ISO 27001 certificate, HITRUST or PCI DSS attestation is published on any public AdvancedMD page, and no trust center exists at trust.advancedmd.com (probed 2026-07-27, no DNS). Absence of publication, not evidence of absence.
+    note: No SOC 2 report, ISO 27001 certificate, HITRUST or PCI DSS attestation is published on any public AdvancedMD page, and no trust center exists at trust.advancedmd.com (probed 2026-07-27 and again 2026-08-15, no DNS on either trust.advancedmd.com or security.advancedmd.com). Absence of publication, not evidence of absence.
+  - id: iso-27001
+    conforms: false
+    note: >-
+      Adherence is claimed but certification is NOT. https://www.advancedmd.com/medical-office-software/security/
+      states AdvancedMD "operates an information security management program that generally
+      adheres to ISO 27001 standards" — an adherence claim, not a certificate, and no
+      certificate number, issuing body or audit date is published. Recorded here rather than
+      under certifications[] for exactly that reason. Re-read 2026-08-15.
+  - id: vulnerability-disclosure
+    conforms: false
+    note: >-
+      Re-probed 2026-08-15 with 0-working/probe-security-programs.py plus a manual read of
+      the security page: no security.txt on any host, no responsible-disclosure or
+      vulnerability-disclosure page, no bug-bounty listing (HackerOne/Bugcrowd/Intigriti) and
+      no security@ contact published. No VulnerabilityDisclosure or TrustCenter artifact was
+      written because there is no verified hit to write.

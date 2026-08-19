@@ -112,3 +112,46 @@ hosts:
 security_txt:
   published: false
   note: No RFC 9116 security.txt is served on any AdvancedMD host.
+agent_card:
+  published: false
+  probed: '2026-08-15'
+  note: >-
+    A2A Agent Card probe, re-run 2026-08-15 across every AdvancedMD host at both the
+    canonical /.well-known/agent-card.json and the pre-0.3 legacy /.well-known/agent.json.
+    No card exists. fhir.advancedmd.com answers HTTP 200 at both paths but the body is the
+    same 2,138-byte Angular SPA shell it returns for every path — an HTML catch-all, not a
+    document — so it is recorded as a miss, not a hit. Nothing was written to a2a/ and no
+    AgentCard pointer is wired, because an agent card may only ever be harvested from a
+    provider that actually serves one.
+  results:
+    - {host: fhir.advancedmd.com, path: /.well-known/agent-card.json, status: 200, real_document: false, body: html-spa-shell}
+    - {host: fhir.advancedmd.com, path: /.well-known/agent.json, status: 200, real_document: false, body: html-spa-shell}
+    - {host: www.advancedmd.com, path: /.well-known/agent-card.json, status: 404}
+    - {host: www.advancedmd.com, path: /.well-known/agent.json, status: 404}
+    - {host: providerapi.advancedmd.com, path: /.well-known/agent-card.json, status: 404}
+    - {host: providerapi.advancedmd.com, path: /.well-known/agent.json, status: 404}
+    - {host: ptapi.advancedmd.com, path: /.well-known/agent-card.json, status: 404}
+    - {host: ptapi.advancedmd.com, path: /.well-known/agent.json, status: 404}
+    - {host: developer.advancedmd.com, path: /.well-known/agent-card.json, status: 503}
+    - {host: developer.advancedmd.com, path: /.well-known/agent.json, status: 503}
+x-recheck:
+  date: '2026-08-15'
+  findings: >-
+    Contract discovery re-run against every API host root. providerapi.advancedmd.com
+    404s /openapi.json, /openapi.yaml, /swagger.json, /v1/openapi.json, /api-docs and
+    /redoc, but serves the live FHIR CapabilityStatement at /v1/r4/metadata (HTTP 200,
+    13,002 bytes) — byte-identical to the copy already harvested at
+    fhir/advancedmd-fhir-r4-capabilitystatement.json (version 20220520), so nothing
+    changed. ptapi.advancedmd.com returns HTTP 401 {"title":"Unauthorized","detail":
+    "Invalid or missing API key."} for /pt-api/swagger.json and
+    /pt-api/swagger/v1/swagger.json — the Swagger path exists but is API-key gated at the
+    origin; the same document is already harvested from the portal into
+    openapi/advancedmd-application-access-apis-swagger.json. developer.advancedmd.com
+    still returns HTTP 503 on the site root, on every spec path and on a nonsense control
+    path — unchanged since 2026-07-27, so the gated Connect API estate remains unreadable.
+  probes:
+    - {url: 'https://providerapi.advancedmd.com/v1/r4/metadata', status: 200}
+    - {url: 'https://providerapi.advancedmd.com/openapi.json', status: 404}
+    - {url: 'https://ptapi.advancedmd.com/pt-api/swagger.json', status: 401}
+    - {url: 'https://developer.advancedmd.com/', status: 503}
+    - {url: 'https://developer.advancedmd.com/zzz-control-path-check', status: 503}

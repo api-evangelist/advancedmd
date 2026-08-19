@@ -1,0 +1,552 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AdvancedMD Application Access APIs",
+    "version": "1.0.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "POST /authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/authenticate"
+          },
+          "docs": "Log in using AdvancedMD credentials (username, password, office key)\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Clinical",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /clinical/allergies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clinical/allergies",
+            "params": [
+              {
+                "name": "patientid",
+                "value": "",
+                "type": "query",
+                "description": "The patient's unique identifier (\"patientid\") returned by the authenticate API."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The beginning (m/d/yyyy) of the date range to return data for."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The end (m/d/yyyy) of the date range to return data for."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GET /clinical/assessments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clinical/assessments",
+            "params": [
+              {
+                "name": "patientid",
+                "value": "",
+                "type": "query",
+                "description": "The patient's unique identifier (\"patientid\") returned by the authenticate API."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The beginning (m/d/yyyy) of the date range to return data for."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The end (m/d/yyyy) of the date range to return data for."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GET /clinical/goals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clinical/goals",
+            "params": [
+              {
+                "name": "patientid",
+                "value": "",
+                "type": "query",
+                "description": "The patient's unique identifier (\"patientid\") returned by the authenticate API."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The beginning (m/d/yyyy) of the date range to return data for."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The end (m/d/yyyy) of the date range to return data for."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GET /clinical/healthconcerns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clinical/healthconcerns",
+            "params": [
+              {
+                "name": "patientid",
+                "value": "",
+                "type": "query",
+                "description": "The patient's unique identifier (\"patientid\") returned by the authenticate API."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The beginning (m/d/yyyy) of the date range to return data for."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The end (m/d/yyyy) of the date range to return data for."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GET /clinical/immunizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clinical/immunizations",
+            "params": [
+              {
+                "name": "patientid",
+                "value": "",
+                "type": "query",
+                "description": "The patient's unique identifier (\"patientid\") returned by the authenticate API."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The beginning (m/d/yyyy) of the date range to return data for."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The end (m/d/yyyy) of the date range to return data for."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GET /clinical/implanteddevices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clinical/implanteddevices",
+            "params": [
+              {
+                "name": "patientid",
+                "value": "",
+                "type": "query",
+                "description": "The patient's unique identifier (\"patientid\") returned by the authenticate API."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The beginning (m/d/yyyy) of the date range to return data for."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The end (m/d/yyyy) of the date range to return data for."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GET /clinical/medications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clinical/medications",
+            "params": [
+              {
+                "name": "patientid",
+                "value": "",
+                "type": "query",
+                "description": "The patient's unique identifier (\"patientid\") returned by the authenticate API."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The beginning (m/d/yyyy) of the date range to return data for."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The end (m/d/yyyy) of the date range to return data for."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GET /clinical/orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clinical/orders",
+            "params": [
+              {
+                "name": "patientid",
+                "value": "",
+                "type": "query",
+                "description": "The patient's unique identifier (\"patientid\") returned by the authenticate API."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The beginning (m/d/yyyy) of the date range to return data for."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The end (m/d/yyyy) of the date range to return data for."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GET /clinical/plans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clinical/plans",
+            "params": [
+              {
+                "name": "patientid",
+                "value": "",
+                "type": "query",
+                "description": "The patient's unique identifier (\"patientid\") returned by the authenticate API."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The beginning (m/d/yyyy) of the date range to return data for."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The end (m/d/yyyy) of the date range to return data for."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GET /clinical/problems",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clinical/problems",
+            "params": [
+              {
+                "name": "patientid",
+                "value": "",
+                "type": "query",
+                "description": "The patient's unique identifier (\"patientid\") returned by the authenticate API."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The beginning (m/d/yyyy) of the date range to return data for."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The end (m/d/yyyy) of the date range to return data for."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GET /clinical/procedures",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clinical/procedures",
+            "params": [
+              {
+                "name": "patientid",
+                "value": "",
+                "type": "query",
+                "description": "The patient's unique identifier (\"patientid\") returned by the authenticate API."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The beginning (m/d/yyyy) of the date range to return data for."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The end (m/d/yyyy) of the date range to return data for."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GET /clinical/providers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clinical/providers",
+            "params": [
+              {
+                "name": "patientid",
+                "value": "",
+                "type": "query",
+                "description": "The patient's unique identifier (\"patientid\") returned by the authenticate API."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The beginning (m/d/yyyy) of the date range to return data for."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The end (m/d/yyyy) of the date range to return data for."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GET /clinical/results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clinical/results",
+            "params": [
+              {
+                "name": "patientid",
+                "value": "",
+                "type": "query",
+                "description": "The patient's unique identifier (\"patientid\") returned by the authenticate API."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The beginning (m/d/yyyy) of the date range to return data for."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The end (m/d/yyyy) of the date range to return data for."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GET /clinical/smokingstatus",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clinical/smokingstatus",
+            "params": [
+              {
+                "name": "patientid",
+                "value": "",
+                "type": "query",
+                "description": "The patient's unique identifier (\"patientid\") returned by the authenticate API."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The beginning (m/d/yyyy) of the date range to return data for."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The end (m/d/yyyy) of the date range to return data for."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GET /clinical/vitalsigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clinical/vitalsigns",
+            "params": [
+              {
+                "name": "patientid",
+                "value": "",
+                "type": "query",
+                "description": "The patient's unique identifier (\"patientid\") returned by the authenticate API."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The beginning (m/d/yyyy) of the date range to return data for."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The end (m/d/yyyy) of the date range to return data for."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "C-CDA",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /clinical/episodesummaries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clinical/episodesummaries",
+            "params": [
+              {
+                "name": "patientid",
+                "value": "",
+                "type": "query",
+                "description": "The patient's unique identifier (\"patientid\") returned by the authenticate API."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The beginning (m/d/yyyy) of the date range to return data for."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The end (m/d/yyyy) of the date range to return data for."
+              }
+            ]
+          },
+          "docs": "This API returns a C-CDA document in HL7 v3 (XML) format. If the Accept header is set to \"application/xml\", it will return raw XML instead of JSON. Otherwise, it will wrap the XML document in a JSON wrapper."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Patient Demographics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /demographics/patients/{patientid}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/demographics/patients/:patientid",
+            "params": [
+              {
+                "name": "patientid",
+                "value": "",
+                "type": "path",
+                "description": "The patient's unique identifier (\"patientid\") returned by the authenticate API."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

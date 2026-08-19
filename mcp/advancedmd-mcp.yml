@@ -319,3 +319,19 @@ tools:
 - name: get_demographics_patients_patient
   description: GET /demographics/patients/{patientid}
   source_operation: openapi/advancedmd-application-access-apis-swagger.json#GET /demographics/patients/{patientid}
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: derived
+  tools: 81
+  checked: '2026-08-15'
+  source: >-
+    catalog MCP census (2026-08-12), re-confirmed 2026-08-15. AdvancedMD ships no MCP
+    server of either kind — no hosted/remote endpoint and no stdio package on npm, PyPI
+    or any MCP registry — so there is nothing to authenticate against and auth is recorded
+    as unknown rather than guessed. The tools[] below are a DERIVED candidate surface from
+    the three OpenAPI/Swagger documents in openapi/, not an AdvancedMD product. The only
+    match anywhere, github.com/aaronblatnoy/advancedmd-mcp, is a third-party project.

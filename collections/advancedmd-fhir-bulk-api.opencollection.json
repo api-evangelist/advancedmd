@@ -1,0 +1,240 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "FHIR Bulk API",
+    "version": "1.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Obtain Access Token",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Request Backend Services Access Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://providerapi.advancedmd.com/v1/oauth2/token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "client_assertion",
+                  "value": ""
+                },
+                {
+                  "name": "client_assertion_type",
+                  "value": ""
+                },
+                {
+                  "name": "scope",
+                  "value": ""
+                },
+                {
+                  "name": "grant_type",
+                  "value": ""
+                },
+                {
+                  "name": "username",
+                  "value": ""
+                },
+                {
+                  "name": "password",
+                  "value": ""
+                },
+                {
+                  "name": "officekey",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Trusted B2B Partner makes a request to the token endpoint by adding the following parameters describerd below"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Start Bulk Data Export",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Start Bulk Data Export Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://providerapi.advancedmd.com/v1/r4/Group/:groupId/$export",
+            "headers": [
+              {
+                "name": "OfficeKey",
+                "value": "991900"
+              },
+              {
+                "name": "prefer",
+                "value": "respond-async"
+              }
+            ],
+            "params": [
+              {
+                "name": "groupId",
+                "value": "12345",
+                "type": "path",
+                "description": "groupId"
+              },
+              {
+                "name": "_type",
+                "value": "Patient,CareTeam",
+                "type": "query",
+                "description": "Specifies a comma-separated list of resource types to include. If this parameter is absent, all resource types the user has authorization to access.\n"
+              },
+              {
+                "name": "_since",
+                "value": "2019-10-25T11:14:00Z",
+                "type": "query",
+                "description": "Only resources that were last updated on or after the given time will be included.\n"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Start Bulk Data Export Job"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Check Data Export Status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check \"In progress\", \"Done\" and \"Cancel\" statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://providerapi.advancedmd.com/v1/fhir-bulk/status",
+            "headers": [
+              {
+                "name": "OfficeKey",
+                "value": "991900"
+              }
+            ],
+            "params": [
+              {
+                "name": "groupId",
+                "value": "12345",
+                "type": "query"
+              },
+              {
+                "name": "jobId",
+                "value": "3739",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "To reach status \"Done\" request execution might take some time, so please be patient"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Cancel Bulk Data Export",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "DELETE /v1/fhir-bulk/status",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://providerapi.advancedmd.com/v1/fhir-bulk/status",
+            "headers": [
+              {
+                "name": "OfficeKey",
+                "value": "991900"
+              }
+            ],
+            "params": [
+              {
+                "name": "groupId",
+                "value": "12345",
+                "type": "query"
+              },
+              {
+                "name": "jobId",
+                "value": "3739",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancel (DELETE) existing Bulk Data Export"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Get FHIR Entity",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Single FHIR Entity data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://providerapi.advancedmd.com/v1/fhir-bulk/fhir-resource/:batchId/:fhirEntity",
+            "headers": [
+              {
+                "name": "OfficeKey",
+                "value": "991900"
+              }
+            ],
+            "params": [
+              {
+                "name": "batchId",
+                "value": "61333c76-14a6-4e48-9fb1-1129fd7967f2",
+                "type": "path",
+                "description": "batchId"
+              },
+              {
+                "name": "fhirEntity",
+                "value": "Patient",
+                "type": "path",
+                "description": "fhirEntity"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Single FHIR Entity data"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,4373 @@
+{
+  "item": [
+    {
+      "id": "953aa30e-2bbd-4db4-8f74-9465e4c48aff",
+      "name": "Authentication",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3d066b20-5d25-4675-9ef0-23e1e1368f63",
+          "name": "Log in using AdvancedMD credentials (username, password, office key)\n",
+          "request": {
+            "name": "Log in using AdvancedMD credentials (username, password, office key)\n",
+            "description": {
+              "content": "Log in using AdvancedMD credentials (username, password, office key)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authenticate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apikey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"officekey\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8e70199a-d0c9-4f31-882b-47c6bcaef867",
+              "name": "Successful authentication will contain a list of patients that the logged in user has access to, as well as the token that can be used for other APIs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"john.aagard.5555@gmail.com\",\n  \"password\": \"Password!1\",\n  \"officekey\": \"970024\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"patientdata\": [\n    {\n      \"patientid\": 3672,\n      \"name\": \"DOE,JOHN Q\",\n      \"address1\": \"APARTMENT 3G\",\n      \"address2\": \"1234 E 6TH ST\",\n      \"city\": \"SPRINGFIELD\",\n      \"state\": \"MO\",\n      \"zipcode\": \"12345-6789\",\n      \"dateofbirth\": \"1961-05-24T00:00:00\"\n    },\n    {\n      \"patientid\": 4923,\n      \"name\": \"DOE,JOHN Q\",\n      \"address1\": \"APARTMENT 3G\",\n      \"address2\": \"1234 E 6TH ST\",\n      \"city\": \"SPRINGFIELD\",\n      \"state\": \"MO\",\n      \"zipcode\": \"12345-6789\",\n      \"dateofbirth\": \"1961-05-24T00:00:00\"\n    }\n  ],\n  \"token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b660c436-6bd7-44a8-85a6-a430f4cbdb70",
+              "name": "Unauthorized: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"john.aagard.5555@gmail.com\",\n  \"password\": \"Password!1\",\n  \"officekey\": \"970024\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Invalid API key or bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2c1a2b73-4436-44f8-ad37-d12aefe8a4c5",
+              "name": "Forbidden: Generally returned when  invalid credentials are supplied when attempting to authorize the user.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"john.aagard.5555@gmail.com\",\n  \"password\": \"Password!1\",\n  \"officekey\": \"970024\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cb1ca55c-3cae-4bdd-84bc-33df667d8f72",
+              "name": "Too many requests: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"john.aagard.5555@gmail.com\",\n  \"password\": \"Password!1\",\n  \"officekey\": \"970024\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"QuotaViolation\",\n  \"detail\": \"Too many requests: Please wait and try your request again in about a minute.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "a7775aab-6331-4d51-97c7-497ffd180db4",
+      "name": "C-CDA",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e281fd8a-798f-42d2-a60d-5bdb3819a2ad",
+          "name": "This API returns a C-CDA document in HL7 v3 (XML) format. If the Accept header is set to \"application/xml\", it will return raw XML instead of JSON. Otherwise, it will wrap the XML document in a JSON wrapper.",
+          "request": {
+            "name": "This API returns a C-CDA document in HL7 v3 (XML) format. If the Accept header is set to \"application/xml\", it will return raw XML instead of JSON. Otherwise, it will wrap the XML document in a JSON wrapper.",
+            "description": {
+              "content": "This API returns a C-CDA document in HL7 v3 (XML) format. If the Accept header is set to \"application/xml\", it will return raw XML instead of JSON. Otherwise, it will wrap the XML document in a JSON wrapper.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clinical",
+                "episodesummaries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "patientid",
+                  "value": "<string>",
+                  "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "(Required) The beginning (m/d/yyyy) of the date range to return data for."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "(Required) The end (m/d/yyyy) of the date range to return data for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apikey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5e7bb258-dd65-46b4-b1ab-d9967d267e47",
+              "name": "Successful API call. Contains the patient’s episode summaries (C-CDA document) for the specified date range.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "episodesummaries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"xml\\\": \\\"<ClinicalDocument xmlns=\\\\\\\"urn:hl7-org:v3\\\\\\\" ...>\\n        <realmCode code=\\\"US\\\" />\\n        <typeId root=\\\\\\\"2.16.840.1.113883.1.3\\\\\\\" extension=\\\\\\\"POCD_HD000040\\\\\\\" />\\n        <templateId root=\\\\\\\"2.16.840.1.113883.10.20.22.1.1\\\\\\\" extension=\\\\\\\"2015-08-01\\\\\\\" />\\n        ...\\n      </ClinicalDocument>\\\"\\n}\\n\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ca15cd2-bec4-461d-bfa8-e2dfe2ed679b",
+              "name": "Unauthorized: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "episodesummaries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"title\\\": \\\"Unauthorized\\\",\\n  \\\"detail\\\": \\\"Invalid API key or bearer token.\\\"\\n}\\n\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "407f0723-8cfa-4c76-9f45-67bf6ad0f1e0",
+              "name": "Too many requests: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "episodesummaries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"title\\\": \\\"QuotaViolation\\\",\\n  \\\"detail\\\": \\\"Too many requests: Please wait and try your request again in about a minute.\\\"\\n}\\n\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "3eea6c02-1c57-44e3-b458-d159305bc903",
+      "name": "Patient Demographics",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "65dd5691-bc81-4b7e-b9c7-ed3840e9e2a3",
+          "name": "/demographics/patients/:patientid",
+          "request": {
+            "name": "/demographics/patients/:patientid",
+            "description": {},
+            "url": {
+              "path": [
+                "demographics",
+                "patients",
+                ":patientid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "patientid",
+                  "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apikey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0a9331d4-9ade-47cf-a473-931b1eb382a9",
+              "name": "Successful API call. Contains the patient's detailed demographic information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "demographics",
+                    "patients",
+                    ":patientid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "patientid",
+                      "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"dob\": \"string\",\n    \"sex\": \"string\",\n    \"language\": \"string\",\n    \"ethnicity\": \"string\",\n    \"races\": \"string\",\n    \"address\": {\n      \"address1\": \"string\",\n      \"address2\": \"string\",\n      \"city\": \"string\",\n      \"state\": \"string\",\n      \"zip\": \"string\"\n    }\n  },\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"dob\": \"string\",\n    \"sex\": \"string\",\n    \"language\": \"string\",\n    \"ethnicity\": \"string\",\n    \"races\": \"string\",\n    \"address\": {\n      \"address1\": \"string\",\n      \"address2\": \"string\",\n      \"city\": \"string\",\n      \"state\": \"string\",\n      \"zip\": \"string\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "77dbdc39-0069-4274-a4e9-d6fe1c23572b",
+              "name": "Unauthorized: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "demographics",
+                    "patients",
+                    ":patientid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "patientid",
+                      "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Invalid API key or bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "59d53127-0043-450c-9107-70c95731b290",
+              "name": "Too many requests: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "demographics",
+                    "patients",
+                    ":patientid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "patientid",
+                      "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"QuotaViolation\",\n  \"detail\": \"Too many requests: Please wait and try your request again in about a minute.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "bf83bd5d-e8ff-4e20-bb35-deafbb10b242",
+      "name": "Clinical",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6964fa8a-f861-4e0f-bfa4-dfca61082b05",
+          "name": "/clinical/allergies",
+          "request": {
+            "name": "/clinical/allergies",
+            "description": {},
+            "url": {
+              "path": [
+                "clinical",
+                "allergies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "patientid",
+                  "value": "<string>",
+                  "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "(Required) The beginning (m/d/yyyy) of the date range to return data for."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "(Required) The end (m/d/yyyy) of the date range to return data for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apikey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0f506e22-4785-4351-a265-912988028dd7",
+              "name": "Successful API call. Contains the patient's Allergies.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "allergies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"status\": \"string\",\n    \"allergyDate\": \"string\",\n    \"reaction\": \"string\",\n    \"rxNormId\": \"string\"\n  },\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"status\": \"string\",\n    \"allergyDate\": \"string\",\n    \"reaction\": \"string\",\n    \"rxNormId\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc12aaf5-a2f6-48a4-93d5-bade66061d20",
+              "name": "Unauthorized: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "allergies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Invalid API key or bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f244fb5-00ca-4a0d-bbb4-76391495c95f",
+              "name": "Too many requests: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "allergies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"QuotaViolation\",\n  \"detail\": \"Too many requests: Please wait and try your request again in about a minute.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "41feca45-6dc7-4a12-b91d-cc8cd8ccc519",
+          "name": "/clinical/assessments",
+          "request": {
+            "name": "/clinical/assessments",
+            "description": {},
+            "url": {
+              "path": [
+                "clinical",
+                "assessments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "patientid",
+                  "value": "<string>",
+                  "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "(Required) The beginning (m/d/yyyy) of the date range to return data for."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "(Required) The end (m/d/yyyy) of the date range to return data for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apikey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4b012379-2711-44ce-aedf-93915ca2d9f5",
+              "name": "Successful API call. Contains the patient's assessments.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "assessments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"date\": \"string\",\n    \"assessment\": \"string\"\n  },\n  {\n    \"date\": \"string\",\n    \"assessment\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4209522-4fbd-4924-8bd5-9b924c957f34",
+              "name": "Unauthorized: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "assessments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Invalid API key or bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11d777b4-83d3-4eed-a59d-b1ea520c6043",
+              "name": "Too many requests: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "assessments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"QuotaViolation\",\n  \"detail\": \"Too many requests: Please wait and try your request again in about a minute.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "83260421-2024-48ab-a8ad-e9c39a36c258",
+          "name": "/clinical/goals",
+          "request": {
+            "name": "/clinical/goals",
+            "description": {},
+            "url": {
+              "path": [
+                "clinical",
+                "goals"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "patientid",
+                  "value": "<string>",
+                  "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "(Required) The beginning (m/d/yyyy) of the date range to return data for."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "(Required) The end (m/d/yyyy) of the date range to return data for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apikey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b4419ae7-3c09-4ef5-b205-4f572a38d849",
+              "name": "Successful API call. Contains the patient's goals.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "goals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"goalText\": \"string\",\n    \"date\": \"string\"\n  },\n  {\n    \"goalText\": \"string\",\n    \"date\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc1885d8-b59b-45f1-9dd6-bec213c3e671",
+              "name": "Unauthorized: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "goals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Invalid API key or bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "085b0d0e-a2ea-4d53-96ae-5b57d17de826",
+              "name": "Too many requests: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "goals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"QuotaViolation\",\n  \"detail\": \"Too many requests: Please wait and try your request again in about a minute.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cab35620-d73c-4715-9356-7a7ce9c9e233",
+          "name": "/clinical/healthconcerns",
+          "request": {
+            "name": "/clinical/healthconcerns",
+            "description": {},
+            "url": {
+              "path": [
+                "clinical",
+                "healthconcerns"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "patientid",
+                  "value": "<string>",
+                  "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "(Required) The beginning (m/d/yyyy) of the date range to return data for."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "(Required) The end (m/d/yyyy) of the date range to return data for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apikey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3f6550a2-d90e-4057-b0f9-405dc6cb18f7",
+              "name": "Successful API call. Contains the patient's health concerns.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "healthconcerns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"concern\": \"string\",\n    \"date\": \"string\"\n  },\n  {\n    \"concern\": \"string\",\n    \"date\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "344ce7a8-499a-4d2b-ae8d-bbc4dfe9d1a9",
+              "name": "Unauthorized: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "healthconcerns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Invalid API key or bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "283d465e-23a7-49d9-b0d7-2be9507264b2",
+              "name": "Too many requests: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "healthconcerns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"QuotaViolation\",\n  \"detail\": \"Too many requests: Please wait and try your request again in about a minute.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eeeec321-12e7-45d0-aca1-59f635c5afc6",
+          "name": "/clinical/immunizations",
+          "request": {
+            "name": "/clinical/immunizations",
+            "description": {},
+            "url": {
+              "path": [
+                "clinical",
+                "immunizations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "patientid",
+                  "value": "<string>",
+                  "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "(Required) The beginning (m/d/yyyy) of the date range to return data for."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "(Required) The end (m/d/yyyy) of the date range to return data for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apikey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "236b1d0d-ea2e-404e-bb2b-82f07ea7eaea",
+              "name": "Successful API call. Contains the patient's immunizations.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "immunizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"date\": \"string\",\n    \"status\": \"string\",\n    \"quantity\": \"string\",\n    \"unit\": \"string\",\n    \"lotNumber\": \"string\",\n    \"cvxCode\": \"string\",\n    \"details\": \"string\"\n  },\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"date\": \"string\",\n    \"status\": \"string\",\n    \"quantity\": \"string\",\n    \"unit\": \"string\",\n    \"lotNumber\": \"string\",\n    \"cvxCode\": \"string\",\n    \"details\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c47eec4a-f38c-4c96-b5e9-aaf53124b9fc",
+              "name": "Unauthorized: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "immunizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Invalid API key or bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6364c743-c72b-4f15-92c8-d7847594fdbe",
+              "name": "Too many requests: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "immunizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"QuotaViolation\",\n  \"detail\": \"Too many requests: Please wait and try your request again in about a minute.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "606cbee1-459d-485d-abec-8958e9788623",
+          "name": "/clinical/implanteddevices",
+          "request": {
+            "name": "/clinical/implanteddevices",
+            "description": {},
+            "url": {
+              "path": [
+                "clinical",
+                "implanteddevices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "patientid",
+                  "value": "<string>",
+                  "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "(Required) The beginning (m/d/yyyy) of the date range to return data for."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "(Required) The end (m/d/yyyy) of the date range to return data for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apikey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2e26f69a-ebd9-41f5-9cbd-e95ef280abf5",
+              "name": "Successful API call. Contains the patient's implanted devices.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "implanteddevices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"deviceId\": \"string\",\n    \"issuingAgency\": \"string\",\n    \"siteName\": \"string\",\n    \"siteCode\": \"string\",\n    \"deviceName\": \"string\",\n    \"deviceDescription\": \"string\",\n    \"manufacturer\": \"string\",\n    \"model\": \"string\",\n    \"serialNumber\": \"string\",\n    \"lot\": \"string\",\n    \"isActive\": \"string\",\n    \"date\": \"string\"\n  },\n  {\n    \"id\": \"string\",\n    \"deviceId\": \"string\",\n    \"issuingAgency\": \"string\",\n    \"siteName\": \"string\",\n    \"siteCode\": \"string\",\n    \"deviceName\": \"string\",\n    \"deviceDescription\": \"string\",\n    \"manufacturer\": \"string\",\n    \"model\": \"string\",\n    \"serialNumber\": \"string\",\n    \"lot\": \"string\",\n    \"isActive\": \"string\",\n    \"date\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c82a5896-a840-4d5b-9508-601b534a3d6c",
+              "name": "Unauthorized: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "implanteddevices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Invalid API key or bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60e1b981-6d73-4e31-9778-697cb3823727",
+              "name": "Too many requests: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "implanteddevices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"QuotaViolation\",\n  \"detail\": \"Too many requests: Please wait and try your request again in about a minute.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e61180f7-05cb-45ad-aa41-35152075e93c",
+          "name": "/clinical/medications",
+          "request": {
+            "name": "/clinical/medications",
+            "description": {},
+            "url": {
+              "path": [
+                "clinical",
+                "medications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "patientid",
+                  "value": "<string>",
+                  "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "(Required) The beginning (m/d/yyyy) of the date range to return data for."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "(Required) The end (m/d/yyyy) of the date range to return data for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apikey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9ca128b6-76fc-4ab4-a651-db629bdd7ad8",
+              "name": "Successful API call. Contains the patient's medications.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "medications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"rxNormId\": \"string\",\n    \"name\": \"string\",\n    \"instructions\": \"string\",\n    \"quantity\": \"string\",\n    \"doseForm\": \"string\",\n    \"date\": \"string\",\n    \"expirationDate\": \"string\",\n    \"currentStatus\": \"string\",\n    \"type\": \"string\"\n  },\n  {\n    \"rxNormId\": \"string\",\n    \"name\": \"string\",\n    \"instructions\": \"string\",\n    \"quantity\": \"string\",\n    \"doseForm\": \"string\",\n    \"date\": \"string\",\n    \"expirationDate\": \"string\",\n    \"currentStatus\": \"string\",\n    \"type\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1a508a5-e478-429f-a90e-0072f5c37ac7",
+              "name": "Unauthorized: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "medications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Invalid API key or bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30f2547c-caad-479a-bccb-d2d6d7877189",
+              "name": "Too many requests: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "medications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"QuotaViolation\",\n  \"detail\": \"Too many requests: Please wait and try your request again in about a minute.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "079c271f-0589-41b9-aa87-336488a7399c",
+          "name": "/clinical/orders",
+          "request": {
+            "name": "/clinical/orders",
+            "description": {},
+            "url": {
+              "path": [
+                "clinical",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "patientid",
+                  "value": "<string>",
+                  "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "(Required) The beginning (m/d/yyyy) of the date range to return data for."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "(Required) The end (m/d/yyyy) of the date range to return data for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apikey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c038dea1-cf51-48d1-8963-71b1bd5821eb",
+              "name": "Successful API call. Contains the patient's orders.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"date\": \"string\",\n    \"testDescription\": \"string\",\n    \"loincCode\": \"string\"\n  },\n  {\n    \"date\": \"string\",\n    \"testDescription\": \"string\",\n    \"loincCode\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37e1d63d-5ee6-4bec-8b7d-3f84ffae81bb",
+              "name": "Unauthorized: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Invalid API key or bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3e139bb-f62d-4e79-8b99-0dcfa664324a",
+              "name": "Too many requests: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"QuotaViolation\",\n  \"detail\": \"Too many requests: Please wait and try your request again in about a minute.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "76a6024e-fac4-42fe-8dfa-2775d2e3b5f6",
+          "name": "/clinical/plans",
+          "request": {
+            "name": "/clinical/plans",
+            "description": {},
+            "url": {
+              "path": [
+                "clinical",
+                "plans"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "patientid",
+                  "value": "<string>",
+                  "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "(Required) The beginning (m/d/yyyy) of the date range to return data for."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "(Required) The end (m/d/yyyy) of the date range to return data for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apikey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4e4175c3-e9fb-4a95-aced-c11cf8e5916f",
+              "name": "Successful API call. Contains the patient's plans.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "plans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"date\": \"string\",\n    \"key\": \"string\",\n    \"plan\": \"string\",\n    \"code\": \"string\"\n  },\n  {\n    \"date\": \"string\",\n    \"key\": \"string\",\n    \"plan\": \"string\",\n    \"code\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "802cc337-5f09-427e-8265-876e1482e437",
+              "name": "Unauthorized: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "plans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Invalid API key or bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41a3ce12-5ff8-4268-a2ca-a9dd10231f19",
+              "name": "Too many requests: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "plans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"QuotaViolation\",\n  \"detail\": \"Too many requests: Please wait and try your request again in about a minute.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "57ba97ce-4bfb-4e62-a791-2ff8e9e7a4b6",
+          "name": "/clinical/problems",
+          "request": {
+            "name": "/clinical/problems",
+            "description": {},
+            "url": {
+              "path": [
+                "clinical",
+                "problems"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "patientid",
+                  "value": "<string>",
+                  "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "(Required) The beginning (m/d/yyyy) of the date range to return data for."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "(Required) The end (m/d/yyyy) of the date range to return data for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apikey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "29650b38-501b-4c55-94c4-2d3eda83b78f",
+              "name": "Successful API call. Contains the patient's Problem List.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "problems"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"code\": \"219376002\",\n    \"codeSystem\": \"SNOMED\",\n    \"name\": \"219427009-War injury due to lasers\",\n    \"description\": \"War injury due to lasers\",\n    \"status\": \"Current\",\n    \"date\": \"20180510\"\n  },\n  {\n    \"code\": \"219376002\",\n    \"codeSystem\": \"SNOMED\",\n    \"name\": \"219427009-War injury due to lasers\",\n    \"description\": \"War injury due to lasers\",\n    \"status\": \"Current\",\n    \"date\": \"20180510\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3eb619e-8861-4c45-8344-717f9fcb1ec3",
+              "name": "Unauthorized: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "problems"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Invalid API key or bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9b74e76-f8d8-46b5-acfa-2d7b68e7ea62",
+              "name": "Too many requests: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "problems"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"QuotaViolation\",\n  \"detail\": \"Too many requests: Please wait and try your request again in about a minute.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b678447c-ebf8-4917-af50-e69416d2e386",
+          "name": "/clinical/procedures",
+          "request": {
+            "name": "/clinical/procedures",
+            "description": {},
+            "url": {
+              "path": [
+                "clinical",
+                "procedures"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "patientid",
+                  "value": "<string>",
+                  "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "(Required) The beginning (m/d/yyyy) of the date range to return data for."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "(Required) The end (m/d/yyyy) of the date range to return data for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apikey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "dc582761-bd62-4710-92d7-ab1f9e6f259e",
+              "name": "Successful API call. Contains the patient's procedures.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "procedures"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"date\": \"string\",\n    \"code\": \"string\",\n    \"type\": \"string\",\n    \"description\": \"string\"\n  },\n  {\n    \"date\": \"string\",\n    \"code\": \"string\",\n    \"type\": \"string\",\n    \"description\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d9b8b93-1a1d-4af0-a684-9d6592cf7d5e",
+              "name": "Unauthorized: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "procedures"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Invalid API key or bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb922fa1-a526-434d-9e3b-a5937777186c",
+              "name": "Too many requests: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "procedures"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"QuotaViolation\",\n  \"detail\": \"Too many requests: Please wait and try your request again in about a minute.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bc182d8c-3860-4b18-bb51-80443b9e8ba3",
+          "name": "/clinical/providers",
+          "request": {
+            "name": "/clinical/providers",
+            "description": {},
+            "url": {
+              "path": [
+                "clinical",
+                "providers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "patientid",
+                  "value": "<string>",
+                  "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "(Required) The beginning (m/d/yyyy) of the date range to return data for."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "(Required) The end (m/d/yyyy) of the date range to return data for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apikey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fa3665bd-97ff-4748-bf06-f3e59ab5e1da",
+              "name": "Successful API call. Contains the patient's care team.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "providers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"npiNumber\": \"string\",\n    \"address1\": \"string\",\n    \"address2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"zip\": \"string\",\n    \"country\": \"string\",\n    \"title\": \"string\",\n    \"lastName\": \"string\",\n    \"firstName\": \"string\",\n    \"middleName\": \"string\"\n  },\n  {\n    \"npiNumber\": \"string\",\n    \"address1\": \"string\",\n    \"address2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"zip\": \"string\",\n    \"country\": \"string\",\n    \"title\": \"string\",\n    \"lastName\": \"string\",\n    \"firstName\": \"string\",\n    \"middleName\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "00fd7fb5-965f-4693-acb3-42240a5f1917",
+              "name": "Unauthorized: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "providers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Invalid API key or bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3425b978-c0e7-448e-bb0d-53e80c44d3c5",
+              "name": "Too many requests: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "providers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"QuotaViolation\",\n  \"detail\": \"Too many requests: Please wait and try your request again in about a minute.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6a708dd5-c232-455c-987a-cdcc058afcb0",
+          "name": "/clinical/results",
+          "request": {
+            "name": "/clinical/results",
+            "description": {},
+            "url": {
+              "path": [
+                "clinical",
+                "results"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "patientid",
+                  "value": "<string>",
+                  "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "(Required) The beginning (m/d/yyyy) of the date range to return data for."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "(Required) The end (m/d/yyyy) of the date range to return data for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apikey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "087d6938-4d71-4ca2-8cbc-04d812f6184b",
+              "name": "Successful API call. Contains the patient's Results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "results"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"code\": \"string\",\n    \"name\": \"string\",\n    \"date\": \"string\",\n    \"results\": [\n      {\n        \"code\": \"string\",\n        \"name\": \"string\",\n        \"value\": \"string\",\n        \"unit\": \"string\",\n        \"interpretationCode\": \"string\",\n        \"range\": \"string\",\n        \"rangeFrom\": \"string\",\n        \"rangeTo\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"name\": \"string\",\n        \"value\": \"string\",\n        \"unit\": \"string\",\n        \"interpretationCode\": \"string\",\n        \"range\": \"string\",\n        \"rangeFrom\": \"string\",\n        \"rangeTo\": \"string\"\n      }\n    ]\n  },\n  {\n    \"code\": \"string\",\n    \"name\": \"string\",\n    \"date\": \"string\",\n    \"results\": [\n      {\n        \"code\": \"string\",\n        \"name\": \"string\",\n        \"value\": \"string\",\n        \"unit\": \"string\",\n        \"interpretationCode\": \"string\",\n        \"range\": \"string\",\n        \"rangeFrom\": \"string\",\n        \"rangeTo\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"name\": \"string\",\n        \"value\": \"string\",\n        \"unit\": \"string\",\n        \"interpretationCode\": \"string\",\n        \"range\": \"string\",\n        \"rangeFrom\": \"string\",\n        \"rangeTo\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "53f2b0b7-176a-4d6b-a563-ad6d0e86766b",
+              "name": "Unauthorized: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "results"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Invalid API key or bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f5ad692b-851a-4150-b7c2-443fc9ddb03a",
+              "name": "Too many requests: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "results"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"QuotaViolation\",\n  \"detail\": \"Too many requests: Please wait and try your request again in about a minute.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2ff97395-8e0d-4f4c-958b-c3b9b4b1af75",
+          "name": "/clinical/smokingstatus",
+          "request": {
+            "name": "/clinical/smokingstatus",
+            "description": {},
+            "url": {
+              "path": [
+                "clinical",
+                "smokingstatus"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "patientid",
+                  "value": "<string>",
+                  "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "(Required) The beginning (m/d/yyyy) of the date range to return data for."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "(Required) The end (m/d/yyyy) of the date range to return data for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apikey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f505b71a-46d2-4e04-8984-71834ad18fb6",
+              "name": "Successful API call. Contains the patient's smoking status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "smokingstatus"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"value\": \"string\",\n    \"description\": \"string\",\n    \"date\": \"string\"\n  },\n  {\n    \"value\": \"string\",\n    \"description\": \"string\",\n    \"date\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "12e979c9-34f1-497f-a334-79fbd57097f1",
+              "name": "Unauthorized: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "smokingstatus"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Invalid API key or bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b68071ae-91b6-4a1f-9be7-f918f0d11280",
+              "name": "Too many requests: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "smokingstatus"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"QuotaViolation\",\n  \"detail\": \"Too many requests: Please wait and try your request again in about a minute.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "63e91041-12b6-4032-b245-b4f18057b231",
+          "name": "/clinical/vitalsigns",
+          "request": {
+            "name": "/clinical/vitalsigns",
+            "description": {},
+            "url": {
+              "path": [
+                "clinical",
+                "vitalsigns"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "patientid",
+                  "value": "<string>",
+                  "description": "(Required) The patient's unique identifier (\"patientid\") returned by the authenticate API."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "(Required) The beginning (m/d/yyyy) of the date range to return data for."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "(Required) The end (m/d/yyyy) of the date range to return data for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apikey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7a8ed215-9202-4650-ae93-595dad7d7069",
+              "name": "Successful API call. Contains the patient's vital signs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "vitalsigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"date\": \"string\",\n    \"measurements\": [\n      {\n        \"name\": \"string\",\n        \"value\": \"string\",\n        \"metricValue\": \"string\"\n      },\n      {\n        \"name\": \"string\",\n        \"value\": \"string\",\n        \"metricValue\": \"string\"\n      }\n    ]\n  },\n  {\n    \"date\": \"string\",\n    \"measurements\": [\n      {\n        \"name\": \"string\",\n        \"value\": \"string\",\n        \"metricValue\": \"string\"\n      },\n      {\n        \"name\": \"string\",\n        \"value\": \"string\",\n        \"metricValue\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "542c0a0a-4d6a-4367-b9d0-f8e17a308eec",
+              "name": "Unauthorized: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "vitalsigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Invalid API key or bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "46ddc4ad-72d2-4d31-a16c-31785523151c",
+              "name": "Too many requests: More details are provided in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clinical",
+                    "vitalsigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patientid",
+                      "value": "32745"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1/1/2017 or 01/01/2017"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "5/16/2018 or 05/16/2018"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"title\": \"QuotaViolation\",\n  \"detail\": \"Too many requests: Please wait and try your request again in about a minute.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://ptapi.advancedmd.com/pt-api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a9d7dac0-3e65-486c-a52c-27ef6d7ad8af",
+    "name": "AdvancedMD Application Access APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "A collection of RESTful APIs that can be used to interact with AdvancedMD data. All APIs return JSON, with the exception of       the Episode Summaries API, which returns an HL7 C-CDA v3 (XML) document.\n\nSupported Version: AdvancedMD v12.6\n",
+      "type": "text/plain"
+    }
+  }
+}

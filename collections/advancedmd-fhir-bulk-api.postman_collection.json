@@ -1,0 +1,1815 @@
+{
+  "item": [
+    {
+      "id": "fa3fa4a5-9d07-442e-a85f-c6a514abfe69",
+      "name": "Obtain Access Token",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "abc6757b-ddd6-484b-ae89-5b4a054557a7",
+          "name": "Request Backend Services Access Token",
+          "request": {
+            "name": "Request Backend Services Access Token",
+            "description": {
+              "content": "Trusted B2B Partner makes a request to the token endpoint by adding the following parameters describerd below",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "oauth2",
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "client_assertion",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "client_assertion_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "grant_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "password",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "officekey",
+                  "value": "<integer>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "be0e0754-8137-48e0-9654-48a2de81108a",
+              "name": "Authorisation token (Bearer)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "oauth2",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "client_assertion",
+                      "value": "jwt_token"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "client_assertion_type",
+                      "value": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "scope",
+                      "value": "system/*.read"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "grant_type",
+                      "value": "client_credentials"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "username",
+                      "value": "your_username"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "password",
+                      "value": "your_password"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "officekey",
+                      "value": "<integer>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": \"string\",\n  \"token_type\": \"Bearer\",\n  \"expires_in\": 7537,\n  \"scope\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92c446a8-90cb-41e6-869a-ffbba2d8c7e9",
+              "name": "Error. Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "oauth2",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "client_assertion",
+                      "value": "jwt_token"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "client_assertion_type",
+                      "value": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "scope",
+                      "value": "system/*.read"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "grant_type",
+                      "value": "client_credentials"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "username",
+                      "value": "your_username"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "password",
+                      "value": "your_password"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "officekey",
+                      "value": "<integer>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"error_description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "5a281324-c23c-4540-a0bf-842ac2db7ddd",
+      "name": "Start Bulk Data Export",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "26314c23-0c02-4bda-a264-9f2b60546bbc",
+          "name": "Start Bulk Data Export Job",
+          "request": {
+            "name": "Start Bulk Data Export Job",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "r4",
+                "Group",
+                ":groupId",
+                "$export"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "_type",
+                  "value": "<string>",
+                  "description": "Specifies a comma-separated list of resource types to include. If this parameter is absent, all resource types the user has authorization to access.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "_since",
+                  "value": "<string>",
+                  "description": "Only resources that were last updated on or after the given time will be included.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "groupId",
+                  "description": "(Required) groupId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) OfficeKey",
+                "key": "OfficeKey",
+                "value": "<integer>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "prefer",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a7a483d2-9553-4cba-8eae-9623ad7b55fd",
+              "name": "Accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "r4",
+                    "Group",
+                    ":groupId",
+                    "$export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "_type",
+                      "value": "Patient,CareTeam"
+                    },
+                    {
+                      "key": "_since",
+                      "value": "2019-10-25T11:14:00Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "groupId",
+                      "description": "(Required) groupId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) OfficeKey",
+                    "key": "OfficeKey",
+                    "value": "991900"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "prefer",
+                    "value": "respond-async"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/fhir+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/fhir+json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"groupId\": 4455,\n  \"jobId\": 6141\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e15c9cb-56d7-4463-bd88-9d07a9c9d167",
+              "name": "Error. Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "r4",
+                    "Group",
+                    ":groupId",
+                    "$export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "_type",
+                      "value": "Patient,CareTeam"
+                    },
+                    {
+                      "key": "_since",
+                      "value": "2019-10-25T11:14:00Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "groupId",
+                      "description": "(Required) groupId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) OfficeKey",
+                    "key": "OfficeKey",
+                    "value": "991900"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "prefer",
+                    "value": "respond-async"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resourceType\": \"string\",\n  \"text\": {\n    \"status\": \"string\",\n    \"div\": \"string\"\n  },\n  \"issue\": [\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    },\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8b6f811-eceb-41f4-848e-0563859df151",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "r4",
+                    "Group",
+                    ":groupId",
+                    "$export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "_type",
+                      "value": "Patient,CareTeam"
+                    },
+                    {
+                      "key": "_since",
+                      "value": "2019-10-25T11:14:00Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "groupId",
+                      "description": "(Required) groupId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) OfficeKey",
+                    "key": "OfficeKey",
+                    "value": "991900"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "prefer",
+                    "value": "respond-async"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resourceType\": \"string\",\n  \"text\": {\n    \"status\": \"string\",\n    \"div\": \"string\"\n  },\n  \"issue\": [\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    },\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05eda43f-f241-48f0-b889-513ac00c8f81",
+              "name": "Service Temporarily Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "r4",
+                    "Group",
+                    ":groupId",
+                    "$export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "_type",
+                      "value": "Patient,CareTeam"
+                    },
+                    {
+                      "key": "_since",
+                      "value": "2019-10-25T11:14:00Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "groupId",
+                      "description": "(Required) groupId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) OfficeKey",
+                    "key": "OfficeKey",
+                    "value": "991900"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "prefer",
+                    "value": "respond-async"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resourceType\": \"string\",\n  \"text\": {\n    \"status\": \"string\",\n    \"div\": \"string\"\n  },\n  \"issue\": [\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    },\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "0b7d342f-259c-49df-bf37-acd1ea02daff",
+      "name": "Check Data Export Status",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1415602c-4066-4830-b452-5754072a72a6",
+          "name": "Check \"In progress\", \"Done\" and \"Cancel\" statuses",
+          "request": {
+            "name": "Check \"In progress\", \"Done\" and \"Cancel\" statuses",
+            "description": {
+              "content": "To reach status \"Done\" request execution might take some time, so please be patient",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "fhir-bulk",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "groupId",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "jobId",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) OfficeKey",
+                "key": "OfficeKey",
+                "value": "<integer>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ec9c2f5e-f05b-475b-bfaa-2298ba08dd6e",
+              "name": "Ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fhir-bulk",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "groupId",
+                      "value": "12345"
+                    },
+                    {
+                      "key": "jobId",
+                      "value": "3739"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) OfficeKey",
+                    "key": "OfficeKey",
+                    "value": "991900"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transactionTime\": \"string\",\n  \"request\": \"string\",\n  \"requiresAccessToken\": true,\n  \"output\": [\n    {\n      \"type\": \"string\",\n      \"url\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"url\": \"string\"\n    }\n  ],\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"url\": \"string\",\n      \"count\": 1454\n    },\n    {\n      \"type\": \"string\",\n      \"url\": \"string\",\n      \"count\": 7572\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "085cd34e-9f09-4e7a-8589-38363ae9d804",
+              "name": "Accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fhir-bulk",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "groupId",
+                      "value": "12345"
+                    },
+                    {
+                      "key": "jobId",
+                      "value": "3739"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) OfficeKey",
+                    "key": "OfficeKey",
+                    "value": "991900"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ad0601e6-7fb1-48ff-b8ab-bbe2a3ea941e",
+              "name": "Error. Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fhir-bulk",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "groupId",
+                      "value": "12345"
+                    },
+                    {
+                      "key": "jobId",
+                      "value": "3739"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) OfficeKey",
+                    "key": "OfficeKey",
+                    "value": "991900"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resourceType\": \"string\",\n  \"text\": {\n    \"status\": \"string\",\n    \"div\": \"string\"\n  },\n  \"issue\": [\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    },\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16441f89-3cf0-4e6e-aebe-022ea7158af5",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fhir-bulk",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "groupId",
+                      "value": "12345"
+                    },
+                    {
+                      "key": "jobId",
+                      "value": "3739"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) OfficeKey",
+                    "key": "OfficeKey",
+                    "value": "991900"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resourceType\": \"string\",\n  \"text\": {\n    \"status\": \"string\",\n    \"div\": \"string\"\n  },\n  \"issue\": [\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    },\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d3f3fe8-f13c-4b55-8de9-90affeb162c1",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fhir-bulk",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "groupId",
+                      "value": "12345"
+                    },
+                    {
+                      "key": "jobId",
+                      "value": "3739"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) OfficeKey",
+                    "key": "OfficeKey",
+                    "value": "991900"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resourceType\": \"string\",\n  \"id\": \"string\",\n  \"issue\": [\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"details\": {\n        \"text\": \"string\"\n      }\n    },\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"details\": {\n        \"text\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "432ce9d0-539e-4ccc-b0cf-24b514bf5d63",
+              "name": "Export operation fails",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fhir-bulk",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "groupId",
+                      "value": "12345"
+                    },
+                    {
+                      "key": "jobId",
+                      "value": "3739"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) OfficeKey",
+                    "key": "OfficeKey",
+                    "value": "991900"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resourceType\": \"string\",\n  \"id\": \"string\",\n  \"issue\": [\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"details\": {\n        \"text\": \"string\"\n      }\n    },\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"details\": {\n        \"text\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "686906e9-904d-43b0-ac0e-6def49ff196b",
+      "name": "Cancel Bulk Data Export",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "472115e5-07bd-433a-b1b3-0ee719e245cd",
+          "name": "Cancel (DELETE) existing Bulk Data Export",
+          "request": {
+            "name": "Cancel (DELETE) existing Bulk Data Export",
+            "description": {
+              "content": "Cancel (DELETE) existing Bulk Data Export",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "fhir-bulk",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "groupId",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "jobId",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) OfficeKey",
+                "key": "OfficeKey",
+                "value": "<integer>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9cde3c86-7d8a-4024-a8c5-e9cf1b3e2633",
+              "name": "Accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fhir-bulk",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "groupId",
+                      "value": "12345"
+                    },
+                    {
+                      "key": "jobId",
+                      "value": "3739"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) OfficeKey",
+                    "key": "OfficeKey",
+                    "value": "991900"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"groupId\": 4455,\n  \"jobId\": 6141\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3fd19d4f-1451-495c-8a33-56c0cf5c4df6",
+              "name": "Error. Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fhir-bulk",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "groupId",
+                      "value": "12345"
+                    },
+                    {
+                      "key": "jobId",
+                      "value": "3739"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) OfficeKey",
+                    "key": "OfficeKey",
+                    "value": "991900"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resourceType\": \"string\",\n  \"text\": {\n    \"status\": \"string\",\n    \"div\": \"string\"\n  },\n  \"issue\": [\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    },\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b47a9e7-f47a-42d8-8330-5a76f8515e9e",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fhir-bulk",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "groupId",
+                      "value": "12345"
+                    },
+                    {
+                      "key": "jobId",
+                      "value": "3739"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) OfficeKey",
+                    "key": "OfficeKey",
+                    "value": "991900"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resourceType\": \"string\",\n  \"text\": {\n    \"status\": \"string\",\n    \"div\": \"string\"\n  },\n  \"issue\": [\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    },\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35b4164a-bcf6-4907-a1d8-5af3f9d97516",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fhir-bulk",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "groupId",
+                      "value": "12345"
+                    },
+                    {
+                      "key": "jobId",
+                      "value": "3739"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) OfficeKey",
+                    "key": "OfficeKey",
+                    "value": "991900"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resourceType\": \"string\",\n  \"id\": \"string\",\n  \"issue\": [\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"details\": {\n        \"text\": \"string\"\n      }\n    },\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"details\": {\n        \"text\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c211fb8c-a810-46a7-b081-e8014161151f",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fhir-bulk",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "groupId",
+                      "value": "12345"
+                    },
+                    {
+                      "key": "jobId",
+                      "value": "3739"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) OfficeKey",
+                    "key": "OfficeKey",
+                    "value": "991900"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resourceType\": \"string\",\n  \"text\": {\n    \"status\": \"string\",\n    \"div\": \"string\"\n  },\n  \"issue\": [\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    },\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "b8da6c14-3664-4c2b-8ec6-dfea77830d23",
+      "name": "Get FHIR Entity",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "15f4f557-6426-478a-ab26-58667b1cd645",
+          "name": "Get Single FHIR Entity data",
+          "request": {
+            "name": "Get Single FHIR Entity data",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "fhir-bulk",
+                "fhir-resource",
+                ":batchId",
+                ":fhirEntity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batchId",
+                  "description": "(Required) batchId"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "fhirEntity",
+                  "description": "(Required) fhirEntity"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) OfficeKey",
+                "key": "OfficeKey",
+                "value": "<integer>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/fhir+ndjson"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e070ab44-f006-4037-9748-cb224afbec70",
+              "name": "Accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fhir-bulk",
+                    "fhir-resource",
+                    ":batchId",
+                    ":fhirEntity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batchId",
+                      "description": "(Required) batchId"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fhirEntity",
+                      "description": "(Required) fhirEntity"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) OfficeKey",
+                    "key": "OfficeKey",
+                    "value": "991900"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/fhir+ndjson"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/fhir+ndjson"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e291d08c-346d-4910-aa60-2317c6442439",
+              "name": "Error. Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fhir-bulk",
+                    "fhir-resource",
+                    ":batchId",
+                    ":fhirEntity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batchId",
+                      "description": "(Required) batchId"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fhirEntity",
+                      "description": "(Required) fhirEntity"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) OfficeKey",
+                    "key": "OfficeKey",
+                    "value": "991900"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resourceType\": \"string\",\n  \"text\": {\n    \"status\": \"string\",\n    \"div\": \"string\"\n  },\n  \"issue\": [\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    },\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d33d0dd8-92ca-4a6e-8f39-570b581c2281",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fhir-bulk",
+                    "fhir-resource",
+                    ":batchId",
+                    ":fhirEntity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batchId",
+                      "description": "(Required) batchId"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fhirEntity",
+                      "description": "(Required) fhirEntity"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) OfficeKey",
+                    "key": "OfficeKey",
+                    "value": "991900"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resourceType\": \"string\",\n  \"text\": {\n    \"status\": \"string\",\n    \"div\": \"string\"\n  },\n  \"issue\": [\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    },\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a98a7139-475f-4857-aaef-d4ed48be078c",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fhir-bulk",
+                    "fhir-resource",
+                    ":batchId",
+                    ":fhirEntity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batchId",
+                      "description": "(Required) batchId"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fhirEntity",
+                      "description": "(Required) fhirEntity"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) OfficeKey",
+                    "key": "OfficeKey",
+                    "value": "991900"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resourceType\": \"string\",\n  \"text\": {\n    \"status\": \"string\",\n    \"div\": \"string\"\n  },\n  \"issue\": [\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    },\n    {\n      \"severity\": \"string\",\n      \"code\": \"string\",\n      \"diagnostics\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://providerapi.advancedmd.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b179a98a-332e-4a3c-bc40-125a8633e8ef",
+    "name": "FHIR Bulk API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "HealthAPIx OAuth v2.0 API Specs for Backend Services Token Generation and Bulk Data Export Procedure",
+      "type": "text/plain"
+    }
+  }
+}

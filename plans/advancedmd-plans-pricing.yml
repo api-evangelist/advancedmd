@@ -1,0 +1,197 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+provider: AdvancedMD
+providerId: advancedmd
+generated: '2026-08-15'
+method: searched
+created: '2026-08-15'
+modified: '2026-08-15'
+source: https://www.advancedmd.com/software-pricing/
+sources:
+  - https://www.advancedmd.com/software-pricing/
+  - https://fhir.advancedmd.com/terms-of-service
+  - https://www.advancedmd.com/group-practice/developer-solutions/
+tags:
+  - Pricing
+  - Healthcare
+  - EHR
+  - Practice Management
+description: >-
+  AdvancedMD publishes list pricing for the SOFTWARE, not for the APIs. The
+  /software-pricing/ page carries a per-provider/per-month tier table by specialty,
+  an encounter (claims-based) alternative, a percentage-of-collections RCM model,
+  an AI add-on, and named migration/setup fee tiers — all quoted below verbatim.
+  The API estate is priced separately and on two completely different terms: the
+  ONC-certified FHIR APIs are supplied free of charge under the Developer Terms of
+  Service, while the proprietary Connect API estate is gated behind a signed
+  Certified API Developer Agreement carrying licensing and support fees that
+  AdvancedMD does not publish. There is no metered API plan, no per-call price and
+  no published API quota anywhere on the public surface.
+currency: USD
+billing_period: monthly
+unit: per provider per month
+unit_definition: >-
+  "Pricing is based on per provider/per month. A provider is defined as a mid-level
+  clinician or higher." — https://www.advancedmd.com/software-pricing/
+plan_count: 6
+plans:
+  - name: Medical Specialties
+    price: '$429-$1,070/provider per month'
+    price_low: 429
+    price_high: 1070
+    currency: USD
+    period: monthly
+    unit: provider
+    note: Software subscription tier for general medical specialty practices.
+  - name: Mental Health
+    price: '$130-$399/provider per month'
+    price_low: 130
+    price_high: 399
+    currency: USD
+    period: monthly
+    unit: provider
+    note: >-
+      "starting at $130/month for small mental health practices and $399/month for
+      large or group mental health practices". Small practices use the self-service
+      AdvancedMD Now edition, described as instant access with no lengthy implementation.
+  - name: Physical Medicine
+    price: '$399/provider per month'
+    price_low: 399
+    price_high: 399
+    currency: USD
+    period: monthly
+    unit: provider
+    note: Covers physical medicine, physical therapy and related rehabilitative specialties.
+  - name: Addiction Medicine
+    price: '$399/provider per month'
+    price_low: 399
+    price_high: 399
+    currency: USD
+    period: monthly
+    unit: provider
+  - name: MedSpa
+    price: '$278/provider per month'
+    price_low: 278
+    price_high: 278
+    currency: USD
+    period: monthly
+    unit: provider
+    note: >-
+      The tier table reads $278; the FAQ on the same page reads "starting at $278/month"
+      and an adjacent FAQ answer says "$279/month". Recorded as published, discrepancy and all.
+  - name: Billing Services
+    price: '$229-$1,070/provider per month'
+    price_low: 229
+    price_high: 1070
+    currency: USD
+    period: monthly
+    unit: provider
+    note: >-
+      Dedicated tier for medical billing service companies; "subscription pricing ranging
+      from $229 to $1,070/month depending on the number of clients you manage. Volume
+      discounts are available."
+services:
+  - name: RCM Services (managed billing)
+    model: percentage-of-collections
+    price: '4-8% of collections'
+    note: >-
+      "priced as a percentage of collections, ranging from 4-8% depending on practice
+      size, specialty, and complexity. The RCM service includes full-service billing
+      management, claims..." Onboarding 6-8 weeks.
+  - name: AdvancedMD Pay (card processing)
+    model: per-transaction
+    price: '2-6% depending on the payment type'
+    note: >-
+      "no monthly fees and no minimums, so you only pay for what you process.
+      Transaction rates typically range from 2-6% depending on the payment type
+      (in-person, online...)".
+alternative_models:
+  - name: Encounter / claims-based pricing — Practice Management
+    price: '$0.87 to $1.74 per claim'
+    note: For practices that prefer to pay per submitted claim rather than a flat monthly rate.
+  - name: Encounter / claims-based pricing — Practice Management + EHR bundle
+    price: '$1.08 to $2.17 per claim'
+    note: >-
+      "Practices averaging between 250-500 claims per month may find encounter pricing
+      more cost-effective than a flat monthly subscription plan."
+add_ons:
+  - name: AI Clinical Assistant + AI Insurance Card Capture
+    price: '$100/month per provider for unlimited encounters, or $0.99 per encounter'
+    note: >-
+      "AI tools are bundled and available for $100/month per provider for unlimited
+      encounters, or $0.99 per encounter, whichever model best fits your practice's
+      patient volume."
+one_time_fees:
+  - name: Setup / implementation
+    price: 'free to $1,000 for smaller practices, up to $6,000 for complex enterprise clients'
+    note: Software onboarding typically ~90 days.
+  - name: Data migration Tier 1 (demographics only)
+    price: '$800'
+  - name: Data migration Tier 2 (demographics + appointments)
+    price: '$1,200'
+  - name: Data migration Tier 3 (full practice management)
+    price: '$2,000'
+    note: >-
+      "financial transaction history is not included in any migration tier"; clinical
+      EHR data migration is priced separately and requires a custom quote.
+discounts:
+  - name: Bundle discount
+    value: up to 40%
+    note: >-
+      "Save up to 40% when you bundle" — combining EHR, practice management and patient
+      engagement software versus purchasing each product separately.
+api_pricing:
+  published: false
+  note: >-
+    No per-call, per-quota or metered API plan is published for any AdvancedMD API.
+    The two API estates are priced on entirely different terms, both of which are
+    recorded below and neither of which is a plan a developer can self-serve into.
+  surfaces:
+    - api: advancedmd:advancedmd-fhir-single-api
+      model: free
+      evidence: >-
+        Developer Terms of Service: "Certified FHIR APIs are provided to Developer free
+        of charge… AdvancedMD may, at its sole discretion, introduce reasonable fees to
+        continue using the Certified FHIR APIs."
+      source: https://fhir.advancedmd.com/terms-of-service
+    - api: advancedmd:advancedmd-fhir-bulk-api
+      model: free
+      evidence: Same Developer Terms of Service clause; the Bulk API is part of the certified FHIR estate.
+      source: https://fhir.advancedmd.com/terms-of-service
+    - api: advancedmd:advancedmd-application-access-apis
+      model: free
+      evidence: >-
+        Published on the same certified developer portal under the same Developer Terms
+        of Service. AdvancedMD labels the product "Legacy Patient APIs (do not select)".
+      source: https://fhir.advancedmd.com/terms-of-service
+    - api: advancedmd:advancedmd-connect-apis
+      model: gated-commercial
+      price: not published
+      evidence: >-
+        Access requires a signed Certified API Developer Agreement carrying licensing and
+        support fees. AdvancedMD publishes no figure for either; the amount is disclosed
+        inside the agreement process, which begins with the API connection request form.
+      source: https://www.advancedmd.com/group-practice/developer-solutions/
+      request_form: https://www.advancedmd.com/api-connection-request/
+free_tier:
+  available: true
+  scope: the ONC-certified FHIR API estate only
+  note: >-
+    Free applies to API access, not to the AdvancedMD platform. A caller still needs an
+    AdvancedMD customer organization to authorize against, and registered applications
+    require manual approval by InterOps before they can be used.
+trial:
+  published: false
+  note: >-
+    No self-service free trial of the software is published on the pricing page; the
+    calls to action are "Schedule a Callback", the bundle builder and a demo request.
+    The mental-health AdvancedMD Now edition is described as instant self-service access
+    but is a paid subscription, not a trial.
+x-evidence:
+  fetched: '2026-08-15'
+  url: https://www.advancedmd.com/software-pricing/
+  http_status: 200
+  method: >-
+    Prices read verbatim from the rendered pricing-tier table and the FAQ block on the
+    pricing page, plus the fee clauses of the FHIR Developer Terms of Service. Nothing
+    here is estimated, interpolated or converted.
