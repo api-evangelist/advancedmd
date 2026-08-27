@@ -87,27 +87,76 @@ x-evidence:
     taken from AdvancedMD's own public description of the programme; no endpoint was reached and
     none is asserted.
 apis:
-- aid: advancedmd:advancedmd-fhir-single-api
-  name: AdvancedMD FHIR Single API (US Core 6.1.0)
+- aid: advancedmd:advancedmd-fhir-bulk-jwks-api
+  name: AdvancedMD FHIR Bulk JWKS API
   description: >-
-    Read-only HL7 FHIR R4 (4.0.1) API for single-patient data access, aligned to the
-    HL7 FHIR US Core Implementation Guide STU 6.1.0 and published for ONC (g)(10)
-    Cures Act certification. Supports both standalone and EHR launch for patient and
-    practitioner SMART apps, with 58 documented paths across 21 FHIR resource types
-    (read, search-type, and POST _search), plus the $docref operation. Base URLs are
-    organization-specific under https://providerapi.advancedmd.com/v1/r4/{orgId}.
-  humanURL: https://fhir.advancedmd.com/fhir/single-api
+    Developer-portal helper API that mints JWT client assertions for testing the FHIR Bulk Data workflow.
+    Documented as POST /v1/fhir-jwks/token with a grant_type=client_credentials&alg=rsa body, authorized
+    with the Bulk application's key and secret over HTTP Basic. AdvancedMD documents this endpoint as
+    test-only — production Bulk applications generate and register their own JWTs. No OpenAPI snapshot
+    is published for this API on the portal.
+  humanURL: https://fhir.advancedmd.com/fhir/bulk-api
+  baseURL: https://providerapi.advancedmd.com
+  tags:
+  - FHIR
+  - Bulk Data
+  - Authentication
+  properties:
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+- aid: advancedmd:advancedmd-fhir-endpoint-directory
+  name: AdvancedMD FHIR Endpoint Directory
+  description: >-
+    Public, unauthenticated service base URL publication required of ONC-certified API suppliers. GET
+    https://providerapi.advancedmd.com/v1/r4/endpoints returns a FHIR Bundle of Endpoint and Organization
+    resources for every AdvancedMD customer organization with a FHIR service base URL; the same list is
+    also published as a downloadable CSV. Updated quarterly.
+  humanURL: https://fhir.advancedmd.com/fhir/base-urls
   baseURL: https://providerapi.advancedmd.com/v1/r4
   tags:
   - FHIR
-  - US Core
-  - SMART on FHIR
-  - Healthcare
+  - Endpoint Directory
+  - Interoperability
+  properties:
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: APIReference
+    url: https://providerapi.advancedmd.com/v1/r4/endpoints
+- aid: advancedmd:advancedmd-connect-apis
+  name: AdvancedMD Connect APIs
+  description: >-
+    AdvancedMD's proprietary partner API family, published in both XML-RPC and REST formats, which lets
+    developers build companion applications that replicate functionality available in the AdvancedMD user
+    interface — patient engagement, appointment scheduling, clinical forms, payment tools and revenue-cycle
+    management. Access is gated: developers must sign a Certified API Developer Agreement (with licensing
+    and support fees), then receive sandbox access and documentation on the AdvancedMD Developer Portal
+    before production credentials are granted. No endpoints or machine-readable specification are published
+    outside that agreement, so none are catalogued here.
+  humanURL: https://www.advancedmd.com/group-practice/developer-solutions/
+  tags:
+  - Practice Management
+  - Scheduling
+  - Revenue Cycle Management
+  - Patient Engagement
+  properties:
+  - type: Documentation
+    url: https://www.advancedmd.com/group-practice/developer-solutions/
+  - type: Portal
+    url: https://developer.advancedmd.com/
+  - type: SignUp
+    url: https://www.advancedmd.com/api-connection-request/
+- aid: advancedmd:advancedmd-allergyintolerance-api
+  name: AdvancedMD Allergy Intolerance API
+  description: The AllergyIntolerance API from AdvancedMD — 3 operation(s) for allergyintolerance.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - AllergyIntolerance
   properties:
   - type: OpenAPI
-    url: openapi/advancedmd-fhir-single-api-openapi.json
-  - type: Overlay
-    url: overlays/advancedmd-fhir-single-api-overlay.yaml
+    url: openapi/advancedmd-allergyintolerance-api-openapi.yml
   - type: CapabilityStatement
     url: fhir/advancedmd-fhir-r4-capabilitystatement.json
   - type: Documentation
@@ -124,131 +173,950 @@ apis:
     url: https://fhir.advancedmd.com/fhir/samples
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/test-data
-- aid: advancedmd:advancedmd-fhir-bulk-api
-  name: AdvancedMD FHIR Bulk API
-  description: >-
-    HL7 FHIR Bulk Data Access (Flat FHIR) API for exporting a patient group's data
-    from AdvancedMD. Documented operations cover backend-services token acquisition
-    (POST /v1/oauth2/token with client_assertion JWT and system/*.read scope), kicking
-    off an export (GET /v1/r4/Group/{groupId}/$export), checking and cancelling export
-    status (/v1/fhir-bulk/status), and retrieving exported FHIR entities
-    (/v1/fhir-bulk/fhir-resource/{batchId}/{fhirEntity}).
-  humanURL: https://fhir.advancedmd.com/fhir/bulk-api
-  baseURL: https://providerapi.advancedmd.com
-  tags:
-  - FHIR
-  - Bulk Data
-  - Healthcare
-  properties:
-  - type: OpenAPI
-    url: openapi/advancedmd-fhir-bulk-api-openapi.json
-  - type: Overlay
-    url: overlays/advancedmd-fhir-bulk-api-overlay.yaml
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-authentication-api
+  name: AdvancedMD Authentication API
+  description: The Authentication API from AdvancedMD — 1 operation(s) for authentication.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-authentication-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
   - type: APIReference
     url: https://fhir.advancedmd.com/fhir/apis
   - type: Authentication
     url: https://fhir.advancedmd.com/fhir/launch-and-authorization
-- aid: advancedmd:advancedmd-fhir-bulk-jwks-api
-  name: AdvancedMD FHIR Bulk JWKS API
-  description: >-
-    Developer-portal helper API that mints JWT client assertions for testing the FHIR
-    Bulk Data workflow. Documented as POST /v1/fhir-jwks/token with a
-    grant_type=client_credentials&alg=rsa body, authorized with the Bulk application's
-    key and secret over HTTP Basic. AdvancedMD documents this endpoint as test-only —
-    production Bulk applications generate and register their own JWTs. No OpenAPI
-    snapshot is published for this API on the portal.
-  humanURL: https://fhir.advancedmd.com/fhir/bulk-api
-  baseURL: https://providerapi.advancedmd.com
-  tags:
-  - FHIR
-  - Bulk Data
-  - Authentication
-  properties:
-  - type: Documentation
-    url: https://fhir.advancedmd.com/fhir/bulk-api
-  - type: APIReference
-    url: https://fhir.advancedmd.com/fhir/apis
-- aid: advancedmd:advancedmd-fhir-endpoint-directory
-  name: AdvancedMD FHIR Endpoint Directory
-  description: >-
-    Public, unauthenticated service base URL publication required of ONC-certified API
-    suppliers. GET https://providerapi.advancedmd.com/v1/r4/endpoints returns a FHIR
-    Bundle of Endpoint and Organization resources for every AdvancedMD customer
-    organization with a FHIR service base URL; the same list is also published as a
-    downloadable CSV. Updated quarterly.
-  humanURL: https://fhir.advancedmd.com/fhir/base-urls
-  baseURL: https://providerapi.advancedmd.com/v1/r4
-  tags:
-  - FHIR
-  - Endpoint Directory
-  - Interoperability
-  properties:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/base-urls
-  - type: APIReference
-    url: https://providerapi.advancedmd.com/v1/r4/endpoints
-- aid: advancedmd:advancedmd-application-access-apis
-  name: AdvancedMD Application Access APIs (Legacy Patient APIs)
-  description: >-
-    Non-FHIR REST API family published on the AdvancedMD FHIR portal as "Legacy Patient
-    APIs" and titled "AdvancedMD Application Access APIs" in its own Swagger 2.0
-    definition (version 1.0.1, supported AdvancedMD v12.6). Eighteen operations over
-    https://ptapi.advancedmd.com/pt-api: POST /authenticate exchanges a patient-portal
-    username, password and practice office key for a bearer token and the list of
-    patients the caller may read, then fifteen read-only /clinical/* endpoints return
-    allergies, assessments, goals, health concerns, immunizations, implanted devices,
-    medications, orders, plans, problems, procedures, providers, results, smoking status
-    and vital signs for a patientid over a required start/end date range. GET
-    /clinical/episodesummaries returns an HL7 C-CDA v3 XML document and GET
-    /demographics/patients/{patientid} returns demographics. Every call carries an
-    `apikey` header alongside the bearer token, and every operation documents a 429
-    QuotaViolation response.
-  humanURL: https://fhir.advancedmd.com/fhir/apis
-  baseURL: https://ptapi.advancedmd.com/pt-api
-  tags:
-  - Patient Data
-  - C-CDA
-  - Clinical
-  - Healthcare
-  properties:
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
     url: openapi/advancedmd-application-access-apis-swagger.json
-  - type: OpenAPI
-    url: openapi/advancedmd-application-access-apis-swagger.json
-  - type: Overlay
-    url: overlays/advancedmd-application-access-apis-overlay.yaml
-  - type: APIReference
-    url: https://fhir.advancedmd.com/fhir/apis
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
-- aid: advancedmd:advancedmd-connect-apis
-  name: AdvancedMD Connect APIs
-  description: >-
-    AdvancedMD's proprietary partner API family, published in both XML-RPC and REST
-    formats, which lets developers build companion applications that replicate
-    functionality available in the AdvancedMD user interface — patient engagement,
-    appointment scheduling, clinical forms, payment tools and revenue-cycle management.
-    Access is gated: developers must sign a Certified API Developer Agreement (with
-    licensing and support fees), then receive sandbox access and documentation on the
-    AdvancedMD Developer Portal before production credentials are granted. No endpoints
-    or machine-readable specification are published outside that agreement, so none are
-    catalogued here.
-  humanURL: https://www.advancedmd.com/group-practice/developer-solutions/
+- aid: advancedmd:advancedmd-c-cda-api
+  name: AdvancedMD C CDA API
+  description: The C-CDA API from AdvancedMD — 1 operation(s) for c-cda.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
   tags:
-  - Practice Management
-  - Scheduling
-  - Revenue Cycle Management
-  - Patient Engagement
+  - C-CDA
   properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-c-cda-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
   - type: Documentation
-    url: https://www.advancedmd.com/group-practice/developer-solutions/
-  - type: Portal
-    url: https://developer.advancedmd.com/
-  - type: SignUp
-    url: https://www.advancedmd.com/api-connection-request/
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-cancel-bulk-data-export-api
+  name: AdvancedMD Cancel Bulk Data Export API
+  description: >-
+    The Cancel Bulk Data Export API from AdvancedMD — 1 operation(s) for cancel bulk data export.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Cancel Bulk Data Export
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-cancel-bulk-data-export-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-careplan-api
+  name: AdvancedMD Care Plan API
+  description: The CarePlan API from AdvancedMD — 3 operation(s) for careplan.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - CarePlan
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-careplan-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-careteam-api
+  name: AdvancedMD Care Team API
+  description: The CareTeam API from AdvancedMD — 3 operation(s) for careteam.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - CareTeam
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-careteam-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-check-data-export-status-api
+  name: AdvancedMD Check Data Export Status API
+  description: >-
+    The Check Data Export Status API from AdvancedMD — 1 operation(s) for check data export status.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Check Data Export Status
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-check-data-export-status-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-clinical-api
+  name: AdvancedMD Clinical API
+  description: The Clinical API from AdvancedMD — 15 operation(s) for clinical.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Clinical
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-clinical-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-condition-api
+  name: AdvancedMD Condition API
+  description: The Condition API from AdvancedMD — 3 operation(s) for condition.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Condition
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-condition-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-coverage-api
+  name: AdvancedMD Coverage API
+  description: The Coverage API from AdvancedMD — 3 operation(s) for coverage.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Coverage
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-coverage-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-device-api
+  name: AdvancedMD Device API
+  description: The Device API from AdvancedMD — 3 operation(s) for device.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Device
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-device-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-diagnosticreport-api
+  name: AdvancedMD Diagnostic Report API
+  description: The DiagnosticReport API from AdvancedMD — 3 operation(s) for diagnosticreport.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - DiagnosticReport
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-diagnosticreport-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-documentreference-api
+  name: AdvancedMD Document Reference API
+  description: The DocumentReference API from AdvancedMD — 4 operation(s) for documentreference.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - DocumentReference
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-documentreference-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-encounter-api
+  name: AdvancedMD Encounter API
+  description: The Encounter API from AdvancedMD — 2 operation(s) for encounter.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Encounter
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-encounter-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-get-fhir-entity-api
+  name: AdvancedMD Get FHIR Entity API
+  description: The Get FHIR Entity API from AdvancedMD — 1 operation(s) for get fhir entity.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Get FHIR Entity
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-get-fhir-entity-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-goal-api
+  name: AdvancedMD Goal API
+  description: The Goal API from AdvancedMD — 3 operation(s) for goal.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Goal
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-goal-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-immunization-api
+  name: AdvancedMD Immunization API
+  description: The Immunization API from AdvancedMD — 3 operation(s) for immunization.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Immunization
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-immunization-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-location-api
+  name: AdvancedMD Location API
+  description: The Location API from AdvancedMD — 2 operation(s) for location.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Location
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-location-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-medicationdispense-api
+  name: AdvancedMD Medication Dispense API
+  description: The MedicationDispense API from AdvancedMD — 3 operation(s) for medicationdispense.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - MedicationDispense
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-medicationdispense-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-medicationrequest-api
+  name: AdvancedMD Medication Request API
+  description: The MedicationRequest API from AdvancedMD — 3 operation(s) for medicationrequest.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - MedicationRequest
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-medicationrequest-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-observation-api
+  name: AdvancedMD Observation API
+  description: The Observation API from AdvancedMD — 3 operation(s) for observation.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Observation
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-observation-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-obtain-access-token-api
+  name: AdvancedMD Obtain Access Token API
+  description: The Obtain Access Token API from AdvancedMD — 1 operation(s) for obtain access token.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Obtain Access Token
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-obtain-access-token-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-organization-api
+  name: AdvancedMD Organization API
+  description: The Organization API from AdvancedMD — 2 operation(s) for organization.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Organization
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-organization-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-patient-api
+  name: AdvancedMD Patient API
+  description: The Patient API from AdvancedMD — 3 operation(s) for patient.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Patient
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-patient-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-patient-demographics-api
+  name: AdvancedMD Patient Demographics API
+  description: The Patient Demographics API from AdvancedMD — 1 operation(s) for patient demographics.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Patient Demographics
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-patient-demographics-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-practitioner-api
+  name: AdvancedMD Practitioner API
+  description: The Practitioner API from AdvancedMD — 2 operation(s) for practitioner.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Practitioner
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-practitioner-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-procedure-api
+  name: AdvancedMD Procedure API
+  description: The Procedure API from AdvancedMD — 3 operation(s) for procedure.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Procedure
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-procedure-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-provenance-api
+  name: AdvancedMD Provenance API
+  description: The Provenance API from AdvancedMD — 1 operation(s) for provenance.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Provenance
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-provenance-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-relatedperson-api
+  name: AdvancedMD Related Person API
+  description: The RelatedPerson API from AdvancedMD — 3 operation(s) for relatedperson.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - RelatedPerson
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-relatedperson-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
+- aid: advancedmd:advancedmd-start-bulk-data-export-api
+  name: AdvancedMD Start Bulk Data Export API
+  description: >-
+    The Start Bulk Data Export API from AdvancedMD — 1 operation(s) for start bulk data export.
+  humanURL: https://fhir.advancedmd.com/fhir/single-api
+  baseURL: https://providerapi.advancedmd.com/v1/r4
+  tags:
+  - Start Bulk Data Export
+  properties:
+  - type: OpenAPI
+    url: openapi/advancedmd-start-bulk-data-export-api-openapi.yml
+  - type: CapabilityStatement
+    url: fhir/advancedmd-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/single-api
+  - type: APIReference
+    url: https://fhir.advancedmd.com/fhir/apis
+  - type: Authentication
+    url: https://fhir.advancedmd.com/fhir/launch-and-authorization
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/base-urls
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/conformance
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/samples
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/test-data
+  - type: Documentation
+    url: https://fhir.advancedmd.com/fhir/bulk-api
+  - type: Swagger
+    url: openapi/advancedmd-application-access-apis-swagger.json
+  - type: Documentation
+    url: https://fhir.advancedmd.com/getting-started
 common:
+- type: Overlay
+  url: overlays/advancedmd-fhir-single-api-overlay.yaml
+- type: Overlay
+  url: overlays/advancedmd-fhir-bulk-api-overlay.yaml
+- type: Overlay
+  url: overlays/advancedmd-application-access-apis-overlay.yaml
 - type: AgenticAccess
   url: agentic-access/advancedmd-agentic-access.yml
 - type: DomainSecurity
