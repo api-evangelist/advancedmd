@@ -16,6 +16,18 @@ description: >-
   proprietary Connect API estate (REST and XML-RPC) plus an ODBC data-access driver,
   which require a signed Certified API Developer Agreement with licensing and support
   fees before sandbox or production credentials are issued.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://www.advancedmd.com/wp-content/uploads/2025/06/cropped-bird_solid_5121-300x300.png
 tags:
 - Healthcare
