@@ -11,55 +11,97 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 5
+edge_count: 9
 edges:
-- tag: AllergyIntolerance
-  spec_file: advancedmd-allergyintolerance-api-openapi.yml
-  capability_id: BC-2900.60
-  capability_id_l1: BC-2900
-  capability_name: Healthcare Interoperability Operations
-  confidence: 0.75
-  evidence: 'FHIR Single API - US Core 6.1.0 ... GET /AllergyIntolerance ... schemas: AllergyIntolerance'
-  reason: A FHIR US Core resource endpoint exposing allergy data for interoperability. The operations
-    are read/search of a standard FHIR resource, which is the provider-side healthcare interoperability
-    surface (FHIR endpoints), not clinical documentation authoring.
 - tag: Start Bulk Data Export
   spec_file: advancedmd-start-bulk-data-export-api-openapi.yml
   capability_id: BC-2900.60
   capability_id_l1: BC-2900
   capability_name: Healthcare Interoperability Operations
-  confidence: 0.72
-  evidence: GET /v1/r4/Group/{groupId}/$export    Start Bulk Data Export Job
-  reason: FHIR Bulk Data ($export) group export is a defined healthcare interoperability operation for
-    provider-to-third-party data sharing, matching operation of FHIR endpoints and patient/population
-    data sharing.
+  confidence: 0.85
+  evidence: GET /v1/r4/Group/{groupId}/$export — "Start Bulk Data Export Job"; "HealthAPIx OAuth v2.0
+    API Specs for Backend Services Token Generation and Bulk Data Export Procedure"
+  reason: FHIR R4 Group $export bulk data export from an EHR vendor is the operation of FHIR endpoints
+    and health data sharing, i.e. healthcare interoperability operations. The OperationOutcome/ExportInfo
+    schemas confirm a FHIR surface rather than a generic file-export utility.
+- tag: DocumentReference
+  spec_file: advancedmd-documentreference-api-openapi.yml
+  capability_id: BC-2900.60
+  capability_id_l1: BC-2900
+  capability_name: Healthcare Interoperability Operations
+  confidence: 0.75
+  evidence: '"GET /DocumentReference/$docref  DocumentReferenceFetchDocref", "POST /DocumentReference/_search",
+    US Core 6.1.0 FHIR R4'
+  reason: The $docref operation is the US Core mechanism for retrieving clinical documents (e.g. C-CDA)
+    for exchange, squarely healthcare interoperability endpoint operation.
+- tag: MedicationDispense
+  spec_file: advancedmd-medicationdispense-api-openapi.yml
+  capability_id: BC-2850
+  capability_id_l1: BC-2850
+  capability_name: Pharmacy & Medication Management
+  confidence: 0.75
+  evidence: GET /MedicationDispense, 'MedicationDispense Search using POST'
+  reason: MedicationDispense records the pharmacy act of dispensing medication to a patient, squarely
+    provider-side pharmacy and medication management. Ambulatory vendor makes inpatient vs outpatient
+    sub-capability ambiguous, so L1 only.
 - tag: C-CDA
   spec_file: advancedmd-c-cda-api-openapi.yml
   capability_id: BC-2900.60
   capability_id_l1: BC-2900
   capability_name: Healthcare Interoperability Operations
   confidence: 0.7
-  evidence: GET /clinical/episodesummaries ... returns an HL7 C-CDA v3 (XML) document
-  reason: Exchange of standardised C-CDA clinical summary documents is healthcare interoperability operations
-    for the provider.
-- tag: Clinical
-  spec_file: advancedmd-clinical-api-openapi.yml
-  capability_id: BC-2830
-  capability_id_l1: BC-2830
-  capability_name: Clinical Documentation Management
-  confidence: 0.7
-  evidence: 'GET /clinical/problems, GET /clinical/orders, GET /clinical/medications ... schemas: Problem,
-    Order, Assessment, VitalSign, Immunization'
-  reason: Broad access to the active clinical record — problems, assessments, orders, medications, vitals
-    — which is the EHR clinical documentation domain. L2 left null since it spans notes, order entry and
-    results.
-- tag: Get FHIR Entity
-  spec_file: advancedmd-get-fhir-entity-api-openapi.yml
+  evidence: GET /clinical/episodesummaries — "the Episode Summaries API, which returns an HL7 C-CDA v3
+    (XML) document"
+  reason: Producing HL7 C-CDA clinical document summaries for exchange is a standards-based health information
+    exchange function, i.e. healthcare interoperability operations for the provider.
+- tag: CareTeam
+  spec_file: advancedmd-careteam-api-openapi.yml
   capability_id: BC-2900.60
   capability_id_l1: BC-2900
   capability_name: Healthcare Interoperability Operations
   confidence: 0.7
-  evidence: 'GET /v1/fhir-bulk/fhir-resource/{batchId}/{fhirEntity}  "Get Single FHIR Entity data"; description:
-    "Bulk Data Export Procedure"'
-  reason: FHIR Bulk Data export retrieval — operation of FHIR endpoints and bulk health data sharing,
-    i.e. healthcare interoperability operations. No clinical or financial workflow is performed.
+  evidence: '"FHIR Single API - US Core 6.1.0 Care Team API" with operations "GET /CareTeam", "POST /CareTeam/_search  CareTeam
+    Search using POST", "aligned to the HL7 FHIR US Core Implementation Guide STU 6.1.0"'
+  reason: A read/search-only FHIR US Core resource endpoint. The realised capability is operation of standards-based
+    FHIR endpoints for exchanging provider/care-team record data, i.e. healthcare interoperability operations,
+    rather than the act of coordinating care itself (no assignment, referral or case-management operations
+    exist).
+- tag: Condition
+  spec_file: advancedmd-condition-api-openapi.yml
+  capability_id: BC-2900.60
+  capability_id_l1: BC-2900
+  capability_name: Healthcare Interoperability Operations
+  confidence: 0.7
+  evidence: '"GET /Condition", "POST /Condition/_search  Conditions Search using POST", spec "aligned
+    to the HL7 FHIR US Core Implementation Guide STU 6.1.0 on FHIR R4"'
+  reason: Read-only FHIR US Core Condition endpoint. The operations expose problem-list data for external
+    consumption via standard FHIR endpoints, which is interoperability operation rather than clinical
+    documentation authoring.
+- tag: Device
+  spec_file: advancedmd-device-api-openapi.yml
+  capability_id: BC-2900.60
+  capability_id_l1: BC-2900
+  capability_name: Healthcare Interoperability Operations
+  confidence: 0.7
+  evidence: '"FHIR Single API - US Core 6.1.0 Device API", "GET /Device/{id}", "POST /Device/_search  Device
+    Search using POST"'
+  reason: Read/search FHIR US Core Device (implantable device) resource endpoint; realises provider-side
+    FHIR endpoint operation for health information exchange, not medical-equipment or asset management.
+- tag: Encounter
+  spec_file: advancedmd-encounter-api-openapi.yml
+  capability_id: BC-2900.60
+  capability_id_l1: BC-2900
+  capability_name: Healthcare Interoperability Operations
+  confidence: 0.7
+  evidence: '"FHIR Single API - US Core 6.1.0 Encounter API", "GET /Encounter", "GET /Encounter/{id}"'
+  reason: Read-only FHIR Encounter endpoint exposing encounter records for external consumption; no scheduling,
+    registration or admission operations, so interoperability operations is the supported reading.
+- tag: Patient Demographics
+  spec_file: advancedmd-patient-demographics-api-openapi.yml
+  capability_id: BC-2800.20
+  capability_id_l1: BC-2800
+  capability_name: Patient Registration Management
+  confidence: 0.7
+  evidence: GET /demographics/patients/{patientid}
+  reason: Retrieval of a patient's demographic record from the practice-management system — the demographic/identity
+    data domain of patient registration.
