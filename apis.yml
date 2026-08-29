@@ -1123,6 +1123,9 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 common:
+- type: CapabilityMap
+  url: capabilities/advancedmd-capability-edges.yml
+  name: AdvancedMD Business Capability Map
 - type: Overlay
   url: overlays/advancedmd-fhir-single-api-overlay.yaml
 - type: Overlay

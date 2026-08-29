@@ -1,0 +1,65 @@
+slug: advancedmd
+provider: AdvancedMD
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Healthcare Providers
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 5
+edges:
+- tag: AllergyIntolerance
+  spec_file: advancedmd-allergyintolerance-api-openapi.yml
+  capability_id: BC-2900.60
+  capability_id_l1: BC-2900
+  capability_name: Healthcare Interoperability Operations
+  confidence: 0.75
+  evidence: 'FHIR Single API - US Core 6.1.0 ... GET /AllergyIntolerance ... schemas: AllergyIntolerance'
+  reason: A FHIR US Core resource endpoint exposing allergy data for interoperability. The operations
+    are read/search of a standard FHIR resource, which is the provider-side healthcare interoperability
+    surface (FHIR endpoints), not clinical documentation authoring.
+- tag: Start Bulk Data Export
+  spec_file: advancedmd-start-bulk-data-export-api-openapi.yml
+  capability_id: BC-2900.60
+  capability_id_l1: BC-2900
+  capability_name: Healthcare Interoperability Operations
+  confidence: 0.72
+  evidence: GET /v1/r4/Group/{groupId}/$export    Start Bulk Data Export Job
+  reason: FHIR Bulk Data ($export) group export is a defined healthcare interoperability operation for
+    provider-to-third-party data sharing, matching operation of FHIR endpoints and patient/population
+    data sharing.
+- tag: C-CDA
+  spec_file: advancedmd-c-cda-api-openapi.yml
+  capability_id: BC-2900.60
+  capability_id_l1: BC-2900
+  capability_name: Healthcare Interoperability Operations
+  confidence: 0.7
+  evidence: GET /clinical/episodesummaries ... returns an HL7 C-CDA v3 (XML) document
+  reason: Exchange of standardised C-CDA clinical summary documents is healthcare interoperability operations
+    for the provider.
+- tag: Clinical
+  spec_file: advancedmd-clinical-api-openapi.yml
+  capability_id: BC-2830
+  capability_id_l1: BC-2830
+  capability_name: Clinical Documentation Management
+  confidence: 0.7
+  evidence: 'GET /clinical/problems, GET /clinical/orders, GET /clinical/medications ... schemas: Problem,
+    Order, Assessment, VitalSign, Immunization'
+  reason: Broad access to the active clinical record — problems, assessments, orders, medications, vitals
+    — which is the EHR clinical documentation domain. L2 left null since it spans notes, order entry and
+    results.
+- tag: Get FHIR Entity
+  spec_file: advancedmd-get-fhir-entity-api-openapi.yml
+  capability_id: BC-2900.60
+  capability_id_l1: BC-2900
+  capability_name: Healthcare Interoperability Operations
+  confidence: 0.7
+  evidence: 'GET /v1/fhir-bulk/fhir-resource/{batchId}/{fhirEntity}  "Get Single FHIR Entity data"; description:
+    "Bulk Data Export Procedure"'
+  reason: FHIR Bulk Data export retrieval — operation of FHIR endpoints and bulk health data sharing,
+    i.e. healthcare interoperability operations. No clinical or financial workflow is performed.
