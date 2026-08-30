@@ -1,0 +1,632 @@
+openapi: 3.2.0
+info:
+  version: 6.1.0
+  title: FHIR Single API - US Core 6.1.0 Care Plan API
+  description: 'Fast Healthcare Interoperability Resources (HL7® FHIR®, pronounced "Fire") defines a set of "Resources" that represent granular clinical concepts. The resources can be managed in isolation, or aggregated into complex documents. Technically, FHIR is designed for the web; the resources are based on simple JSON structures, with an http-based RESTful protocol where each resource has predictable URL. Where possible, open internet standards are used for data representation. This OpenAPI specification is aligned to the HL7 FHIR US Core Implementation Guide STU 6.1.0 on FHIR R4 (v4.0.1).
+
+    '
+  x-fhir-version: 4.0.1
+  x-us-core-version: 6.1.0
+servers:
+- url: https://providerapi.advancedmd.com/v1/r4
+security:
+- bearerAuth: []
+tags:
+- name: CarePlan
+paths:
+  /CarePlan:
+    get:
+      tags:
+      - CarePlan
+      description: "This interaction searches a set of CarePlans based on some filter criteria. Search interactions take a series of query parameters for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-careplan.html'>\U0001F4D8 FHIR documentation for CarePlan.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` query parameter to access another patient's data.\n"
+      parameters:
+      - name: patient
+        in: query
+        description: Who the care plan is for
+        schema:
+          type: string
+        examples:
+          patient_id:
+            summary: Logical patient id
+            value: '6077169'
+          patient_reference:
+            summary: Relative Patient reference
+            value: Patient/6077169
+      - name: category
+        in: query
+        description: Type of care plan
+        schema:
+          type: string
+        example: 736373009
+      responses:
+        '200':
+          description: Success
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarePlan'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /CarePlan/{id}:
+    get:
+      tags:
+      - CarePlan
+      description: "This interaction searches Careplan based on care plan id.Search interactions take careplan id in path for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-careplan.html'>\U0001F4D8 FHIR documentation for CarePlan.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` query parameter to access another patient's data.\n"
+      parameters:
+      - name: id
+        in: path
+        description: The logical resource id associated with the Resource.
+        required: true
+        schema:
+          type: integer
+          example: 153649881
+      - name: patient
+        in: query
+        description: Patient ID to filter the search.
+        schema:
+          type: integer
+          example: 6077169
+      responses:
+        '200':
+          description: Success
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/CarePlan'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /CarePlan/_search:
+    post:
+      tags:
+      - CarePlan
+      description: "This interaction searches a set of CarePlans based on some filter criteria. Search interactions take a series of parameters of name''=''value pairs encoded as an application/x-www-form-urlencoded submission for a POST.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-careplan.html'>\U0001F4D8 FHIR documentation for CarePlan.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` parameter (in the request body) to access another patient's data.\n"
+      operationId: CarePlans Search using POST
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                patient:
+                  type: integer
+                  description: Who care plan is for
+                  example: 6077169
+                category:
+                  type: string
+                  description: Type of care plan
+                  example: 736373009
+              required:
+              - patient
+              - category
+      responses:
+        '200':
+          description: CarePlan bundle
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarePlan'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    CarePlan:
+      x-us-core-profile: http://hl7.org/fhir/us/core/StructureDefinition/us-core-careplan
+      required:
+      - activity
+      - addresses
+      - author
+      - basedOn
+      - careTeam
+      - category
+      - contained
+      - created
+      - description
+      - encounter
+      - goal
+      - id
+      - identifier
+      - instantiatesUri
+      - intent
+      - meta
+      - partOf
+      - period
+      - replaces
+      - resourceType
+      - status
+      - subject
+      - text
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        id:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        contained:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - id
+            - resourceType
+            type: object
+            properties:
+              resourceType:
+                minLength: 1
+                type: string
+              id:
+                minLength: 1
+                type: string
+              clinicalStatus:
+                required:
+                - coding
+                type: object
+                properties:
+                  coding:
+                    minItems: 1
+                    uniqueItems: true
+                    type: array
+                    items:
+                      required:
+                      - code
+                      - system
+                      type: object
+                      properties:
+                        system:
+                          minLength: 1
+                          type: string
+                        code:
+                          minLength: 1
+                          type: string
+              verificationStatus:
+                required:
+                - coding
+                type: object
+                properties:
+                  coding:
+                    minItems: 1
+                    uniqueItems: true
+                    type: array
+                    items:
+                      required:
+                      - code
+                      - system
+                      type: object
+                      properties:
+                        system:
+                          minLength: 1
+                          type: string
+                        code:
+                          minLength: 1
+                          type: string
+              code:
+                required:
+                - text
+                type: object
+                properties:
+                  text:
+                    minLength: 1
+                    type: string
+              subject:
+                required:
+                - display
+                - reference
+                type: object
+                properties:
+                  reference:
+                    minLength: 1
+                    type: string
+                  display:
+                    minLength: 1
+                    type: string
+        identifier:
+          description: Business identifiers assigned to the care plan by source workflows or the originating clinical system.
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            description: Identifier value for the care plan when the issuing system is implied by implementation context.
+            required:
+            - value
+            type: object
+            properties:
+              value:
+                description: Business identifier value for the care plan.
+                minLength: 1
+                type: string
+        instantiatesUri:
+          type: array
+          items:
+            type: object
+            properties: {}
+        basedOn:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - display
+            type: object
+            properties:
+              display:
+                minLength: 1
+                type: string
+        replaces:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - display
+            type: object
+            properties:
+              display:
+                minLength: 1
+                type: string
+        partOf:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - display
+            type: object
+            properties:
+              display:
+                minLength: 1
+                type: string
+        status:
+          minLength: 1
+          type: string
+        intent:
+          minLength: 1
+          type: string
+        category:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - text
+            type: object
+            properties:
+              text:
+                minLength: 1
+                type: string
+        description:
+          minLength: 1
+          type: string
+        subject:
+          required:
+          - display
+          - reference
+          type: object
+          properties:
+            reference:
+              minLength: 1
+              type: string
+            display:
+              minLength: 1
+              type: string
+        encounter:
+          required:
+          - reference
+          type: object
+          properties:
+            reference:
+              minLength: 1
+              type: string
+        period:
+          required:
+          - end
+          type: object
+          properties:
+            end:
+              minLength: 1
+              type: string
+        created:
+          minLength: 1
+          type: string
+        author:
+          required:
+          - display
+          - reference
+          type: object
+          properties:
+            reference:
+              minLength: 1
+              type: string
+            display:
+              minLength: 1
+              type: string
+        careTeam:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - reference
+            type: object
+            properties:
+              reference:
+                minLength: 1
+                type: string
+        addresses:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - display
+            - reference
+            type: object
+            properties:
+              reference:
+                minLength: 1
+                type: string
+              display:
+                minLength: 1
+                type: string
+        goal:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - reference
+            type: object
+            properties:
+              reference:
+                minLength: 1
+                type: string
+        activity:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: object
+            properties:
+              outcomeCodeableConcept:
+                minItems: 1
+                uniqueItems: true
+                type: array
+                items:
+                  type: object
+                  properties:
+                    coding:
+                      minItems: 1
+                      uniqueItems: true
+                      type: array
+                      items:
+                        required:
+                        - code
+                        - display
+                        - system
+                        type: object
+                        properties:
+                          system:
+                            minLength: 1
+                            type: string
+                          code:
+                            minLength: 1
+                            type: string
+                          display:
+                            minLength: 1
+                            type: string
+              outcomeReference:
+                minItems: 1
+                uniqueItems: true
+                type: array
+                items:
+                  required:
+                  - display
+                  - reference
+                  type: object
+                  properties:
+                    reference:
+                      minLength: 1
+                      type: string
+                    display:
+                      minLength: 1
+                      type: string
+              detail:
+                required:
+                - code
+                - doNotPerform
+                - location
+                - performer
+                - scheduledTiming
+                - status
+                - statusReason
+                type: object
+                properties:
+                  code:
+                    required:
+                    - coding
+                    type: object
+                    properties:
+                      coding:
+                        minItems: 1
+                        uniqueItems: true
+                        type: array
+                        items:
+                          required:
+                          - code
+                          - display
+                          - system
+                          type: object
+                          properties:
+                            system:
+                              minLength: 1
+                              type: string
+                            code:
+                              minLength: 1
+                              type: string
+                            display:
+                              minLength: 1
+                              type: string
+                  status:
+                    minLength: 1
+                    type: string
+                  statusReason:
+                    required:
+                    - text
+                    type: object
+                    properties:
+                      text:
+                        minLength: 1
+                        type: string
+                  doNotPerform:
+                    type: boolean
+                  scheduledTiming:
+                    required:
+                    - repeat
+                    type: object
+                    properties:
+                      repeat:
+                        required:
+                        - frequency
+                        - period
+                        - periodUnit
+                        type: object
+                        properties:
+                          frequency:
+                            type: number
+                          period:
+                            type: number
+                          periodUnit:
+                            minLength: 1
+                            type: string
+                  location:
+                    required:
+                    - display
+                    type: object
+                    properties:
+                      display:
+                        minLength: 1
+                        type: string
+                  performer:
+                    minItems: 1
+                    uniqueItems: true
+                    type: array
+                    items:
+                      required:
+                      - display
+                      - reference
+                      type: object
+                      properties:
+                        reference:
+                          minLength: 1
+                          type: string
+                        display:
+                          minLength: 1
+                          type: string
+        meta:
+          required:
+          - tag
+          type: object
+          properties:
+            tag:
+              minItems: 1
+              uniqueItems: true
+              type: array
+              items:
+                required:
+                - code
+                - display
+                - system
+                type: object
+                properties:
+                  system:
+                    minLength: 1
+                    type: string
+                  code:
+                    minLength: 1
+                    type: string
+                  display:
+                    minLength: 1
+                    type: string
+      description: ''
+    Error:
+      required:
+      - text
+      - issue
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        issue:
+          type: array
+          items:
+            required:
+            - severity
+            - code
+            - diagnostics
+            type: object
+            properties:
+              severity:
+                minLength: 1
+                type: string
+              code:
+                minLength: 1
+                type: string
+              diagnostics:
+                minLength: 1
+                type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+externalDocs:
+  description: HL7 FHIR US Core IG STU 6.1.0
+  url: https://hl7.org/fhir/us/core/STU6.1/

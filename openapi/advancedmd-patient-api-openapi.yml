@@ -1,0 +1,470 @@
+openapi: 3.2.0
+info:
+  version: 6.1.0
+  title: FHIR Single API - US Core 6.1.0 Patient API
+  description: 'Fast Healthcare Interoperability Resources (HL7® FHIR®, pronounced "Fire") defines a set of "Resources" that represent granular clinical concepts. The resources can be managed in isolation, or aggregated into complex documents. Technically, FHIR is designed for the web; the resources are based on simple JSON structures, with an http-based RESTful protocol where each resource has predictable URL. Where possible, open internet standards are used for data representation. This OpenAPI specification is aligned to the HL7 FHIR US Core Implementation Guide STU 6.1.0 on FHIR R4 (v4.0.1).
+
+    '
+  x-fhir-version: 4.0.1
+  x-us-core-version: 6.1.0
+servers:
+- url: https://providerapi.advancedmd.com/v1/r4
+security:
+- bearerAuth: []
+tags:
+- name: Patient
+paths:
+  /Patient:
+    get:
+      tags:
+      - Patient
+      description: 'This interaction searches a set of Patients based on some filter criteria. Search interactions take a series of query parameters for a GET.<p><a href=''https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-patient.html''>📘 FHIR documentation for Patient.</a></p>
+
+
+        🛡️ **Authorization behavior:**
+
+        - **Patients** (using `patient/*.read` scope) can access only their own Patient resource.
+
+        - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.
+
+        - **Practitioners** (using `user/*.read` scope) must explicitly pass the `_id` query parameter to access another patient''s data.
+
+        '
+      parameters:
+      - name: _id
+        in: query
+        description: Logical ID of the Patient resource. Required for practitioners to access specific patients when using `user/*.read`
+        schema:
+          type: integer
+        example: 6077169
+      - name: identifier
+        in: query
+        description: A patient business identifier such as an MRN or MPI. Use token syntax `{system}|{value}` when the issuing system is known, or just the identifier value when the server can infer the system.
+        schema:
+          type: string
+        example: http://hospital.smarthealthit.org|90332213
+      - name: name
+        in: query
+        description: A text search against patient name. Current implementation behavior primarily matches family names across all `Patient.name` entries (for example `official`, `old`) and may not return results for given-name-only input.
+        schema:
+          type: string
+        example: Jones
+      - name: birthdate
+        in: query
+        description: The patient's date of birth. Use in combination with `name` for better match precision. Format is `YYYY-MM-DD`.
+        schema:
+          type: string
+          format: date
+        example: '1990-07-04'
+      - name: gender
+        in: query
+        description: The patient's administrative gender. Use in combination with `name` for better match precision. Token values are `male`, `female`, `other`, or `unknown`.
+        schema:
+          type: string
+        example: female
+      responses:
+        '200':
+          description: Success
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Patient'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /Patient/{id}:
+    get:
+      tags:
+      - Patient
+      description: 'This interaction searches Patient based on patient id. Search interactions take patient id in path for a GET.<p><a href=''https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-patient.html''>📘 FHIR documentation for Patient.</a></p>
+
+
+        🛡️ **Authorization behavior:**
+
+        - **Patients** (using `patient/*.read` scope) can access only their own Patient resource.
+
+        - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.
+
+        - **Practitioners** (using `user/*.read` scope) must explicitly pass the `id` path parameter to access another patient''s data.
+
+        '
+      parameters:
+      - name: id
+        in: path
+        description: The logical resource id associated with the Resource
+        required: true
+        schema:
+          type: integer
+          example: 6077169
+      responses:
+        '200':
+          description: Success
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Patient'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /Patient/_search:
+    post:
+      tags:
+      - Patient
+      description: 'This interaction searches a set of Patients based on some filter criteria. Search interactions take a series of parameters of name''''=''''value pairs encoded as an application/x-www-form-urlencoded submission for a POST.<p><a href=''https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-patient.html''>📘 FHIR documentation for Patient.</a></p>
+
+
+        🛡️ **Authorization behavior:**
+
+        - **Patients** (using `patient/*.read` scope) can access only their own Patient resource.
+
+        - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.
+
+        - **Practitioners** (using `user/*.read` scope) must include `_id` in the request body to query another patient.
+
+        '
+      operationId: Patients Search using POST
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                _id:
+                  type: integer
+                  description: The resource identity
+                  example: 6077169
+                identifier:
+                  type: string
+                  description: A patient business identifier such as an MRN or MPI. Use token syntax `{system}|{value}` when the issuing system is known, or provide only the identifier value when the server can infer the system.
+                  example: http://hospital.smarthealthit.org|90332213
+                name:
+                  type: string
+                  description: A text search against patient name. Current implementation behavior primarily matches family names across all `Patient.name` entries (for example `official`, `old`) and may not return results for given-name-only input.
+                  example: Jones
+                birthdate:
+                  type: string
+                  format: date
+                  description: The patient's date of birth. Use in combination with `name` for better match precision. Format is `YYYY-MM-DD`.
+                  example: '1990-07-04'
+                gender:
+                  type: string
+                  description: 'The patient''s administrative gender. Use in combination with `name` for better match precision. Token values: `male`, `female`, `other`, `unknown`.'
+                  example: female
+              required:
+              - _id
+      responses:
+        '200':
+          description: Patient bundle
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Patient'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      required:
+      - text
+      - issue
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        issue:
+          type: array
+          items:
+            required:
+            - severity
+            - code
+            - diagnostics
+            type: object
+            properties:
+              severity:
+                minLength: 1
+                type: string
+              code:
+                minLength: 1
+                type: string
+              diagnostics:
+                minLength: 1
+                type: string
+    Patient:
+      x-us-core-profile: http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient
+      required:
+      - active
+      - contact
+      - gender
+      - id
+      - identifier
+      - link
+      - managingOrganization
+      - meta
+      - name
+      - photo
+      - resourceType
+      - text
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        id:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        identifier:
+          description: Business identifiers assigned to the patient, such as an MRN, MPI, or enterprise patient identifier.
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            description: Identifier with declared use, identifier system, and value for the patient.
+            required:
+            - system
+            - use
+            - value
+            type: object
+            properties:
+              use:
+                description: Purpose of the identifier, such as official, usual, temporary, secondary, or old.
+                minLength: 1
+                type: string
+              type:
+                description: Coded type describing what kind of patient identifier is being carried.
+                required:
+                - coding
+                type: object
+                properties:
+                  coding:
+                    minItems: 1
+                    uniqueItems: true
+                    type: array
+                    items:
+                      required:
+                      - code
+                      - system
+                      type: object
+                      properties:
+                        system:
+                          description: Code system that defines the identifier type.
+                          minLength: 1
+                          type: string
+                        code:
+                          description: Code for the identifier type.
+                          minLength: 1
+                          type: string
+              system:
+                description: Namespace or URI that defines the patient identifier value.
+                minLength: 1
+                type: string
+              value:
+                description: Patient identifier value unique within the stated system.
+                minLength: 1
+                type: string
+        active:
+          type: boolean
+        name:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - family
+            - use
+            type: object
+            properties:
+              use:
+                minLength: 1
+                type: string
+              family:
+                minLength: 1
+                type: string
+              given:
+                type: array
+                items:
+                  type: object
+                  properties: {}
+        gender:
+          minLength: 1
+          type: string
+        photo:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - contentType
+            - data
+            type: object
+            properties:
+              contentType:
+                minLength: 1
+                type: string
+              data:
+                minLength: 1
+                type: string
+        contact:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: object
+            properties:
+              relationship:
+                minItems: 1
+                uniqueItems: true
+                type: array
+                items:
+                  type: object
+                  properties:
+                    coding:
+                      minItems: 1
+                      uniqueItems: true
+                      type: array
+                      items:
+                        required:
+                        - code
+                        - system
+                        type: object
+                        properties:
+                          system:
+                            minLength: 1
+                            type: string
+                          code:
+                            minLength: 1
+                            type: string
+              organization:
+                required:
+                - display
+                - reference
+                type: object
+                properties:
+                  reference:
+                    minLength: 1
+                    type: string
+                  display:
+                    minLength: 1
+                    type: string
+        managingOrganization:
+          required:
+          - display
+          - reference
+          type: object
+          properties:
+            reference:
+              minLength: 1
+              type: string
+            display:
+              minLength: 1
+              type: string
+        link:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - type
+            type: object
+            properties:
+              other:
+                required:
+                - reference
+                type: object
+                properties:
+                  reference:
+                    minLength: 1
+                    type: string
+              type:
+                minLength: 1
+                type: string
+        meta:
+          required:
+          - tag
+          type: object
+          properties:
+            tag:
+              minItems: 1
+              uniqueItems: true
+              type: array
+              items:
+                required:
+                - code
+                - display
+                - system
+                type: object
+                properties:
+                  system:
+                    minLength: 1
+                    type: string
+                  code:
+                    minLength: 1
+                    type: string
+                  display:
+                    minLength: 1
+                    type: string
+      description: ''
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+externalDocs:
+  description: HL7 FHIR US Core IG STU 6.1.0
+  url: https://hl7.org/fhir/us/core/STU6.1/

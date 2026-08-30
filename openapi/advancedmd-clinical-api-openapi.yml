@@ -1,0 +1,687 @@
+openapi: 3.2.0
+info:
+  version: 1.0.1
+  title: AdvancedMD Application Access Clinical API
+  description: 'A collection of RESTful APIs that can be used to interact with AdvancedMD data. All APIs return JSON, with the exception of       the Episode Summaries API, which returns an HL7 C-CDA v3 (XML) document.
+
+
+    Supported Version: AdvancedMD v12.6
+
+    '
+servers:
+- url: https://ptapi.advancedmd.com/pt-api
+tags:
+- name: Clinical
+paths:
+  /clinical/allergies:
+    get:
+      security:
+      - API Key: []
+        Bearer Token: []
+      tags:
+      - Clinical
+      parameters:
+      - $ref: '#/components/parameters/patientId'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      responses:
+        '200':
+          description: Successful API call. Contains the patient's Allergies.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Allergy'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/Too_many_requests'
+  /clinical/assessments:
+    get:
+      security:
+      - API Key: []
+        Bearer Token: []
+      tags:
+      - Clinical
+      parameters:
+      - $ref: '#/components/parameters/patientId'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      responses:
+        '200':
+          description: Successful API call. Contains the patient's assessments.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Assessment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/Too_many_requests'
+  /clinical/goals:
+    get:
+      security:
+      - API Key: []
+        Bearer Token: []
+      tags:
+      - Clinical
+      parameters:
+      - $ref: '#/components/parameters/patientId'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      responses:
+        '200':
+          description: Successful API call. Contains the patient's goals.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Goal'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/Too_many_requests'
+  /clinical/healthconcerns:
+    get:
+      security:
+      - API Key: []
+        Bearer Token: []
+      tags:
+      - Clinical
+      parameters:
+      - $ref: '#/components/parameters/patientId'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      responses:
+        '200':
+          description: Successful API call. Contains the patient's health concerns.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HealthConcern'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/Too_many_requests'
+  /clinical/immunizations:
+    get:
+      security:
+      - API Key: []
+        Bearer Token: []
+      tags:
+      - Clinical
+      parameters:
+      - $ref: '#/components/parameters/patientId'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      responses:
+        '200':
+          description: Successful API call. Contains the patient's immunizations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Immunization'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/Too_many_requests'
+  /clinical/implanteddevices:
+    get:
+      security:
+      - API Key: []
+        Bearer Token: []
+      tags:
+      - Clinical
+      parameters:
+      - $ref: '#/components/parameters/patientId'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      responses:
+        '200':
+          description: Successful API call. Contains the patient's implanted devices.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ImplantedDevice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/Too_many_requests'
+  /clinical/medications:
+    get:
+      security:
+      - API Key: []
+        Bearer Token: []
+      tags:
+      - Clinical
+      parameters:
+      - $ref: '#/components/parameters/patientId'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      responses:
+        '200':
+          description: Successful API call. Contains the patient's medications.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Medication'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/Too_many_requests'
+  /clinical/orders:
+    get:
+      security:
+      - API Key: []
+        Bearer Token: []
+      tags:
+      - Clinical
+      parameters:
+      - $ref: '#/components/parameters/patientId'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      responses:
+        '200':
+          description: Successful API call. Contains the patient's orders.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/Too_many_requests'
+  /clinical/plans:
+    get:
+      security:
+      - API Key: []
+        Bearer Token: []
+      tags:
+      - Clinical
+      parameters:
+      - $ref: '#/components/parameters/patientId'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      responses:
+        '200':
+          description: Successful API call. Contains the patient's plans.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Plan'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/Too_many_requests'
+  /clinical/problems:
+    get:
+      security:
+      - API Key: []
+        Bearer Token: []
+      tags:
+      - Clinical
+      parameters:
+      - $ref: '#/components/parameters/patientId'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      responses:
+        '200':
+          description: Successful API call. Contains the patient's Problem List.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/Too_many_requests'
+  /clinical/procedures:
+    get:
+      security:
+      - API Key: []
+        Bearer Token: []
+      tags:
+      - Clinical
+      parameters:
+      - $ref: '#/components/parameters/patientId'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      responses:
+        '200':
+          description: Successful API call. Contains the patient's procedures.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Procedure'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/Too_many_requests'
+  /clinical/providers:
+    get:
+      security:
+      - API Key: []
+        Bearer Token: []
+      tags:
+      - Clinical
+      parameters:
+      - $ref: '#/components/parameters/patientId'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      responses:
+        '200':
+          description: Successful API call. Contains the patient's care team.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Provider'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/Too_many_requests'
+  /clinical/results:
+    get:
+      security:
+      - API Key: []
+        Bearer Token: []
+      tags:
+      - Clinical
+      parameters:
+      - $ref: '#/components/parameters/patientId'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      responses:
+        '200':
+          description: Successful API call. Contains the patient's Results.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResultSet'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/Too_many_requests'
+  /clinical/smokingstatus:
+    get:
+      security:
+      - API Key: []
+        Bearer Token: []
+      tags:
+      - Clinical
+      parameters:
+      - $ref: '#/components/parameters/patientId'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      responses:
+        '200':
+          description: Successful API call. Contains the patient's smoking status.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SmokingStatus'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/Too_many_requests'
+  /clinical/vitalsigns:
+    get:
+      security:
+      - API Key: []
+        Bearer Token: []
+      tags:
+      - Clinical
+      parameters:
+      - $ref: '#/components/parameters/patientId'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      responses:
+        '200':
+          description: Successful API call. Contains the patient's vital signs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VitalSign'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/Too_many_requests'
+components:
+  schemas:
+    Problem:
+      type: object
+      properties:
+        code:
+          type: string
+          description: The ICD or SNOMED code representing the problem.
+          example: '219376002'
+        codeSystem:
+          type: string
+          description: The codeset (ICD-9/ICD-10/SNOMED) that the code comes from.
+          example: SNOMED
+        name:
+          type: string
+          description: The full name of the problem.
+          example: 219427009-War injury due to lasers
+        description:
+          type: string
+          description: Description of the problem.
+          example: War injury due to lasers
+        status:
+          type: string
+          description: Problem status (current/historical).
+          example: Current
+        date:
+          type: string
+          description: The codeset (ICD-9/ICD-10/SNOMED) that the code comes from.
+          example: '20180510'
+    Order:
+      type: object
+      properties:
+        date:
+          type: string
+        testDescription:
+          type: string
+        loincCode:
+          type: string
+    HealthConcern:
+      type: object
+      properties:
+        concern:
+          type: string
+        date:
+          type: string
+    Immunization:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        date:
+          type: string
+        status:
+          type: string
+        quantity:
+          type: string
+        unit:
+          type: string
+        lotNumber:
+          type: string
+        cvxCode:
+          type: string
+        details:
+          type: string
+    VitalSign:
+      type: object
+      properties:
+        date:
+          type: string
+        measurements:
+          type: array
+          items:
+            $ref: '#/components/schemas/VitalMeasurment'
+    SmokingStatus:
+      type: object
+      properties:
+        value:
+          type: string
+        description:
+          type: string
+        date:
+          type: string
+    Assessment:
+      type: object
+      properties:
+        date:
+          type: string
+        assessment:
+          type: string
+    Provider:
+      type: object
+      properties:
+        npiNumber:
+          type: string
+        address1:
+          type: string
+        address2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+        country:
+          type: string
+        title:
+          type: string
+        lastName:
+          type: string
+        firstName:
+          type: string
+        middleName:
+          type: string
+    ImplantedDevice:
+      type: object
+      properties:
+        id:
+          type: string
+        deviceId:
+          type: string
+        issuingAgency:
+          type: string
+        siteName:
+          type: string
+        siteCode:
+          type: string
+        deviceName:
+          type: string
+        deviceDescription:
+          type: string
+        manufacturer:
+          type: string
+        model:
+          type: string
+        serialNumber:
+          type: string
+        lot:
+          type: string
+        isActive:
+          type: string
+        date:
+          type: string
+    Plan:
+      type: object
+      properties:
+        date:
+          type: string
+        key:
+          type: string
+        plan:
+          type: string
+        code:
+          type: string
+    Medication:
+      type: object
+      properties:
+        rxNormId:
+          type: string
+        name:
+          type: string
+        instructions:
+          type: string
+        quantity:
+          type: string
+        doseForm:
+          type: string
+        date:
+          type: string
+        expirationDate:
+          type: string
+        currentStatus:
+          type: string
+        type:
+          type: string
+    ResultSet:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        date:
+          type: string
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Result'
+    Goal:
+      type: object
+      properties:
+        goalText:
+          type: string
+        date:
+          type: string
+    Result:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        unit:
+          type: string
+        interpretationCode:
+          type: string
+        range:
+          type: string
+        rangeFrom:
+          type: string
+        rangeTo:
+          type: string
+    Allergy:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+        allergyDate:
+          type: string
+        reaction:
+          type: string
+        rxNormId:
+          type: string
+    VitalMeasurment:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        metricValue:
+          type: string
+    Procedure:
+      type: object
+      properties:
+        date:
+          type: string
+        code:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+  responses:
+    Too_many_requests:
+      description: 'Too many requests: More details are provided in the response.'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: QuotaViolation
+              detail:
+                type: string
+                example: 'Too many requests: Please wait and try your request again in about a minute.'
+    Unauthorized:
+      description: 'Unauthorized: More details are provided in the response.'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: Unauthorized
+              detail:
+                type: string
+                example: Invalid API key or bearer token.
+  parameters:
+    endDate:
+      name: endDate
+      description: The end (m/d/yyyy) of the date range to return data for.
+      in: query
+      required: true
+      x-example: 5/16/2018 or 05/16/2018
+      schema:
+        type: string
+    startDate:
+      name: startDate
+      description: The beginning (m/d/yyyy) of the date range to return data for.
+      in: query
+      required: true
+      x-example: 1/1/2017 or 01/01/2017
+      schema:
+        type: string
+    patientId:
+      name: patientid
+      description: The patient's unique identifier ("patientid") returned by the authenticate API.
+      in: query
+      required: true
+      x-example: '32745'
+      schema:
+        type: string
+  securitySchemes:
+    API_Key:
+      type: apiKey
+      in: header
+      name: apikey
+    Bearer_Token:
+      type: apiKey
+      in: header
+      name: Authorization

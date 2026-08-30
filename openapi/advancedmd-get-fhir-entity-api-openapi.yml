@@ -1,0 +1,130 @@
+openapi: 3.2.0
+info:
+  title: FHIR Bulk Get FHIR Entity API
+  description: HealthAPIx OAuth v2.0 API Specs for Backend Services Token Generation and Bulk Data Export Procedure
+  version: '1.1'
+servers:
+- url: https://providerapi.advancedmd.com
+tags:
+- name: Get FHIR Entity
+paths:
+  /v1/fhir-bulk/fhir-resource/{batchId}/{fhirEntity}:
+    get:
+      tags:
+      - Get FHIR Entity
+      summary: Get Single FHIR Entity data
+      security:
+      - bearerAuth: []
+      parameters:
+      - in: header
+        name: OfficeKey
+        description: OfficeKey
+        required: true
+        schema:
+          type: integer
+        example: 991900
+      - in: path
+        name: batchId
+        description: batchId
+        required: true
+        schema:
+          type: string
+        example: 61333c76-14a6-4e48-9fb1-1129fd7967f2
+      - in: path
+        name: fhirEntity
+        description: fhirEntity
+        required: true
+        schema:
+          type: string
+        example: Patient
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/fhir+ndjson:
+              schema:
+                $ref: '#/components/schemas/ExportFhirEntity'
+        '400':
+          description: Error. Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationOutcome'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationOutcome'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationOutcome'
+components:
+  schemas:
+    OperationOutcome:
+      type: object
+      properties:
+        resourceType:
+          type: string
+        text:
+          type: object
+          properties:
+            status:
+              type: string
+            div:
+              type: string
+        issue:
+          type: array
+          items:
+            type: object
+            properties:
+              severity:
+                type: string
+              code:
+                type: string
+              diagnostics:
+                type: string
+    ExportFhirEntity:
+      type: object
+      properties:
+        resourceType:
+          type: string
+        id:
+          type: string
+        meta:
+          type: object
+          properties:
+            versionId:
+              type: string
+            lastUpdated:
+              type: string
+            profile:
+              type: array
+              items:
+                type: string
+        code:
+          type: object
+          properties:
+            coding:
+              type: array
+              items:
+                type: object
+                properties:
+                  system:
+                    type: string
+                  code:
+                    type: string
+                  display:
+                    type: string
+            text:
+              type: string
+        status:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

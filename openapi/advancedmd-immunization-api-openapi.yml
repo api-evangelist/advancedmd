@@ -1,0 +1,548 @@
+openapi: 3.2.0
+info:
+  version: 6.1.0
+  title: FHIR Single API - US Core 6.1.0 Immunization API
+  description: 'Fast Healthcare Interoperability Resources (HL7® FHIR®, pronounced "Fire") defines a set of "Resources" that represent granular clinical concepts. The resources can be managed in isolation, or aggregated into complex documents. Technically, FHIR is designed for the web; the resources are based on simple JSON structures, with an http-based RESTful protocol where each resource has predictable URL. Where possible, open internet standards are used for data representation. This OpenAPI specification is aligned to the HL7 FHIR US Core Implementation Guide STU 6.1.0 on FHIR R4 (v4.0.1).
+
+    '
+  x-fhir-version: 4.0.1
+  x-us-core-version: 6.1.0
+servers:
+- url: https://providerapi.advancedmd.com/v1/r4
+security:
+- bearerAuth: []
+tags:
+- name: Immunization
+paths:
+  /Immunization:
+    get:
+      tags:
+      - Immunization
+      description: "This interaction searches a set of Immunizations based on some filter criteria. Search interactions take a series of query parameters for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-immunization.html'>\U0001F4D8 FHIR documentation for Immunization.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` query parameter to access another patient's data.\n"
+      parameters:
+      - name: patient
+        in: query
+        description: Who this immunization is intended for
+        schema:
+          type: string
+        examples:
+          patient_id:
+            summary: Logical patient id
+            value: '6077169'
+          patient_reference:
+            summary: Relative Patient reference
+            value: Patient/6077169
+      responses:
+        '200':
+          description: Success
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Immunization'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /Immunization/{id}:
+    get:
+      tags:
+      - Immunization
+      description: "This interaction searches Immunization based on immunization id.Search interactions take immunization id in path for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-immunization.html'>\U0001F4D8 FHIR documentation for Immunization.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` query parameter to access another patient's data.\n"
+      parameters:
+      - name: id
+        in: path
+        description: The logical resource id associated with the Resource.
+        required: true
+        schema:
+          type: integer
+          example: 95
+      - name: patient
+        in: query
+        description: Patient ID to filter the search.
+        schema:
+          type: integer
+          example: 6077169
+      responses:
+        '200':
+          description: Success
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Immunization'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /Immunization/_search:
+    post:
+      tags:
+      - Immunization
+      description: "This interaction searches a set of Immunizations based on some filter criteria. Search interactions take a series of parameters of name''=''value pairs encoded as an application/x-www-form-urlencoded submission for a POST.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-immunization.html'>\U0001F4D8 FHIR documentation for Immunization.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` parameter (in the request body) to access another patient's data.\n"
+      operationId: Immunizations Search using POST
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                patient:
+                  type: integer
+                  description: The patient for the vaccination record
+                  example: 6077169
+              required:
+              - patient
+      responses:
+        '200':
+          description: Immunization bundle
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Immunization'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      required:
+      - text
+      - issue
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        issue:
+          type: array
+          items:
+            required:
+            - severity
+            - code
+            - diagnostics
+            type: object
+            properties:
+              severity:
+                minLength: 1
+                type: string
+              code:
+                minLength: 1
+                type: string
+              diagnostics:
+                minLength: 1
+                type: string
+    Immunization:
+      x-us-core-profile: http://hl7.org/fhir/us/core/StructureDefinition/us-core-immunization
+      required:
+      - doseQuantity
+      - education
+      - encounter
+      - expirationDate
+      - fundingSource
+      - id
+      - identifier
+      - isSubpotent
+      - location
+      - lotNumber
+      - manufacturer
+      - meta
+      - note
+      - occurrenceDateTime
+      - patient
+      - performer
+      - primarySource
+      - programEligibility
+      - reasonCode
+      - resourceType
+      - route
+      - site
+      - status
+      - text
+      - vaccineCode
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        id:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        identifier:
+          description: Business identifiers assigned to the immunization event by immunization registries, EHRs, or source systems.
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            description: Identifier with a namespace in `system` and a resource-specific value in `value`.
+            required:
+            - system
+            - value
+            type: object
+            properties:
+              system:
+                description: Namespace or URI that defines the identifier value.
+                minLength: 1
+                type: string
+              value:
+                description: Identifier value unique within the stated system.
+                minLength: 1
+                type: string
+        status:
+          minLength: 1
+          type: string
+        vaccineCode:
+          required:
+          - coding
+          - text
+          type: object
+          properties:
+            coding:
+              minItems: 1
+              uniqueItems: true
+              type: array
+              items:
+                required:
+                - code
+                - system
+                type: object
+                properties:
+                  system:
+                    minLength: 1
+                    type: string
+                  code:
+                    minLength: 1
+                    type: string
+            text:
+              minLength: 1
+              type: string
+        patient:
+          required:
+          - reference
+          type: object
+          properties:
+            reference:
+              minLength: 1
+              type: string
+        encounter:
+          required:
+          - reference
+          type: object
+          properties:
+            reference:
+              minLength: 1
+              type: string
+        occurrenceDateTime:
+          minLength: 1
+          type: string
+        primarySource:
+          type: boolean
+        location:
+          required:
+          - reference
+          type: object
+          properties:
+            reference:
+              minLength: 1
+              type: string
+        manufacturer:
+          required:
+          - reference
+          type: object
+          properties:
+            reference:
+              minLength: 1
+              type: string
+        lotNumber:
+          minLength: 1
+          type: string
+        expirationDate:
+          minLength: 1
+          type: string
+        site:
+          required:
+          - coding
+          type: object
+          properties:
+            coding:
+              minItems: 1
+              uniqueItems: true
+              type: array
+              items:
+                required:
+                - code
+                - display
+                - system
+                type: object
+                properties:
+                  system:
+                    minLength: 1
+                    type: string
+                  code:
+                    minLength: 1
+                    type: string
+                  display:
+                    minLength: 1
+                    type: string
+        route:
+          required:
+          - coding
+          type: object
+          properties:
+            coding:
+              minItems: 1
+              uniqueItems: true
+              type: array
+              items:
+                required:
+                - code
+                - display
+                - system
+                type: object
+                properties:
+                  system:
+                    minLength: 1
+                    type: string
+                  code:
+                    minLength: 1
+                    type: string
+                  display:
+                    minLength: 1
+                    type: string
+        doseQuantity:
+          required:
+          - code
+          - system
+          - value
+          type: object
+          properties:
+            value:
+              type: number
+            system:
+              minLength: 1
+              type: string
+            code:
+              minLength: 1
+              type: string
+        performer:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: object
+            properties:
+              function:
+                required:
+                - coding
+                type: object
+                properties:
+                  coding:
+                    minItems: 1
+                    uniqueItems: true
+                    type: array
+                    items:
+                      required:
+                      - code
+                      - system
+                      type: object
+                      properties:
+                        system:
+                          minLength: 1
+                          type: string
+                        code:
+                          minLength: 1
+                          type: string
+              actor:
+                required:
+                - reference
+                type: object
+                properties:
+                  reference:
+                    minLength: 1
+                    type: string
+        note:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - text
+            type: object
+            properties:
+              text:
+                minLength: 1
+                type: string
+        reasonCode:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: object
+            properties:
+              coding:
+                minItems: 1
+                uniqueItems: true
+                type: array
+                items:
+                  required:
+                  - code
+                  - system
+                  type: object
+                  properties:
+                    system:
+                      minLength: 1
+                      type: string
+                    code:
+                      minLength: 1
+                      type: string
+        isSubpotent:
+          type: boolean
+        education:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - documentType
+            - presentationDate
+            - publicationDate
+            type: object
+            properties:
+              documentType:
+                minLength: 1
+                type: string
+              publicationDate:
+                minLength: 1
+                type: string
+              presentationDate:
+                minLength: 1
+                type: string
+        programEligibility:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: object
+            properties:
+              coding:
+                minItems: 1
+                uniqueItems: true
+                type: array
+                items:
+                  required:
+                  - code
+                  - system
+                  type: object
+                  properties:
+                    system:
+                      minLength: 1
+                      type: string
+                    code:
+                      minLength: 1
+                      type: string
+        fundingSource:
+          required:
+          - coding
+          type: object
+          properties:
+            coding:
+              minItems: 1
+              uniqueItems: true
+              type: array
+              items:
+                required:
+                - code
+                - system
+                type: object
+                properties:
+                  system:
+                    minLength: 1
+                    type: string
+                  code:
+                    minLength: 1
+                    type: string
+        meta:
+          required:
+          - tag
+          type: object
+          properties:
+            tag:
+              minItems: 1
+              uniqueItems: true
+              type: array
+              items:
+                required:
+                - code
+                - display
+                - system
+                type: object
+                properties:
+                  system:
+                    minLength: 1
+                    type: string
+                  code:
+                    minLength: 1
+                    type: string
+                  display:
+                    minLength: 1
+                    type: string
+      description: ''
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+externalDocs:
+  description: HL7 FHIR US Core IG STU 6.1.0
+  url: https://hl7.org/fhir/us/core/STU6.1/

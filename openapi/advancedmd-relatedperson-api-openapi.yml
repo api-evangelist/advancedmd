@@ -1,0 +1,309 @@
+openapi: 3.2.0
+info:
+  version: 6.1.0
+  title: FHIR Single API - US Core 6.1.0 Related Person API
+  description: 'Fast Healthcare Interoperability Resources (HL7® FHIR®, pronounced "Fire") defines a set of "Resources" that represent granular clinical concepts. The resources can be managed in isolation, or aggregated into complex documents. Technically, FHIR is designed for the web; the resources are based on simple JSON structures, with an http-based RESTful protocol where each resource has predictable URL. Where possible, open internet standards are used for data representation. This OpenAPI specification is aligned to the HL7 FHIR US Core Implementation Guide STU 6.1.0 on FHIR R4 (v4.0.1).
+
+    '
+  x-fhir-version: 4.0.1
+  x-us-core-version: 6.1.0
+servers:
+- url: https://providerapi.advancedmd.com/v1/r4
+security:
+- bearerAuth: []
+tags:
+- name: RelatedPerson
+paths:
+  /RelatedPerson:
+    get:
+      tags:
+      - RelatedPerson
+      description: "This interaction searches a set of RelatedPersons based on some filter criteria. Search interactions take a series of query parameters for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-relatedperson.html'>\U0001F4D8 US Core RelatedPerson profile.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` query parameter to access another patient's data.\n"
+      parameters:
+      - name: patient
+        in: query
+        description: The patient the person is related to
+        schema:
+          type: string
+        examples:
+          patient_id:
+            summary: Logical patient id
+            value: '6077169'
+          patient_reference:
+            summary: Relative Patient reference
+            value: Patient/6077169
+      - name: _id
+        in: query
+        description: The logical resource id associated with RelatedPerson
+        schema:
+          type: string
+        example: 456
+      responses:
+        '200':
+          description: Success
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RelatedPerson'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RelatedPerson/{id}:
+    get:
+      tags:
+      - RelatedPerson
+      description: "This interaction retrieves a RelatedPerson resource by id.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-relatedperson.html'>\U0001F4D8 US Core RelatedPerson profile.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` query parameter to access another patient's data.\n"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          example: 456
+      - name: patient
+        in: query
+        description: Patient ID to filter the search.
+        schema:
+          type: integer
+          example: 6077169
+      responses:
+        '200':
+          description: Success
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/RelatedPerson'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RelatedPerson/_search:
+    post:
+      tags:
+      - RelatedPerson
+      description: "This interaction searches a set of RelatedPersons based on some filter criteria encoded as an application/x-www-form-urlencoded submission for a POST.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-relatedperson.html'>\U0001F4D8 US Core RelatedPerson profile.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` parameter (in the request body) to access another patient's data.\n"
+      operationId: RelatedPerson Search using POST
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                patient:
+                  type: integer
+                  example: 6077169
+                _id:
+                  type: string
+                  description: The logical resource id associated with RelatedPerson
+                  example: 456
+              required:
+              - patient
+      responses:
+        '200':
+          description: RelatedPerson bundle
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RelatedPerson'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    RelatedPerson:
+      x-us-core-profile: http://hl7.org/fhir/us/core/StructureDefinition/us-core-relatedperson
+      description: US Core RelatedPerson (new in US Core 6.1.0)
+      required:
+      - id
+      - resourceType
+      - active
+      - patient
+      - relationship
+      - name
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        id:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        active:
+          type: boolean
+        patient:
+          required:
+          - reference
+          type: object
+          properties:
+            reference:
+              minLength: 1
+              type: string
+            display:
+              minLength: 1
+              type: string
+        relationship:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: object
+            properties:
+              coding:
+                minItems: 1
+              text:
+                minLength: 1
+                type: string
+        name:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - family
+            type: object
+            properties:
+              use:
+                minLength: 1
+                type: string
+              family:
+                minLength: 1
+                type: string
+              given:
+                type: array
+        telecom:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - system
+            - value
+            type: object
+            properties:
+              system:
+                minLength: 1
+                type: string
+              value:
+                minLength: 1
+                type: string
+        address:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: object
+            properties:
+              use:
+                minLength: 1
+                type: string
+              line:
+                type: array
+              city:
+                minLength: 1
+                type: string
+              state:
+                minLength: 1
+                type: string
+              postalCode:
+                minLength: 1
+                type: string
+        meta:
+          required:
+          - tag
+          type: object
+          properties:
+            tag:
+              minItems: 1
+              uniqueItems: true
+              type: array
+              items:
+                required: null
+    Error:
+      required:
+      - text
+      - issue
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        issue:
+          type: array
+          items:
+            required:
+            - severity
+            - code
+            - diagnostics
+            type: object
+            properties:
+              severity:
+                minLength: 1
+                type: string
+              code:
+                minLength: 1
+                type: string
+              diagnostics:
+                minLength: 1
+                type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+externalDocs:
+  description: HL7 FHIR US Core IG STU 6.1.0
+  url: https://hl7.org/fhir/us/core/STU6.1/

@@ -1,0 +1,115 @@
+openapi: 3.2.0
+info:
+  version: 1.0.1
+  title: AdvancedMD Application Access Patient Demographics API
+  description: 'A collection of RESTful APIs that can be used to interact with AdvancedMD data. All APIs return JSON, with the exception of       the Episode Summaries API, which returns an HL7 C-CDA v3 (XML) document.
+
+
+    Supported Version: AdvancedMD v12.6
+
+    '
+servers:
+- url: https://ptapi.advancedmd.com/pt-api
+tags:
+- name: Patient Demographics
+paths:
+  /demographics/patients/{patientid}:
+    get:
+      security:
+      - API Key: []
+        Bearer Token: []
+      tags:
+      - Patient Demographics
+      parameters:
+      - name: patientid
+        description: The patient's unique identifier ("patientid") returned by the authenticate API.
+        in: path
+        required: true
+        x-example: '32745'
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful API call. Contains the patient's detailed demographic information.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The internal AdvancedMD identifier for the patient
+                    name:
+                      type: string
+                      description: The patient's full name
+                    dob:
+                      type: string
+                      description: The patients date of birth
+                    sex:
+                      type: string
+                      description: The patient's gender (M = male, F = female, U = unknown)
+                    language:
+                      type: string
+                      description: The patient's preferred language
+                    ethnicity:
+                      type: string
+                      description: The patient's ethnicity
+                    races:
+                      type: string
+                      description: The patient's race (or races)
+                    address:
+                      type: object
+                      properties:
+                        address1:
+                          type: string
+                        address2:
+                          type: string
+                        city:
+                          type: string
+                        state:
+                          type: string
+                        zip:
+                          type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/Too_many_requests'
+components:
+  responses:
+    Too_many_requests:
+      description: 'Too many requests: More details are provided in the response.'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: QuotaViolation
+              detail:
+                type: string
+                example: 'Too many requests: Please wait and try your request again in about a minute.'
+    Unauthorized:
+      description: 'Unauthorized: More details are provided in the response.'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: Unauthorized
+              detail:
+                type: string
+                example: Invalid API key or bearer token.
+  securitySchemes:
+    API_Key:
+      type: apiKey
+      in: header
+      name: apikey
+    Bearer_Token:
+      type: apiKey
+      in: header
+      name: Authorization

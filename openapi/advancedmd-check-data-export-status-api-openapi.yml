@@ -1,0 +1,161 @@
+openapi: 3.2.0
+info:
+  title: FHIR Bulk Check Data Export Status API
+  description: HealthAPIx OAuth v2.0 API Specs for Backend Services Token Generation and Bulk Data Export Procedure
+  version: '1.1'
+servers:
+- url: https://providerapi.advancedmd.com
+tags:
+- name: Check Data Export Status
+paths:
+  /v1/fhir-bulk/status:
+    get:
+      tags:
+      - Check Data Export Status
+      summary: Check "In progress", "Done" and "Cancel" statuses
+      description: To reach status "Done" request execution might take some time, so please be patient
+      security:
+      - bearerAuth: []
+      parameters:
+      - in: header
+        name: OfficeKey
+        description: OfficeKey
+        required: true
+        schema:
+          type: integer
+        example: 991900
+      - in: query
+        name: groupId
+        required: true
+        schema:
+          type: integer
+        example: 12345
+      - in: query
+        name: jobId
+        required: true
+        schema:
+          type: integer
+        example: 3739
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportStatus'
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportIsReady'
+        '400':
+          description: Error. Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationOutcome'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationOutcome'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationOutcomeWithID'
+        '500':
+          description: Export operation fails
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationOutcomeWithID'
+components:
+  schemas:
+    ExportIsReady:
+      type: object
+      properties:
+        transactionTime:
+          type: string
+        request:
+          type: string
+        requiresAccessToken:
+          type: boolean
+        output:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              url:
+                type: string
+        error:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              url:
+                type: string
+              count:
+                type: integer
+    OperationOutcome:
+      type: object
+      properties:
+        resourceType:
+          type: string
+        text:
+          type: object
+          properties:
+            status:
+              type: string
+            div:
+              type: string
+        issue:
+          type: array
+          items:
+            type: object
+            properties:
+              severity:
+                type: string
+              code:
+                type: string
+              diagnostics:
+                type: string
+    OperationOutcomeWithID:
+      type: object
+      properties:
+        resourceType:
+          type: string
+        id:
+          description: jobId
+          type: string
+        issue:
+          type: array
+          items:
+            type: object
+            properties:
+              severity:
+                type: string
+              code:
+                type: string
+              details:
+                type: object
+                properties:
+                  text:
+                    type: string
+    ExportStatus:
+      type: object
+      properties:
+        status:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

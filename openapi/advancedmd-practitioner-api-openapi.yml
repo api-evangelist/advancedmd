@@ -1,0 +1,341 @@
+openapi: 3.2.0
+info:
+  version: 6.1.0
+  title: FHIR Single API - US Core 6.1.0 Practitioner API
+  description: 'Fast Healthcare Interoperability Resources (HL7® FHIR®, pronounced "Fire") defines a set of "Resources" that represent granular clinical concepts. The resources can be managed in isolation, or aggregated into complex documents. Technically, FHIR is designed for the web; the resources are based on simple JSON structures, with an http-based RESTful protocol where each resource has predictable URL. Where possible, open internet standards are used for data representation. This OpenAPI specification is aligned to the HL7 FHIR US Core Implementation Guide STU 6.1.0 on FHIR R4 (v4.0.1).
+
+    '
+  x-fhir-version: 4.0.1
+  x-us-core-version: 6.1.0
+servers:
+- url: https://providerapi.advancedmd.com/v1/r4
+security:
+- bearerAuth: []
+tags:
+- name: Practitioner
+paths:
+  /Practitioner:
+    get:
+      tags:
+      - Practitioner
+      description: "This interaction searches a set of Practitioners based on some filter criteria. Search interactions take a series of query parameters for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-practitioner.html'>\U0001F4D8 FHIR documentation for Practitioner.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` query parameter to access another patient's data.\n"
+      parameters:
+      - name: _id
+        in: query
+        description: Logical id of the practitioner.
+        schema:
+          type: string
+        example: 3238
+      - name: identifier
+        in: query
+        description: A practitioner business identifier such as an NPI. Use token syntax `{system}|{value}` when the identifier system is known.
+        schema:
+          type: string
+        example: http://hl7.org/fhir/sid/us-npi|1234567890
+      - name: name
+        in: query
+        description: A server defined search that may match any HumanName field.
+        schema:
+          type: string
+        example: Smith
+      responses:
+        '200':
+          description: Success
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Practitioner'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /Practitioner/{id}:
+    get:
+      tags:
+      - Practitioner
+      description: "This interaction searches Practitioner based on practitioner id.Search interactions take practitioner id in path for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-practitioner.html'>\U0001F4D8 FHIR documentation for Practitioner.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` query parameter to access another patient's data.\n"
+      parameters:
+      - name: id
+        in: path
+        description: The logical resource id associated with the Resource.
+        required: true
+        schema:
+          type: integer
+          example: 3238
+      - name: patient
+        in: query
+        description: Patient ID to filter the search.
+        schema:
+          type: integer
+          example: 6077169
+      responses:
+        '200':
+          description: Success
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Practitioner'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      required:
+      - text
+      - issue
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        issue:
+          type: array
+          items:
+            required:
+            - severity
+            - code
+            - diagnostics
+            type: object
+            properties:
+              severity:
+                minLength: 1
+                type: string
+              code:
+                minLength: 1
+                type: string
+              diagnostics:
+                minLength: 1
+                type: string
+    Practitioner:
+      x-us-core-profile: http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner
+      required:
+      - active
+      - address
+      - id
+      - identifier
+      - meta
+      - name
+      - qualification
+      - resourceType
+      - text
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        id:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        identifier:
+          description: Business identifiers assigned to the practitioner, such as an NPI or another provider identifier.
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            description: Identifier with a namespace in `system` and a practitioner-specific value in `value`.
+            required:
+            - system
+            - value
+            type: object
+            properties:
+              system:
+                description: Namespace or URI that defines the identifier value.
+                minLength: 1
+                type: string
+              value:
+                description: Identifier value unique within the stated system.
+                minLength: 1
+                type: string
+        active:
+          type: boolean
+        name:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - family
+            type: object
+            properties:
+              family:
+                minLength: 1
+                type: string
+              given:
+                type: array
+                items:
+                  type: object
+                  properties: {}
+              prefix:
+                type: array
+                items:
+                  type: object
+                  properties: {}
+        address:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - city
+            - postalCode
+            - state
+            - use
+            type: object
+            properties:
+              use:
+                minLength: 1
+                type: string
+              line:
+                type: array
+                items:
+                  type: object
+                  properties: {}
+              city:
+                minLength: 1
+                type: string
+              state:
+                minLength: 1
+                type: string
+              postalCode:
+                minLength: 1
+                type: string
+        qualification:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: object
+            properties:
+              identifier:
+                minItems: 1
+                uniqueItems: true
+                type: array
+                items:
+                  required:
+                  - system
+                  - value
+                  type: object
+                  properties:
+                    system:
+                      minLength: 1
+                      type: string
+                    value:
+                      minLength: 1
+                      type: string
+              code:
+                required:
+                - coding
+                - text
+                type: object
+                properties:
+                  coding:
+                    minItems: 1
+                    uniqueItems: true
+                    type: array
+                    items:
+                      required:
+                      - code
+                      - display
+                      - system
+                      type: object
+                      properties:
+                        system:
+                          minLength: 1
+                          type: string
+                        code:
+                          minLength: 1
+                          type: string
+                        display:
+                          minLength: 1
+                          type: string
+                  text:
+                    minLength: 1
+                    type: string
+              period:
+                required:
+                - start
+                type: object
+                properties:
+                  start:
+                    minLength: 1
+                    type: string
+              issuer:
+                required:
+                - display
+                type: object
+                properties:
+                  display:
+                    minLength: 1
+                    type: string
+        meta:
+          required:
+          - tag
+          type: object
+          properties:
+            tag:
+              minItems: 1
+              uniqueItems: true
+              type: array
+              items:
+                required:
+                - code
+                - display
+                - system
+                type: object
+                properties:
+                  system:
+                    minLength: 1
+                    type: string
+                  code:
+                    minLength: 1
+                    type: string
+                  display:
+                    minLength: 1
+                    type: string
+      description: ''
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+externalDocs:
+  description: HL7 FHIR US Core IG STU 6.1.0
+  url: https://hl7.org/fhir/us/core/STU6.1/

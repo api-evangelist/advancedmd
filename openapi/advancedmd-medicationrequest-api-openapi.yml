@@ -1,0 +1,335 @@
+openapi: 3.2.0
+info:
+  version: 6.1.0
+  title: FHIR Single API - US Core 6.1.0 Medication Request API
+  description: 'Fast Healthcare Interoperability Resources (HL7® FHIR®, pronounced "Fire") defines a set of "Resources" that represent granular clinical concepts. The resources can be managed in isolation, or aggregated into complex documents. Technically, FHIR is designed for the web; the resources are based on simple JSON structures, with an http-based RESTful protocol where each resource has predictable URL. Where possible, open internet standards are used for data representation. This OpenAPI specification is aligned to the HL7 FHIR US Core Implementation Guide STU 6.1.0 on FHIR R4 (v4.0.1).
+
+    '
+  x-fhir-version: 4.0.1
+  x-us-core-version: 6.1.0
+servers:
+- url: https://providerapi.advancedmd.com/v1/r4
+security:
+- bearerAuth: []
+tags:
+- name: MedicationRequest
+paths:
+  /MedicationRequest:
+    get:
+      tags:
+      - MedicationRequest
+      description: "This interaction searches a set of MedicationRequests based on some filter criteria. Search interactions take a series of query parameters for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-medicationrequest.html'>\U0001F4D8 FHIR documentation for MedicationRequest.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` query parameter to access another patient's data.\n"
+      parameters:
+      - name: patient
+        in: query
+        description: Who this goal is intended for
+        schema:
+          type: string
+        examples:
+          patient_id:
+            summary: Logical patient id
+            value: '6077169'
+          patient_reference:
+            summary: Relative Patient reference
+            value: Patient/6077169
+      - name: intent
+        in: query
+        description: proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option
+        schema:
+          type: string
+        example: order
+      - name: status
+        in: query
+        description: active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown
+        schema:
+          type: string
+        example: active
+      responses:
+        '200':
+          description: Success
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MedicationRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /MedicationRequest/{id}:
+    get:
+      tags:
+      - MedicationRequest
+      description: "This interaction searches MedicationRequest based on medication request id.Search interactions take medication request id in path for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-medicationrequest.html'>\U0001F4D8 FHIR documentation for MedicationRequest.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` query parameter to access another patient's data.\n"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          example: 407
+      - name: patient
+        in: query
+        description: Patient ID to filter the search.
+        schema:
+          type: integer
+          example: 6077169
+      responses:
+        '200':
+          description: Success
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/MedicationRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /MedicationRequest/_search:
+    post:
+      tags:
+      - MedicationRequest
+      description: "This interaction searches a set of MedicationRequest based on some filter criteria. Search interactions take a series of parameters of name''=''value pairs encoded as an application/x-www-form-urlencoded submission for a POST.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-medicationrequest.html'>\U0001F4D8 FHIR documentation for MedicationRequest.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` parameter (in the request body) to access another patient's data.\n"
+      operationId: MedicationRequest Search using POST
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                patient:
+                  type: integer
+                  description: ' '
+                  example: 6077169
+                intent:
+                  type: string
+                  description: proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option
+                  example: order
+                status:
+                  type: string
+                  description: active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown
+                  example: active
+              required:
+              - patient
+              - intent
+      responses:
+        '200':
+          description: DiagnosticReport bundle
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MedicationRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      required:
+      - text
+      - issue
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        issue:
+          type: array
+          items:
+            required:
+            - severity
+            - code
+            - diagnostics
+            type: object
+            properties:
+              severity:
+                minLength: 1
+                type: string
+              code:
+                minLength: 1
+                type: string
+              diagnostics:
+                minLength: 1
+                type: string
+    MedicationRequest:
+      x-us-core-profile: http://hl7.org/fhir/us/core/StructureDefinition/us-core-medicationrequest
+      required:
+      - id
+      - text
+      - identifier
+      - status
+      - intent
+      - medicationReference
+      - subject
+      - encounter
+      - authoredOn
+      - requester
+      - reasonCode
+      - dosageInstruction
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        id:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        identifier:
+          description: Business identifiers assigned to the medication request by the ordering or source clinical system.
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            description: Identifier value for the medication request when the issuing system is implementation-defined.
+            required:
+            - value
+            type: object
+            properties:
+              value:
+                description: Business identifier value for the medication request.
+                minLength: 1
+                type: string
+        status:
+          minLength: 1
+          type: string
+        intent:
+          minLength: 1
+          type: string
+        medicationReference:
+          required:
+          - reference
+          - display
+          type: object
+          properties:
+            reference:
+              minLength: 1
+              type: string
+            display:
+              minLength: 1
+              type: string
+        subject:
+          required:
+          - reference
+          - display
+          type: object
+          properties:
+            reference:
+              minLength: 1
+              type: string
+            display:
+              minLength: 1
+              type: string
+        encounter:
+          required:
+          - reference
+          - display
+          type: object
+          properties:
+            reference:
+              minLength: 1
+              type: string
+            display:
+              minLength: 1
+              type: string
+        authoredOn:
+          minLength: 1
+          type: string
+        requester:
+          required:
+          - reference
+          - display
+          type: object
+          properties:
+            reference:
+              minLength: 1
+              type: string
+            display:
+              minLength: 1
+              type: string
+        reasonCode:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: object
+            properties:
+              coding:
+                minItems: 1
+                uniqueItems: true
+                type: array
+                items:
+                  required:
+                  - code
+                  - system
+                  type: object
+                  properties:
+                    system:
+                      minLength: 1
+                      type: string
+                    code:
+                      minLength: 1
+                      type: string
+                    display:
+                      minLength: 1
+                      type: string
+        dosageInstruction:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: object
+            properties:
+              sequence:
+                minLength: 1
+                type: string
+              text:
+                minLength: 1
+                type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+externalDocs:
+  description: HL7 FHIR US Core IG STU 6.1.0
+  url: https://hl7.org/fhir/us/core/STU6.1/

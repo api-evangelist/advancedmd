@@ -1,0 +1,89 @@
+openapi: 3.2.0
+info:
+  title: FHIR Bulk Obtain Access Token API
+  description: HealthAPIx OAuth v2.0 API Specs for Backend Services Token Generation and Bulk Data Export Procedure
+  version: '1.1'
+servers:
+- url: https://providerapi.advancedmd.com
+tags:
+- name: Obtain Access Token
+paths:
+  /v1/oauth2/token:
+    post:
+      tags:
+      - Obtain Access Token
+      summary: Request Backend Services Access Token
+      description: Trusted B2B Partner makes a request to the token endpoint by adding the following parameters describerd below
+      security: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                client_assertion:
+                  type: string
+                  example: jwt_token
+                client_assertion_type:
+                  type: string
+                  example: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+                scope:
+                  type: string
+                  example: system/*.read
+                grant_type:
+                  type: string
+                  example: client_credentials
+                username:
+                  type: string
+                  example: your_username
+                password:
+                  type: string
+                  example: your_password
+                officekey:
+                  type: integer
+                  example: your_officekey
+        required: true
+      responses:
+        '200':
+          description: Authorisation token (Bearer)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+        '400':
+          description: Error. Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400oAuth2'
+components:
+  schemas:
+    Error400oAuth2:
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+    Token:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: The access token value
+        token_type:
+          type: string
+          description: Type of the token is set to "Bearer"
+          enum:
+          - Bearer
+        expires_in:
+          type: integer
+          description: The lifetime in seconds of the access token
+        scope:
+          type: string
+          description: authorized scopes based on apps registered scopes
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

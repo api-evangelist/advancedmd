@@ -1,0 +1,488 @@
+openapi: 3.2.0
+info:
+  version: 6.1.0
+  title: FHIR Single API - US Core 6.1.0 Observation API
+  description: 'Fast Healthcare Interoperability Resources (HL7® FHIR®, pronounced "Fire") defines a set of "Resources" that represent granular clinical concepts. The resources can be managed in isolation, or aggregated into complex documents. Technically, FHIR is designed for the web; the resources are based on simple JSON structures, with an http-based RESTful protocol where each resource has predictable URL. Where possible, open internet standards are used for data representation. This OpenAPI specification is aligned to the HL7 FHIR US Core Implementation Guide STU 6.1.0 on FHIR R4 (v4.0.1).
+
+    '
+  x-fhir-version: 4.0.1
+  x-us-core-version: 6.1.0
+servers:
+- url: https://providerapi.advancedmd.com/v1/r4
+security:
+- bearerAuth: []
+tags:
+- name: Observation
+paths:
+  /Observation:
+    get:
+      tags:
+      - Observation
+      description: "This interaction searches a set of Observations based on some filter criteria. Search interactions take a series of query parameters for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/CapabilityStatement-us-core-server.html#observation'>\U0001F4D8 FHIR documentation for Observation.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` query parameter to access another patient's data.\n"
+      parameters:
+      - name: patient
+        in: query
+        description: The subject that the observation is about (if patient)
+        schema:
+          type: string
+        examples:
+          patient_id:
+            summary: Logical patient id
+            value: '6077169'
+          patient_reference:
+            summary: Relative Patient reference
+            value: Patient/6077169
+      - name: category
+        in: query
+        description: 'The classification of the observation. Common US Core Observation profile categories include:
+
+          - `laboratory` — US Core Laboratory Result Observation Profile
+
+          - `vital-signs` — US Core Vital Signs Profile (Blood Pressure, BMI, Body Height/Weight/Temperature, Head Circumference, Heart Rate, Pulse Oximetry, Respiratory Rate, and pediatric profiles)
+
+          - `social-history` — US Core Observation Occupation, Sexual Orientation, Smoking Status profiles
+
+          - `survey` — US Core Observation Screening Assessment, Pregnancy Intent/Status profiles
+
+          For screening and assessment use cases, US Core supports additional category values in addition to `survey`, including:
+
+          - `sdoh` - SDOH Assessment
+
+          - `functional-status` - Functional Status
+
+          - `disability-status` - Disability Status
+
+          - `cognitive-status` - Mental/Cognitive Status
+
+          '
+        schema:
+          type: string
+        example: laboratory
+      - name: code
+        in: query
+        description: 'The LOINC or SNOMED code of the observation type. Use token syntax `{system}|{code}` to specify a code system, or just the code value alone.
+
+
+          Common US Core Observation LOINC codes organized by profile:
+
+
+          **Vital Signs:**
+
+          - `8867-4` — Heart rate
+
+          - `8310-5` — Body temperature
+
+          - `8302-2` — Body height
+
+          - `29463-7` — Body weight
+
+          - `39156-5` — BMI
+
+          - `2708-6` — Oxygen saturation
+
+          - `9279-1` — Respiratory rate
+
+          - `85354-9` — Systolic and Diastolic BP
+
+
+          **Laboratory Results:**
+
+          - `2345-7` — Glucose (serum/plasma)
+
+          - `2951-2` — Sodium
+
+
+          **Social History:**
+
+          - `72166-2` — Smoking status
+
+          - `11341-5` — Occupation
+
+
+          **Sexual Orientation (US Core 6.1.0):**
+
+          - `76690-7` — Sexual orientation
+
+
+          **Pregnancy (US Core 6.1.0):**
+
+          - `82810-3` — Pregnancy status
+
+          - `76438-3` — Pregnancy intent
+
+          '
+        schema:
+          type: string
+        examples:
+          loinc_code_only:
+            value: 8867-4
+            description: Heart rate only
+          loinc_with_system:
+            value: http://loinc.org|8867-4
+            description: Heart rate with LOINC system
+          sexual_orientation:
+            value: http://loinc.org|76690-7
+            description: Sexual orientation (6.1.0)
+          pregnancy_status:
+            value: http://loinc.org|82810-3
+            description: Pregnancy status (6.1.0)
+      - name: date
+        in: query
+        description: Clinically relevant date/time of the observation. Supports prefixes `eq`, `lt`, `gt`, `ge`, `le` (e.g. `ge2024-01-01`). If the obtained element is a period, matches any date that falls within the period.
+        schema:
+          type: string
+          format: date
+        example: '2024-06-01'
+      - name: status
+        in: query
+        description: 'The status of the observation. Required for the `patient + category + status` SHALL search combination. Allowed values: `registered`, `preliminary`, `final`, `amended`, `corrected`, `cancelled`, `entered-in-error`, `unknown`.
+
+          '
+        schema:
+          type: string
+          enum:
+          - registered
+          - preliminary
+          - final
+          - amended
+          - corrected
+          - cancelled
+          - entered-in-error
+          - unknown
+        example: final
+      responses:
+        '200':
+          description: Success
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Observation'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /Observation/{id}:
+    get:
+      tags:
+      - Observation
+      description: "This interaction searches Observation based on observation id.Search interactions take observation id in path for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/CapabilityStatement-us-core-server.html#observation'>\U0001F4D8 FHIR documentation for Observation.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` query parameter to access another patient's data.\n"
+      parameters:
+      - name: id
+        in: path
+        description: The logical resource id associated with the Resource.
+        required: true
+        schema:
+          type: integer
+          example: 153649902
+      - name: patient
+        in: query
+        description: Patient ID to filter the search.
+        schema:
+          type: integer
+          example: 6077169
+      responses:
+        '200':
+          description: Success
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Observation'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /Observation/_search:
+    post:
+      tags:
+      - Observation
+      description: "This interaction searches a set of Observations based on some filter criteria. Search interactions take a series of parameters of name''=''value pairs encoded as an application/x-www-form-urlencoded submission for a POST.<p><a href='https://hl7.org/fhir/us/core/STU6.1/CapabilityStatement-us-core-server.html#observation'>\U0001F4D8 FHIR documentation for Observation.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` parameter (in the request body) to access another patient's data.\n"
+      operationId: Observations Search using POST
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                patient:
+                  type: integer
+                  description: The subject that the observation is about (if patient)
+                  example: 6077169
+                category:
+                  type: string
+                  description: 'The classification of the observation. Common US Core profiles use `laboratory`, `vital-signs`, `social-history`, `survey`, `exam`, `procedure`.
+
+                    Additional category values include `sdoh`, `functional-status`, `disability-status`, and `cognitive-status`.
+
+                    '
+                  example: laboratory
+                code:
+                  type: string
+                  description: 'The LOINC or SNOMED code of the observation type. Use token syntax `{system}|{code}` to specify a code system.
+
+                    Common US Core codes: vital signs (8867-4 heart rate, 8310-5 temperature, 8302-2 height, 29463-7 weight, 39156-5 BMI, 85354-9 BP), labs (2345-7 glucose, 2951-2 sodium), social history (72166-2 smoking status, 11341-5 occupation), sexual orientation (76690-7), pregnancy (82810-3 status, 76438-3 intent).
+
+                    '
+                  example: http://loinc.org|8867-4
+                date:
+                  type: string
+                  format: date
+                  description: Clinically relevant date/time of the observation. Supports prefixes `eq`, `lt`, `gt`, `ge`, `le`. If the obtained element is a period, matches any date that falls within the period.
+                  example: '2024-06-01'
+                status:
+                  type: string
+                  description: 'The status of the observation. Required for the `patient + category + status` SHALL search combination. Allowed values: `registered`, `preliminary`, `final`, `amended`, `corrected`, `cancelled`, `entered-in-error`, `unknown`.'
+                  enum:
+                  - registered
+                  - preliminary
+                  - final
+                  - amended
+                  - corrected
+                  - cancelled
+                  - entered-in-error
+                  - unknown
+                  example: final
+              required:
+              - patient
+      responses:
+        '200':
+          description: Observation bundle
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Observation'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Observation:
+      x-us-core-profiles:
+      - http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-lab
+      - http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-clinical-result
+      - http://hl7.org/fhir/us/core/StructureDefinition/pediatric-bmi-for-age
+      - http://hl7.org/fhir/us/core/StructureDefinition/pediatric-weight-for-height
+      - http://hl7.org/fhir/us/core/StructureDefinition/head-occipital-frontal-circumference-percentile
+      - http://hl7.org/fhir/us/core/StructureDefinition/us-core-body-height
+      - http://hl7.org/fhir/us/core/StructureDefinition/us-core-body-temperature
+      - http://hl7.org/fhir/us/core/StructureDefinition/us-core-body-weight
+      - http://hl7.org/fhir/us/core/StructureDefinition/us-core-bmi
+      - http://hl7.org/fhir/us/core/StructureDefinition/us-core-heart-rate
+      - http://hl7.org/fhir/us/core/StructureDefinition/us-core-pulse-oximetry
+      - http://hl7.org/fhir/us/core/StructureDefinition/us-core-respiratory-rate
+      - http://hl7.org/fhir/us/core/StructureDefinition/us-core-blood-pressure
+      - http://hl7.org/fhir/us/core/StructureDefinition/us-core-smokingstatus
+      required:
+      - category
+      - code
+      - effectiveDateTime
+      - encounter
+      - id
+      - meta
+      - resourceType
+      - status
+      - subject
+      - text
+      - valueQuantity
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        id:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        status:
+          minLength: 1
+          type: string
+        category:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: object
+            properties:
+              coding:
+                minItems: 1
+                uniqueItems: true
+                type: array
+                items:
+                  required:
+                  - code
+                  - display
+                  - system
+                  type: object
+                  properties:
+                    system:
+                      minLength: 1
+                      type: string
+                    code:
+                      minLength: 1
+                      type: string
+                    display:
+                      minLength: 1
+                      type: string
+        code:
+          required:
+          - coding
+          type: object
+          properties:
+            coding:
+              minItems: 1
+              uniqueItems: true
+              type: array
+              items:
+                required:
+                - code
+                - display
+                - system
+                type: object
+                properties:
+                  system:
+                    minLength: 1
+                    type: string
+                  code:
+                    minLength: 1
+                    type: string
+                  display:
+                    minLength: 1
+                    type: string
+        subject:
+          required:
+          - reference
+          type: object
+          properties:
+            reference:
+              minLength: 1
+              type: string
+        encounter:
+          required:
+          - reference
+          type: object
+          properties:
+            reference:
+              minLength: 1
+              type: string
+        effectiveDateTime:
+          minLength: 1
+          type: string
+        valueQuantity:
+          required:
+          - code
+          - system
+          - unit
+          - value
+          type: object
+          properties:
+            value:
+              type: number
+            unit:
+              minLength: 1
+              type: string
+            system:
+              minLength: 1
+              type: string
+            code:
+              minLength: 1
+              type: string
+        meta:
+          required:
+          - tag
+          type: object
+          properties:
+            tag:
+              minItems: 1
+              uniqueItems: true
+              type: array
+              items:
+                required:
+                - code
+                - display
+                - system
+                type: object
+                properties:
+                  system:
+                    minLength: 1
+                    type: string
+                  code:
+                    minLength: 1
+                    type: string
+                  display:
+                    minLength: 1
+                    type: string
+      description: ''
+    Error:
+      required:
+      - text
+      - issue
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        issue:
+          type: array
+          items:
+            required:
+            - severity
+            - code
+            - diagnostics
+            type: object
+            properties:
+              severity:
+                minLength: 1
+                type: string
+              code:
+                minLength: 1
+                type: string
+              diagnostics:
+                minLength: 1
+                type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+externalDocs:
+  description: HL7 FHIR US Core IG STU 6.1.0
+  url: https://hl7.org/fhir/us/core/STU6.1/

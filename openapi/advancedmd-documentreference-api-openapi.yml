@@ -1,0 +1,761 @@
+openapi: 3.2.0
+info:
+  version: 6.1.0
+  title: FHIR Single API - US Core 6.1.0 Document Reference API
+  description: 'Fast Healthcare Interoperability Resources (HL7® FHIR®, pronounced "Fire") defines a set of "Resources" that represent granular clinical concepts. The resources can be managed in isolation, or aggregated into complex documents. Technically, FHIR is designed for the web; the resources are based on simple JSON structures, with an http-based RESTful protocol where each resource has predictable URL. Where possible, open internet standards are used for data representation. This OpenAPI specification is aligned to the HL7 FHIR US Core Implementation Guide STU 6.1.0 on FHIR R4 (v4.0.1).
+
+    '
+  x-fhir-version: 4.0.1
+  x-us-core-version: 6.1.0
+servers:
+- url: https://providerapi.advancedmd.com/v1/r4
+security:
+- bearerAuth: []
+tags:
+- name: DocumentReference
+paths:
+  /DocumentReference:
+    get:
+      tags:
+      - DocumentReference
+      description: "This interaction searches a set of DocumentReferences based on some filter criteria. Search interactions take a series of query parameters for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-documentreference.html'>\U0001F4D8 FHIR documentation for DocumentReference.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` query parameter to access another patient's data.\n"
+      parameters:
+      - name: patient
+        in: query
+        description: Who/what is the subject of the document
+        schema:
+          type: string
+        examples:
+          patient_id:
+            summary: Logical patient id
+            value: '6077169'
+          patient_reference:
+            summary: Relative Patient reference
+            value: Patient/6077169
+      - name: _id
+        in: query
+        description: Logical id of the document reference
+        schema:
+          type: string
+        example: 153649915
+      - name: type
+        in: query
+        description: Kind of document (LOINC if possible)
+        schema:
+          type: string
+        example: 34133-9
+      - name: category
+        in: query
+        description: Categorization of document
+        schema:
+          type: string
+        example: clinical-note
+      - name: date
+        in: query
+        description: When this document reference was created
+        schema:
+          type: string
+          format: date
+        example: '2024-06-01'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DocumentReference'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /DocumentReference/{id}:
+    get:
+      tags:
+      - DocumentReference
+      description: "This interaction searches DocumentReference based on document reference id.Search interactions take document reference id in path for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-documentreference.html'>\U0001F4D8 FHIR documentation for DocumentReference.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` query parameter to access another patient's data.\n"
+      parameters:
+      - name: id
+        in: path
+        description: The logical resource id associated with the Resource.
+        required: true
+        schema:
+          type: integer
+          example: 153649915
+      - name: patient
+        in: query
+        description: Patient ID to filter the search.
+        schema:
+          type: integer
+          example: 6077169
+      responses:
+        '200':
+          description: Success
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/DocumentReference'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /DocumentReference/$docref:
+    get:
+      tags:
+      - DocumentReference
+      description: "This operation returns references to documents related to a patient and aligns to the US Core Fetch DocumentReference operation.<p><a href='https://hl7.org/fhir/us/core/STU6.1/OperationDefinition-docref.html'>\U0001F4C4 US Core $docref operation.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` query parameter to access another patient's data.\n"
+      operationId: DocumentReferenceFetchDocref
+      parameters:
+      - name: patient
+        in: query
+        required: true
+        description: The id of the patient resource.
+        schema:
+          type: integer
+        example: 6077169
+      - name: start
+        in: query
+        description: Start of the care date range for matching documents.
+        schema:
+          type: string
+          format: date-time
+        example: '2024-01-01T00:00:00Z'
+      - name: end
+        in: query
+        description: End of the care date range for matching documents.
+        schema:
+          type: string
+          format: date-time
+        example: '2024-12-31T23:59:59Z'
+      - name: type
+        in: query
+        description: Document type code such as the LOINC code for CCD.
+        schema:
+          type: string
+        example: 34133-9
+      - name: on-demand
+        in: query
+        description: Whether to request only on-demand documents.
+        schema:
+          type: boolean
+        example: false
+      - name: profile
+        in: query
+        description: Canonical profile URL used to request documents for a specific profile.
+        schema:
+          type: string
+        example: http://hl7.org/fhir/us/core/StructureDefinition/us-core-documentreference
+      responses:
+        '200':
+          description: Searchset bundle containing DocumentReference resources.
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DocumentReference'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /DocumentReference/_search:
+    post:
+      tags:
+      - DocumentReference
+      description: "This interaction searches a set of DocumentReferences based on some filter criteria. Search interactions take a series of parameters of name''=''value pairs encoded as an application/x-www-form-urlencoded submission for a POST.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-documentreference.html'>\U0001F4D8 FHIR documentation for DocumentReference.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` parameter (in the request body) to access another patient's data.\n"
+      operationId: DocumentReferences Search using POST
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                patient:
+                  type: integer
+                  description: Who/what is the subject of the document
+                  example: 6077169
+                _id:
+                  type: string
+                  description: Logical id of the document reference
+                  example: 153649915
+                type:
+                  type: string
+                  description: Kind of document (LOINC if possible)
+                  example: 34133-9
+                category:
+                  type: string
+                  description: Categorization of document
+                  example: clinical-note
+                date:
+                  type: string
+                  format: date
+                  description: When this document reference was created
+                  example: '2024-06-01'
+              required:
+              - patient
+      responses:
+        '200':
+          description: DocumentReference bundle
+          content:
+            application/fhir+json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DocumentReference'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      required:
+      - text
+      - issue
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        issue:
+          type: array
+          items:
+            required:
+            - severity
+            - code
+            - diagnostics
+            type: object
+            properties:
+              severity:
+                minLength: 1
+                type: string
+              code:
+                minLength: 1
+                type: string
+              diagnostics:
+                minLength: 1
+                type: string
+    DocumentReference:
+      x-us-core-profile: http://hl7.org/fhir/us/core/StructureDefinition/us-core-documentreference
+      required:
+      - authenticator
+      - author
+      - category
+      - contained
+      - content
+      - context
+      - custodian
+      - date
+      - description
+      - docStatus
+      - id
+      - identifier
+      - masterIdentifier
+      - meta
+      - relatesTo
+      - resourceType
+      - securityLabel
+      - status
+      - subject
+      - text
+      - type
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        id:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        contained:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - id
+            - resourceType
+            type: object
+            properties:
+              resourceType:
+                minLength: 1
+                type: string
+              id:
+                minLength: 1
+                type: string
+              name:
+                minItems: 1
+                uniqueItems: true
+                type: array
+                items:
+                  required:
+                  - family
+                  type: object
+                  properties:
+                    family:
+                      minLength: 1
+                      type: string
+                    given:
+                      type: array
+                      items:
+                        type: object
+                        properties: {}
+        masterIdentifier:
+          description: Master identifier assigned to this document by the publishing or source document system.
+          required:
+          - system
+          - value
+          type: object
+          properties:
+            system:
+              description: Namespace or URI that defines the master identifier value.
+              minLength: 1
+              type: string
+            value:
+              description: Master identifier value unique within the stated system.
+              minLength: 1
+              type: string
+        identifier:
+          description: Additional business identifiers associated with this document reference.
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            description: Identifier with a namespace in `system` and a resource-specific value in `value`.
+            required:
+            - system
+            - value
+            type: object
+            properties:
+              system:
+                description: Namespace or URI that defines the identifier value.
+                minLength: 1
+                type: string
+              value:
+                description: Identifier value unique within the stated system.
+                minLength: 1
+                type: string
+        status:
+          minLength: 1
+          type: string
+        docStatus:
+          minLength: 1
+          type: string
+        type:
+          required:
+          - coding
+          type: object
+          properties:
+            coding:
+              minItems: 1
+              uniqueItems: true
+              type: array
+              items:
+                required:
+                - code
+                - display
+                - system
+                type: object
+                properties:
+                  system:
+                    minLength: 1
+                    type: string
+                  code:
+                    minLength: 1
+                    type: string
+                  display:
+                    minLength: 1
+                    type: string
+        category:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: object
+            properties:
+              coding:
+                minItems: 1
+                uniqueItems: true
+                type: array
+                items:
+                  required:
+                  - code
+                  - display
+                  - system
+                  type: object
+                  properties:
+                    system:
+                      minLength: 1
+                      type: string
+                    code:
+                      minLength: 1
+                      type: string
+                    display:
+                      minLength: 1
+                      type: string
+        subject:
+          required:
+          - reference
+          type: object
+          properties:
+            reference:
+              minLength: 1
+              type: string
+        date:
+          minLength: 1
+          type: string
+        author:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - reference
+            type: object
+            properties:
+              reference:
+                minLength: 1
+                type: string
+        authenticator:
+          required:
+          - reference
+          type: object
+          properties:
+            reference:
+              minLength: 1
+              type: string
+        custodian:
+          required:
+          - reference
+          type: object
+          properties:
+            reference:
+              minLength: 1
+              type: string
+        relatesTo:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+            - code
+            type: object
+            properties:
+              code:
+                minLength: 1
+                type: string
+              target:
+                required:
+                - reference
+                type: object
+                properties:
+                  reference:
+                    minLength: 1
+                    type: string
+        description:
+          minLength: 1
+          type: string
+        securityLabel:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: object
+            properties:
+              coding:
+                minItems: 1
+                uniqueItems: true
+                type: array
+                items:
+                  required:
+                  - code
+                  - display
+                  - system
+                  type: object
+                  properties:
+                    system:
+                      minLength: 1
+                      type: string
+                    code:
+                      minLength: 1
+                      type: string
+                    display:
+                      minLength: 1
+                      type: string
+        content:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: object
+            properties:
+              attachment:
+                required:
+                - contentType
+                - creation
+                - hash
+                - language
+                - size
+                - title
+                - url
+                type: object
+                properties:
+                  contentType:
+                    minLength: 1
+                    type: string
+                  language:
+                    minLength: 1
+                    type: string
+                  url:
+                    minLength: 1
+                    type: string
+                  size:
+                    type: number
+                  hash:
+                    minLength: 1
+                    type: string
+                  title:
+                    minLength: 1
+                    type: string
+                  creation:
+                    minLength: 1
+                    type: string
+              format:
+                required:
+                - code
+                - display
+                - system
+                type: object
+                properties:
+                  system:
+                    minLength: 1
+                    type: string
+                  code:
+                    minLength: 1
+                    type: string
+                  display:
+                    minLength: 1
+                    type: string
+        context:
+          required:
+          - encounter
+          - event
+          - facilityType
+          - period
+          - practiceSetting
+          - related
+          - sourcePatientInfo
+          type: object
+          properties:
+            encounter:
+              minItems: 1
+              uniqueItems: true
+              type: array
+              items:
+                required:
+                - reference
+                type: object
+                properties:
+                  reference:
+                    minLength: 1
+                    type: string
+            event:
+              minItems: 1
+              uniqueItems: true
+              type: array
+              items:
+                type: object
+                properties:
+                  coding:
+                    minItems: 1
+                    uniqueItems: true
+                    type: array
+                    items:
+                      required:
+                      - code
+                      - display
+                      - system
+                      type: object
+                      properties:
+                        system:
+                          minLength: 1
+                          type: string
+                        code:
+                          minLength: 1
+                          type: string
+                        display:
+                          minLength: 1
+                          type: string
+            period:
+              required:
+              - end
+              - start
+              type: object
+              properties:
+                start:
+                  minLength: 1
+                  type: string
+                end:
+                  minLength: 1
+                  type: string
+            facilityType:
+              required:
+              - coding
+              type: object
+              properties:
+                coding:
+                  minItems: 1
+                  uniqueItems: true
+                  type: array
+                  items:
+                    required:
+                    - code
+                    - display
+                    - system
+                    type: object
+                    properties:
+                      system:
+                        minLength: 1
+                        type: string
+                      code:
+                        minLength: 1
+                        type: string
+                      display:
+                        minLength: 1
+                        type: string
+            practiceSetting:
+              required:
+              - coding
+              type: object
+              properties:
+                coding:
+                  minItems: 1
+                  uniqueItems: true
+                  type: array
+                  items:
+                    required:
+                    - code
+                    - display
+                    - system
+                    type: object
+                    properties:
+                      system:
+                        minLength: 1
+                        type: string
+                      code:
+                        minLength: 1
+                        type: string
+                      display:
+                        minLength: 1
+                        type: string
+            sourcePatientInfo:
+              required:
+              - reference
+              type: object
+              properties:
+                reference:
+                  minLength: 1
+                  type: string
+            related:
+              minItems: 1
+              uniqueItems: true
+              type: array
+              items:
+                required:
+                - reference
+                type: object
+                properties:
+                  reference:
+                    minLength: 1
+                    type: string
+                  identifier:
+                    required:
+                    - system
+                    - value
+                    type: object
+                    properties:
+                      system:
+                        minLength: 1
+                        type: string
+                      value:
+                        minLength: 1
+                        type: string
+        meta:
+          required:
+          - tag
+          type: object
+          properties:
+            tag:
+              minItems: 1
+              uniqueItems: true
+              type: array
+              items:
+                required:
+                - code
+                - display
+                - system
+                type: object
+                properties:
+                  system:
+                    minLength: 1
+                    type: string
+                  code:
+                    minLength: 1
+                    type: string
+                  display:
+                    minLength: 1
+                    type: string
+      description: ''
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+externalDocs:
+  description: HL7 FHIR US Core IG STU 6.1.0
+  url: https://hl7.org/fhir/us/core/STU6.1/

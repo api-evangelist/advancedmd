@@ -1,0 +1,118 @@
+openapi: 3.2.0
+info:
+  title: FHIR Bulk Start Bulk Data Export API
+  description: HealthAPIx OAuth v2.0 API Specs for Backend Services Token Generation and Bulk Data Export Procedure
+  version: '1.1'
+servers:
+- url: https://providerapi.advancedmd.com
+tags:
+- name: Start Bulk Data Export
+paths:
+  /v1/r4/Group/{groupId}/$export:
+    get:
+      tags:
+      - Start Bulk Data Export
+      summary: Start Bulk Data Export Job
+      security:
+      - bearerAuth: []
+      parameters:
+      - in: header
+        name: OfficeKey
+        description: OfficeKey
+        required: true
+        schema:
+          type: integer
+        example: 991900
+      - in: header
+        name: prefer
+        required: true
+        schema:
+          type: string
+        example: respond-async
+      - in: path
+        name: groupId
+        description: groupId
+        required: true
+        schema:
+          type: integer
+        example: 12345
+      - in: query
+        name: _type
+        description: 'Specifies a comma-separated list of resource types to include. If this parameter is absent, all resource types the user has authorization to access.
+
+          '
+        schema:
+          type: string
+        example: Patient,CareTeam
+      - in: query
+        name: _since
+        description: 'Only resources that were last updated on or after the given time will be included.
+
+          '
+        schema:
+          type: string
+        example: '2019-10-25T11:14:00Z'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/fhir+json:
+              schema:
+                $ref: '#/components/schemas/ExportInfo'
+        '400':
+          description: Error. Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationOutcome'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationOutcome'
+        '503':
+          description: Service Temporarily Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationOutcome'
+components:
+  schemas:
+    OperationOutcome:
+      type: object
+      properties:
+        resourceType:
+          type: string
+        text:
+          type: object
+          properties:
+            status:
+              type: string
+            div:
+              type: string
+        issue:
+          type: array
+          items:
+            type: object
+            properties:
+              severity:
+                type: string
+              code:
+                type: string
+              diagnostics:
+                type: string
+    ExportInfo:
+      type: object
+      properties:
+        status:
+          type: string
+        groupId:
+          type: integer
+        jobId:
+          type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

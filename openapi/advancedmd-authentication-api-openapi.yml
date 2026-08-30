@@ -1,0 +1,144 @@
+openapi: 3.2.0
+info:
+  version: 1.0.1
+  title: AdvancedMD Application Access Authentication API
+  description: 'A collection of RESTful APIs that can be used to interact with AdvancedMD data. All APIs return JSON, with the exception of       the Episode Summaries API, which returns an HL7 C-CDA v3 (XML) document.
+
+
+    Supported Version: AdvancedMD v12.6
+
+    '
+servers:
+- url: https://ptapi.advancedmd.com/pt-api
+tags:
+- name: Authentication
+paths:
+  /authenticate:
+    post:
+      security:
+      - API Key: []
+      tags:
+      - Authentication
+      description: 'Log in using AdvancedMD credentials (username, password, office key)
+
+        '
+      responses:
+        '200':
+          description: Successful authentication will contain a list of patients that the logged in user has access to, as well as the token that can be used for other APIs.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  patientdata:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        patientid:
+                          type: integer
+                          x-example: 12345
+                        name:
+                          type: string
+                          example: DOE,JOHN Q
+                        address1:
+                          type: string
+                          example: APARTMENT 3G
+                        address2:
+                          type: string
+                          example: 1234 E 6TH ST
+                        city:
+                          type: string
+                          example: SPRINGFIELD
+                        state:
+                          type: string
+                          example: MO
+                        zipcode:
+                          type: string
+                          example: 12345-6789
+                        dateofbirth:
+                          type: string
+                          description: Patient's date of birth
+                          example: '1961-05-24T00:00:00'
+                  token:
+                    type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/Too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - username
+              - password
+              - officekey
+              properties:
+                username:
+                  type: string
+                  example: john.aagard.5555@gmail.com
+                  description: 'The user''s username (email address).
+
+                    '
+                password:
+                  type: string
+                  example: Password!1
+                  description: 'The user''s password.
+
+                    '
+                officekey:
+                  type: string
+                  example: '970024'
+                  description: 'The office key of the practice that holds the patient''s data.
+
+                    '
+        description: 'The username (email address) and password that the user would use
+
+          to log in to the practice''s Patient Portal, along with the practice''s
+
+          office key.
+
+          '
+components:
+  responses:
+    Too_many_requests:
+      description: 'Too many requests: More details are provided in the response.'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: QuotaViolation
+              detail:
+                type: string
+                example: 'Too many requests: Please wait and try your request again in about a minute.'
+    Unauthorized:
+      description: 'Unauthorized: More details are provided in the response.'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: Unauthorized
+              detail:
+                type: string
+                example: Invalid API key or bearer token.
+    Forbidden:
+      description: 'Forbidden: Generally returned when  invalid credentials are supplied when attempting to authorize the user.'
+  securitySchemes:
+    API_Key:
+      type: apiKey
+      in: header
+      name: apikey
+    Bearer_Token:
+      type: apiKey
+      in: header
+      name: Authorization
