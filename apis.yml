@@ -205,7 +205,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-cancel-bulk-data-export-api
@@ -238,7 +238,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-careteam-api
@@ -270,7 +270,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-check-data-export-status-api
@@ -303,7 +303,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-clinical-api
@@ -335,7 +335,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-condition-api
@@ -367,7 +367,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-coverage-api
@@ -399,7 +399,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-device-api
@@ -431,7 +431,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-diagnosticreport-api
@@ -463,7 +463,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-encounter-api
@@ -495,7 +495,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-get-fhir-entity-api
@@ -527,7 +527,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-goal-api
@@ -559,7 +559,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-immunization-api
@@ -591,7 +591,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-location-api
@@ -623,7 +623,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-medicationdispense-api
@@ -655,7 +655,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-observation-api
@@ -687,7 +687,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-obtain-access-token-api
@@ -719,7 +719,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-organization-api
@@ -751,7 +751,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-patient-api
@@ -760,6 +760,8 @@ apis:
   humanURL: https://fhir.advancedmd.com/fhir/single-api
   baseURL: https://providerapi.advancedmd.com/v1/r4
   tags:
+  - Patients
+  tags_raw:
   - Patient
   properties:
   - type: OpenAPI
@@ -783,7 +785,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-patient-demographics-api
@@ -815,7 +817,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-practitioner-api
@@ -847,7 +849,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-procedure-api
@@ -879,7 +881,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-provenance-api
@@ -911,7 +913,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-relatedperson-api
@@ -943,7 +945,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-start-bulk-data-export-api
@@ -976,7 +978,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-allergy-intolerance-api
@@ -985,6 +987,8 @@ apis:
   humanURL: https://fhir.advancedmd.com/fhir/bulk-api
   baseURL: https://providerapi.advancedmd.com
   tags:
+  - AllergyIntolerance
+  tags_raw:
   - Allergy Intolerance
   properties:
   - type: OpenAPI
@@ -1008,7 +1012,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-care-plan-api
@@ -1017,6 +1021,8 @@ apis:
   humanURL: https://fhir.advancedmd.com/fhir/bulk-api
   baseURL: https://providerapi.advancedmd.com
   tags:
+  - CarePlan
+  tags_raw:
   - Care plan
   properties:
   - type: OpenAPI
@@ -1040,7 +1046,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-ccda-api
@@ -1049,6 +1055,8 @@ apis:
   humanURL: https://fhir.advancedmd.com/fhir/bulk-api
   baseURL: https://providerapi.advancedmd.com
   tags:
+  - C-CDA
+  tags_raw:
   - CCDA
   properties:
   - type: OpenAPI
@@ -1072,7 +1080,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-document-reference-api
@@ -1081,6 +1089,8 @@ apis:
   humanURL: https://fhir.advancedmd.com/fhir/bulk-api
   baseURL: https://providerapi.advancedmd.com
   tags:
+  - DocumentReference
+  tags_raw:
   - Document Reference
   properties:
   - type: OpenAPI
@@ -1104,7 +1114,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 - aid: advancedmd:advancedmd-medication-request-api
@@ -1113,6 +1123,8 @@ apis:
   humanURL: https://fhir.advancedmd.com/fhir/bulk-api
   baseURL: https://providerapi.advancedmd.com
   tags:
+  - MedicationRequest
+  tags_raw:
   - Medication Request
   properties:
   - type: OpenAPI
@@ -1136,7 +1148,7 @@ apis:
   - type: Documentation
     url: https://fhir.advancedmd.com/fhir/bulk-api
   - type: Swagger
-    url: openapi/advancedmd-application-access-apis-swagger.json
+    url: openapi/_original/advancedmd-application-access-apis-swagger.json
   - type: Documentation
     url: https://fhir.advancedmd.com/getting-started
 common:
