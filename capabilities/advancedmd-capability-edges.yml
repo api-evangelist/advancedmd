@@ -25,7 +25,8 @@ edges:
     and health data sharing, i.e. healthcare interoperability operations. The OperationOutcome/ExportInfo
     schemas confirm a FHIR surface rather than a generic file-export utility.
 - tag: DocumentReference
-  spec_file: advancedmd-documentreference-api-openapi.yml
+  spec_file: advancedmd-document-reference-api-openapi.yml
+  reanchored_from: advancedmd-documentreference-api-openapi.yml
   capability_id: BC-2900.60
   capability_id_l1: BC-2900
   capability_name: Healthcare Interoperability Operations
@@ -45,7 +46,8 @@ edges:
     provider-side pharmacy and medication management. Ambulatory vendor makes inpatient vs outpatient
     sub-capability ambiguous, so L1 only.
 - tag: C-CDA
-  spec_file: advancedmd-c-cda-api-openapi.yml
+  spec_file: advancedmd-ccda-api-openapi.yml
+  reanchored_from: advancedmd-c-cda-api-openapi.yml
   capability_id: BC-2900.60
   capability_id_l1: BC-2900
   capability_name: Healthcare Interoperability Operations
