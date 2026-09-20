@@ -11,7 +11,7 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 9
+edge_count: 12
 edges:
 - tag: Start Bulk Data Export
   spec_file: advancedmd-start-bulk-data-export-api-openapi.yml
@@ -24,6 +24,18 @@ edges:
   reason: FHIR R4 Group $export bulk data export from an EHR vendor is the operation of FHIR endpoints
     and health data sharing, i.e. healthcare interoperability operations. The OperationOutcome/ExportInfo
     schemas confirm a FHIR surface rather than a generic file-export utility.
+- tag: AllergyIntolerance
+  spec_file: advancedmd-allergy-intolerance-api-openapi.yml
+  capability_id: BC-2900.60
+  capability_id_l1: BC-2900
+  capability_name: Healthcare Interoperability Operations
+  confidence: 0.75
+  evidence: 'FHIR Single API - US Core 6.1.0 ... GET /AllergyIntolerance ... schemas: AllergyIntolerance'
+  reason: A FHIR US Core resource endpoint exposing allergy data for interoperability. The operations
+    are read/search of a standard FHIR resource, which is the provider-side healthcare interoperability
+    surface (FHIR endpoints), not clinical documentation authoring.
+  recovered_from: healthcare-vertical-edges.json
+  reanchored_from: advancedmd-allergyintolerance-api-openapi.yml
 - tag: DocumentReference
   spec_file: advancedmd-document-reference-api-openapi.yml
   reanchored_from: advancedmd-documentreference-api-openapi.yml
@@ -68,6 +80,18 @@ edges:
     FHIR endpoints for exchanging provider/care-team record data, i.e. healthcare interoperability operations,
     rather than the act of coordinating care itself (no assignment, referral or case-management operations
     exist).
+- tag: Clinical
+  spec_file: advancedmd-clinical-api-openapi.yml
+  capability_id: BC-2830
+  capability_id_l1: BC-2830
+  capability_name: Clinical Documentation Management
+  confidence: 0.7
+  evidence: 'GET /clinical/problems, GET /clinical/orders, GET /clinical/medications ... schemas: Problem,
+    Order, Assessment, VitalSign, Immunization'
+  reason: Broad access to the active clinical record — problems, assessments, orders, medications, vitals
+    — which is the EHR clinical documentation domain. L2 left null since it spans notes, order entry and
+    results.
+  recovered_from: healthcare-vertical-edges.json
 - tag: Condition
   spec_file: advancedmd-condition-api-openapi.yml
   capability_id: BC-2900.60
@@ -98,6 +122,17 @@ edges:
   evidence: '"FHIR Single API - US Core 6.1.0 Encounter API", "GET /Encounter", "GET /Encounter/{id}"'
   reason: Read-only FHIR Encounter endpoint exposing encounter records for external consumption; no scheduling,
     registration or admission operations, so interoperability operations is the supported reading.
+- tag: Get FHIR Entity
+  spec_file: advancedmd-get-fhir-entity-api-openapi.yml
+  capability_id: BC-2900.60
+  capability_id_l1: BC-2900
+  capability_name: Healthcare Interoperability Operations
+  confidence: 0.7
+  evidence: 'GET /v1/fhir-bulk/fhir-resource/{batchId}/{fhirEntity}  "Get Single FHIR Entity data"; description:
+    "Bulk Data Export Procedure"'
+  reason: FHIR Bulk Data export retrieval — operation of FHIR endpoints and bulk health data sharing,
+    i.e. healthcare interoperability operations. No clinical or financial workflow is performed.
+  recovered_from: healthcare-vertical-edges.json
 - tag: Patient Demographics
   spec_file: advancedmd-patient-demographics-api-openapi.yml
   capability_id: BC-2800.20
