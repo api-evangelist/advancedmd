@@ -2,9 +2,7 @@ openapi: 3.2.0
 info:
   version: 6.1.0
   title: FHIR Single API - US Core 6.1.0 Patient API
-  description: 'Fast Healthcare Interoperability Resources (HL7® FHIR®, pronounced "Fire") defines a set of "Resources" that represent granular clinical concepts. The resources can be managed in isolation, or aggregated into complex documents. Technically, FHIR is designed for the web; the resources are based on simple JSON structures, with an http-based RESTful protocol where each resource has predictable URL. Where possible, open internet standards are used for data representation. This OpenAPI specification is aligned to the HL7 FHIR US Core Implementation Guide STU 6.1.0 on FHIR R4 (v4.0.1).
-
-    '
+  description: Fast Healthcare Interoperability Resources (HL7® FHIR®, pronounced "Fire") defines a set of "Resources" that represent granular clinical concepts.
   x-fhir-version: 4.0.1
   x-us-core-version: 6.1.0
 servers:
@@ -18,7 +16,9 @@ paths:
     get:
       tags:
       - Patient
-      description: 'This interaction searches a set of Patients based on some filter criteria. Search interactions take a series of query parameters for a GET.<p><a href=''https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-patient.html''>📘 FHIR documentation for Patient.</a></p>
+      description: 'This interaction searches a set of Patients based on some filter criteria. Search interactions take a series of query parameters for a GET.
+
+        📘 FHIR documentation for Patient.
 
 
         🛡️ **Authorization behavior:**
@@ -27,9 +27,7 @@ paths:
 
         - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.
 
-        - **Practitioners** (using `user/*.read` scope) must explicitly pass the `_id` query parameter to access another patient''s data.
-
-        '
+        - **Practitioners** (using `user/*.read` scope) must explicitly pass the `_id` query parameter to access another patient''s data.'
       parameters:
       - name: _id
         in: query
@@ -83,11 +81,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Get patient
+      x-summary-source: derived
+      operationId: getPatient
+      x-operation-id-source: derived
   /Patient/{id}:
     get:
       tags:
       - Patient
-      description: 'This interaction searches Patient based on patient id. Search interactions take patient id in path for a GET.<p><a href=''https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-patient.html''>📘 FHIR documentation for Patient.</a></p>
+      description: 'This interaction searches Patient based on patient id. Search interactions take patient id in path for a GET.
+
+        📘 FHIR documentation for Patient.
 
 
         🛡️ **Authorization behavior:**
@@ -96,9 +100,7 @@ paths:
 
         - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.
 
-        - **Practitioners** (using `user/*.read` scope) must explicitly pass the `id` path parameter to access another patient''s data.
-
-        '
+        - **Practitioners** (using `user/*.read` scope) must explicitly pass the `id` path parameter to access another patient''s data.'
       parameters:
       - name: id
         in: path
@@ -126,11 +128,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Get patient by id
+      x-summary-source: derived
+      operationId: getPatientById
+      x-operation-id-source: derived
   /Patient/_search:
     post:
       tags:
       - Patient
-      description: 'This interaction searches a set of Patients based on some filter criteria. Search interactions take a series of parameters of name''''=''''value pairs encoded as an application/x-www-form-urlencoded submission for a POST.<p><a href=''https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-patient.html''>📘 FHIR documentation for Patient.</a></p>
+      description: 'This interaction searches a set of Patients based on some filter criteria. Search interactions take a series of parameters of name''''=''''value pairs encoded as an application/x-www-form-urlencoded submission for a POST.
+
+        📘 FHIR documentation for Patient.
 
 
         🛡️ **Authorization behavior:**
@@ -139,9 +147,7 @@ paths:
 
         - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.
 
-        - **Practitioners** (using `user/*.read` scope) must include `_id` in the request body to query another patient.
-
-        '
+        - **Practitioners** (using `user/*.read` scope) must include `_id` in the request body to query another patient.'
       operationId: Patients Search using POST
       requestBody:
         content:
@@ -193,6 +199,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Patients search using POST
+      x-summary-source: derived
 components:
   schemas:
     Error:

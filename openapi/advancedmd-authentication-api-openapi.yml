@@ -2,12 +2,10 @@ openapi: 3.2.0
 info:
   version: 1.0.1
   title: AdvancedMD Application Access Authentication API
-  description: 'A collection of RESTful APIs that can be used to interact with AdvancedMD data. All APIs return JSON, with the exception of       the Episode Summaries API, which returns an HL7 C-CDA v3 (XML) document.
+  description: 'A collection of RESTful APIs that can be used to interact with AdvancedMD data. All APIs return JSON, with the exception of the Episode Summaries API, which returns an HL7 C-CDA v3 (XML) document.
 
 
-    Supported Version: AdvancedMD v12.6
-
-    '
+    Supported Version: AdvancedMD v12.6'
 servers:
 - url: https://ptapi.advancedmd.com/pt-api
 tags:
@@ -19,9 +17,7 @@ paths:
       - API Key: []
       tags:
       - Authentication
-      description: 'Log in using AdvancedMD credentials (username, password, office key)
-
-        '
+      description: Log in using AdvancedMD credentials (username, password, office key)
       responses:
         '200':
           description: Successful authentication will contain a list of patients that the logged in user has access to, as well as the token that can be used for other APIs.
@@ -103,8 +99,14 @@ paths:
           office key.
 
           '
+      summary: Create authenticate
+      x-summary-source: derived
+      operationId: postAuthenticate
+      x-operation-id-source: derived
 components:
   responses:
+    Forbidden:
+      description: 'Forbidden: Generally returned when  invalid credentials are supplied when attempting to authorize the user.'
     Too_many_requests:
       description: 'Too many requests: More details are provided in the response.'
       content:
@@ -131,8 +133,6 @@ components:
               detail:
                 type: string
                 example: Invalid API key or bearer token.
-    Forbidden:
-      description: 'Forbidden: Generally returned when  invalid credentials are supplied when attempting to authorize the user.'
   securitySchemes:
     API_Key:
       type: apiKey

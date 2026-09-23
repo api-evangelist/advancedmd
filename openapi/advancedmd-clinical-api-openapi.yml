@@ -2,12 +2,10 @@ openapi: 3.2.0
 info:
   version: 1.0.1
   title: AdvancedMD Application Access Clinical API
-  description: 'A collection of RESTful APIs that can be used to interact with AdvancedMD data. All APIs return JSON, with the exception of       the Episode Summaries API, which returns an HL7 C-CDA v3 (XML) document.
+  description: 'A collection of RESTful APIs that can be used to interact with AdvancedMD data. All APIs return JSON, with the exception of the Episode Summaries API, which returns an HL7 C-CDA v3 (XML) document.
 
 
-    Supported Version: AdvancedMD v12.6
-
-    '
+    Supported Version: AdvancedMD v12.6'
 servers:
 - url: https://ptapi.advancedmd.com/pt-api
 tags:
@@ -37,6 +35,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/Too_many_requests'
+      summary: Get clinical allergies
+      x-summary-source: derived
+      operationId: getClinicalAllergies
+      x-operation-id-source: derived
   /clinical/assessments:
     get:
       security:
@@ -61,6 +63,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/Too_many_requests'
+      summary: Get clinical assessments
+      x-summary-source: derived
+      operationId: getClinicalAssessments
+      x-operation-id-source: derived
   /clinical/goals:
     get:
       security:
@@ -85,6 +91,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/Too_many_requests'
+      summary: Get clinical goals
+      x-summary-source: derived
+      operationId: getClinicalGoals
+      x-operation-id-source: derived
   /clinical/healthconcerns:
     get:
       security:
@@ -109,6 +119,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/Too_many_requests'
+      summary: Get clinical healthconcerns
+      x-summary-source: derived
+      operationId: getClinicalHealthconcerns
+      x-operation-id-source: derived
   /clinical/immunizations:
     get:
       security:
@@ -133,6 +147,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/Too_many_requests'
+      summary: Get clinical immunizations
+      x-summary-source: derived
+      operationId: getClinicalImmunizations
+      x-operation-id-source: derived
   /clinical/implanteddevices:
     get:
       security:
@@ -157,6 +175,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/Too_many_requests'
+      summary: Get clinical implanteddevices
+      x-summary-source: derived
+      operationId: getClinicalImplanteddevices
+      x-operation-id-source: derived
   /clinical/medications:
     get:
       security:
@@ -181,6 +203,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/Too_many_requests'
+      summary: Get clinical medications
+      x-summary-source: derived
+      operationId: getClinicalMedications
+      x-operation-id-source: derived
   /clinical/orders:
     get:
       security:
@@ -205,6 +231,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/Too_many_requests'
+      summary: Get clinical orders
+      x-summary-source: derived
+      operationId: getClinicalOrders
+      x-operation-id-source: derived
   /clinical/plans:
     get:
       security:
@@ -229,6 +259,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/Too_many_requests'
+      summary: Get clinical plans
+      x-summary-source: derived
+      operationId: getClinicalPlans
+      x-operation-id-source: derived
   /clinical/problems:
     get:
       security:
@@ -253,6 +287,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/Too_many_requests'
+      summary: Get clinical problems
+      x-summary-source: derived
+      operationId: getClinicalProblems
+      x-operation-id-source: derived
   /clinical/procedures:
     get:
       security:
@@ -277,6 +315,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/Too_many_requests'
+      summary: Get clinical procedures
+      x-summary-source: derived
+      operationId: getClinicalProcedures
+      x-operation-id-source: derived
   /clinical/providers:
     get:
       security:
@@ -301,6 +343,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/Too_many_requests'
+      summary: Get clinical providers
+      x-summary-source: derived
+      operationId: getClinicalProviders
+      x-operation-id-source: derived
   /clinical/results:
     get:
       security:
@@ -325,6 +371,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/Too_many_requests'
+      summary: Get clinical results
+      x-summary-source: derived
+      operationId: getClinicalResults
+      x-operation-id-source: derived
   /clinical/smokingstatus:
     get:
       security:
@@ -349,6 +399,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/Too_many_requests'
+      summary: Get clinical smokingstatus
+      x-summary-source: derived
+      operationId: getClinicalSmokingstatus
+      x-operation-id-source: derived
   /clinical/vitalsigns:
     get:
       security:
@@ -373,121 +427,22 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/Too_many_requests'
+      summary: Get clinical vitalsigns
+      x-summary-source: derived
+      operationId: getClinicalVitalsigns
+      x-operation-id-source: derived
 components:
   schemas:
-    Problem:
+    Procedure:
       type: object
       properties:
+        date:
+          type: string
         code:
           type: string
-          description: The ICD or SNOMED code representing the problem.
-          example: '219376002'
-        codeSystem:
-          type: string
-          description: The codeset (ICD-9/ICD-10/SNOMED) that the code comes from.
-          example: SNOMED
-        name:
-          type: string
-          description: The full name of the problem.
-          example: 219427009-War injury due to lasers
-        description:
-          type: string
-          description: Description of the problem.
-          example: War injury due to lasers
-        status:
-          type: string
-          description: Problem status (current/historical).
-          example: Current
-        date:
-          type: string
-          description: The codeset (ICD-9/ICD-10/SNOMED) that the code comes from.
-          example: '20180510'
-    Order:
-      type: object
-      properties:
-        date:
-          type: string
-        testDescription:
-          type: string
-        loincCode:
-          type: string
-    HealthConcern:
-      type: object
-      properties:
-        concern:
-          type: string
-        date:
-          type: string
-    Immunization:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        date:
-          type: string
-        status:
-          type: string
-        quantity:
-          type: string
-        unit:
-          type: string
-        lotNumber:
-          type: string
-        cvxCode:
-          type: string
-        details:
-          type: string
-    VitalSign:
-      type: object
-      properties:
-        date:
-          type: string
-        measurements:
-          type: array
-          items:
-            $ref: '#/components/schemas/VitalMeasurment'
-    SmokingStatus:
-      type: object
-      properties:
-        value:
+        type:
           type: string
         description:
-          type: string
-        date:
-          type: string
-    Assessment:
-      type: object
-      properties:
-        date:
-          type: string
-        assessment:
-          type: string
-    Provider:
-      type: object
-      properties:
-        npiNumber:
-          type: string
-        address1:
-          type: string
-        address2:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        zip:
-          type: string
-        country:
-          type: string
-        title:
-          type: string
-        lastName:
-          type: string
-        firstName:
-          type: string
-        middleName:
           type: string
     ImplantedDevice:
       type: object
@@ -518,16 +473,95 @@ components:
           type: string
         date:
           type: string
-    Plan:
+    Order:
       type: object
       properties:
         date:
           type: string
-        key:
+        testDescription:
           type: string
-        plan:
+        loincCode:
           type: string
+    Result:
+      type: object
+      properties:
         code:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        unit:
+          type: string
+        interpretationCode:
+          type: string
+        range:
+          type: string
+        rangeFrom:
+          type: string
+        rangeTo:
+          type: string
+    ResultSet:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        date:
+          type: string
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Result'
+    HealthConcern:
+      type: object
+      properties:
+        concern:
+          type: string
+        date:
+          type: string
+    SmokingStatus:
+      type: object
+      properties:
+        value:
+          type: string
+        description:
+          type: string
+        date:
+          type: string
+    Allergy:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+        allergyDate:
+          type: string
+        reaction:
+          type: string
+        rxNormId:
+          type: string
+    VitalSign:
+      type: object
+      properties:
+        date:
+          type: string
+        measurements:
+          type: array
+          items:
+            $ref: '#/components/schemas/VitalMeasurment'
+    VitalMeasurment:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        metricValue:
           type: string
     Medication:
       type: object
@@ -550,19 +584,97 @@ components:
           type: string
         type:
           type: string
-    ResultSet:
+    Immunization:
       type: object
       properties:
-        code:
+        id:
           type: string
         name:
           type: string
         date:
           type: string
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Result'
+        status:
+          type: string
+        quantity:
+          type: string
+        unit:
+          type: string
+        lotNumber:
+          type: string
+        cvxCode:
+          type: string
+        details:
+          type: string
+    Provider:
+      type: object
+      properties:
+        npiNumber:
+          type: string
+        address1:
+          type: string
+        address2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+        country:
+          type: string
+        title:
+          type: string
+        lastName:
+          type: string
+        firstName:
+          type: string
+        middleName:
+          type: string
+    Problem:
+      type: object
+      properties:
+        code:
+          type: string
+          description: The ICD or SNOMED code representing the problem.
+          example: '219376002'
+        codeSystem:
+          type: string
+          description: The codeset (ICD-9/ICD-10/SNOMED) that the code comes from.
+          example: SNOMED
+        name:
+          type: string
+          description: The full name of the problem.
+          example: 219427009-War injury due to lasers
+        description:
+          type: string
+          description: Description of the problem.
+          example: War injury due to lasers
+        status:
+          type: string
+          description: Problem status (current/historical).
+          example: Current
+        date:
+          type: string
+          description: The codeset (ICD-9/ICD-10/SNOMED) that the code comes from.
+          example: '20180510'
+    Assessment:
+      type: object
+      properties:
+        date:
+          type: string
+        assessment:
+          type: string
+    Plan:
+      type: object
+      properties:
+        date:
+          type: string
+        key:
+          type: string
+        plan:
+          type: string
+        code:
+          type: string
     Goal:
       type: object
       properties:
@@ -570,60 +682,31 @@ components:
           type: string
         date:
           type: string
-    Result:
-      type: object
-      properties:
-        code:
-          type: string
-        name:
-          type: string
-        value:
-          type: string
-        unit:
-          type: string
-        interpretationCode:
-          type: string
-        range:
-          type: string
-        rangeFrom:
-          type: string
-        rangeTo:
-          type: string
-    Allergy:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        status:
-          type: string
-        allergyDate:
-          type: string
-        reaction:
-          type: string
-        rxNormId:
-          type: string
-    VitalMeasurment:
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-        metricValue:
-          type: string
-    Procedure:
-      type: object
-      properties:
-        date:
-          type: string
-        code:
-          type: string
-        type:
-          type: string
-        description:
-          type: string
+  parameters:
+    startDate:
+      name: startDate
+      description: The beginning (m/d/yyyy) of the date range to return data for.
+      in: query
+      required: true
+      x-example: 1/1/2017 or 01/01/2017
+      schema:
+        type: string
+    patientId:
+      name: patientid
+      description: The patient's unique identifier ("patientid") returned by the authenticate API.
+      in: query
+      required: true
+      x-example: '32745'
+      schema:
+        type: string
+    endDate:
+      name: endDate
+      description: The end (m/d/yyyy) of the date range to return data for.
+      in: query
+      required: true
+      x-example: 5/16/2018 or 05/16/2018
+      schema:
+        type: string
   responses:
     Too_many_requests:
       description: 'Too many requests: More details are provided in the response.'
@@ -651,31 +734,6 @@ components:
               detail:
                 type: string
                 example: Invalid API key or bearer token.
-  parameters:
-    endDate:
-      name: endDate
-      description: The end (m/d/yyyy) of the date range to return data for.
-      in: query
-      required: true
-      x-example: 5/16/2018 or 05/16/2018
-      schema:
-        type: string
-    startDate:
-      name: startDate
-      description: The beginning (m/d/yyyy) of the date range to return data for.
-      in: query
-      required: true
-      x-example: 1/1/2017 or 01/01/2017
-      schema:
-        type: string
-    patientId:
-      name: patientid
-      description: The patient's unique identifier ("patientid") returned by the authenticate API.
-      in: query
-      required: true
-      x-example: '32745'
-      schema:
-        type: string
   securitySchemes:
     API_Key:
       type: apiKey

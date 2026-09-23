@@ -77,6 +77,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OperationOutcome'
+      operationId: getV1R4GroupByGroupId$export
+      x-operation-id-source: derived
 components:
   schemas:
     OperationOutcome:

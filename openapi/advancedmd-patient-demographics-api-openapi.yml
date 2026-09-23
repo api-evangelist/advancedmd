@@ -2,12 +2,10 @@ openapi: 3.2.0
 info:
   version: 1.0.1
   title: AdvancedMD Application Access Patient Demographics API
-  description: 'A collection of RESTful APIs that can be used to interact with AdvancedMD data. All APIs return JSON, with the exception of       the Episode Summaries API, which returns an HL7 C-CDA v3 (XML) document.
+  description: 'A collection of RESTful APIs that can be used to interact with AdvancedMD data. All APIs return JSON, with the exception of the Episode Summaries API, which returns an HL7 C-CDA v3 (XML) document.
 
 
-    Supported Version: AdvancedMD v12.6
-
-    '
+    Supported Version: AdvancedMD v12.6'
 servers:
 - url: https://ptapi.advancedmd.com/pt-api
 tags:
@@ -76,6 +74,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/Too_many_requests'
+      summary: Get demographics patients by patientid
+      x-summary-source: derived
+      operationId: getDemographicsPatientsByPatientid
+      x-operation-id-source: derived
 components:
   responses:
     Too_many_requests:

@@ -2,9 +2,7 @@ openapi: 3.2.0
 info:
   version: 6.1.0
   title: FHIR Single API - US Core 6.1.0 Encounter API
-  description: 'Fast Healthcare Interoperability Resources (HL7® FHIR®, pronounced "Fire") defines a set of "Resources" that represent granular clinical concepts. The resources can be managed in isolation, or aggregated into complex documents. Technically, FHIR is designed for the web; the resources are based on simple JSON structures, with an http-based RESTful protocol where each resource has predictable URL. Where possible, open internet standards are used for data representation. This OpenAPI specification is aligned to the HL7 FHIR US Core Implementation Guide STU 6.1.0 on FHIR R4 (v4.0.1).
-
-    '
+  description: Fast Healthcare Interoperability Resources (HL7® FHIR®, pronounced "Fire") defines a set of "Resources" that represent granular clinical concepts.
   x-fhir-version: 4.0.1
   x-us-core-version: 6.1.0
 servers:
@@ -18,7 +16,18 @@ paths:
     get:
       tags:
       - Encounter
-      description: "This interaction searches a set of Encounters based on some filter criteria. Search interactions take a series of query parameters for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-encounter.html'>\U0001F4D8 FHIR documentation for Encounter.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` query parameter to access another patient's data.\n"
+      description: 'This interaction searches a set of Encounters based on some filter criteria. Search interactions take a series of query parameters for a GET.
+
+        📘 FHIR documentation for Encounter.
+
+
+        🛡️ **Authorization behavior:**
+
+        - **Patients** (using `patient/*.read` scope) can access only their own resources.
+
+        - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.
+
+        - **Practitioners** (using `user/*.read` scope) must provide the `patient` query parameter to access another patient''s data.'
       parameters:
       - name: _id
         in: query
@@ -78,11 +87,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Get encounter
+      x-summary-source: derived
+      operationId: getEncounter
+      x-operation-id-source: derived
   /Encounter/{id}:
     get:
       tags:
       - Encounter
-      description: "This interaction searches Encounter based on encounter id.Search interactions take encounter id in path for a GET.<p><a href='https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-encounter.html'>\U0001F4D8 FHIR documentation for Encounter.</a></p>\n\n\U0001F6E1️ **Authorization behavior:**\n  - **Patients** (using `patient/*.read` scope) can access only their own resources.\n  - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.\n  - **Practitioners** (using `user/*.read` scope) must provide the `patient` query parameter to access another patient's data.\n"
+      description: 'This interaction searches Encounter based on encounter id.Search interactions take encounter id in path for a GET.
+
+        📘 FHIR documentation for Encounter.
+
+
+        🛡️ **Authorization behavior:**
+
+        - **Patients** (using `patient/*.read` scope) can access only their own resources.
+
+        - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.
+
+        - **Practitioners** (using `user/*.read` scope) must provide the `patient` query parameter to access another patient''s data.'
       parameters:
       - name: id
         in: path
@@ -116,8 +140,51 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Get encounter by id
+      x-summary-source: derived
+      operationId: getEncounterById
+      x-operation-id-source: derived
 components:
   schemas:
+    Error:
+      required:
+      - text
+      - issue
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        issue:
+          type: array
+          items:
+            required:
+            - severity
+            - code
+            - diagnostics
+            type: object
+            properties:
+              severity:
+                minLength: 1
+                type: string
+              code:
+                minLength: 1
+                type: string
+              diagnostics:
+                minLength: 1
+                type: string
     Encounter:
       x-us-core-profile: http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter
       required:
@@ -201,45 +268,6 @@ components:
                     minLength: 1
                     type: string
       description: ''
-    Error:
-      required:
-      - text
-      - issue
-      type: object
-      properties:
-        resourceType:
-          minLength: 1
-          type: string
-        text:
-          required:
-          - div
-          - status
-          type: object
-          properties:
-            status:
-              minLength: 1
-              type: string
-            div:
-              minLength: 1
-              type: string
-        issue:
-          type: array
-          items:
-            required:
-            - severity
-            - code
-            - diagnostics
-            type: object
-            properties:
-              severity:
-                minLength: 1
-                type: string
-              code:
-                minLength: 1
-                type: string
-              diagnostics:
-                minLength: 1
-                type: string
   securitySchemes:
     bearerAuth:
       type: http

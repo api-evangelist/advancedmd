@@ -66,17 +66,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OperationOutcome'
+      summary: Delete fhir bulk status
+      x-summary-source: derived
+      operationId: deleteV1FhirBulkStatus
+      x-operation-id-source: derived
 components:
   schemas:
-    ExportIsCanceled:
-      type: object
-      properties:
-        status:
-          type: string
-        groupId:
-          type: integer
-        jobId:
-          type: integer
     OperationOutcome:
       type: object
       properties:
@@ -100,6 +95,15 @@ components:
                 type: string
               diagnostics:
                 type: string
+    ExportIsCanceled:
+      type: object
+      properties:
+        status:
+          type: string
+        groupId:
+          type: integer
+        jobId:
+          type: integer
     OperationOutcomeWithID:
       type: object
       properties:

@@ -73,37 +73,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OperationOutcomeWithID'
+      operationId: getV1FhirBulkStatus
+      x-operation-id-source: derived
 components:
   schemas:
-    ExportIsReady:
+    ExportStatus:
       type: object
       properties:
-        transactionTime:
+        status:
           type: string
-        request:
-          type: string
-        requiresAccessToken:
-          type: boolean
-        output:
-          type: array
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-              url:
-                type: string
-        error:
-          type: array
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-              url:
-                type: string
-              count:
-                type: integer
     OperationOutcome:
       type: object
       properties:
@@ -149,11 +127,35 @@ components:
                 properties:
                   text:
                     type: string
-    ExportStatus:
+    ExportIsReady:
       type: object
       properties:
-        status:
+        transactionTime:
           type: string
+        request:
+          type: string
+        requiresAccessToken:
+          type: boolean
+        output:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              url:
+                type: string
+        error:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              url:
+                type: string
+              count:
+                type: integer
   securitySchemes:
     bearerAuth:
       type: http
