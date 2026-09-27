@@ -128,7 +128,7 @@ paths:
         - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.
 
         - **Practitioners** (using `user/*.read` scope) must provide the `patient` parameter (in the request body) to access another patient''s data.'
-      operationId: Goal Search using POST
+      operationId: GoalSearchUsingPOST
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -158,6 +158,8 @@ paths:
                 $ref: '#/components/schemas/Error'
       summary: Goal search using POST
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: Goal Search using POST
 components:
   schemas:
     Error:

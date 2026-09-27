@@ -72,29 +72,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    OperationOutcome:
-      type: object
-      properties:
-        resourceType:
-          type: string
-        text:
-          type: object
-          properties:
-            status:
-              type: string
-            div:
-              type: string
-        issue:
-          type: array
-          items:
-            type: object
-            properties:
-              severity:
-                type: string
-              code:
-                type: string
-              diagnostics:
-                type: string
     ExportIsCanceled:
       type: object
       properties:
@@ -126,6 +103,29 @@ components:
                 properties:
                   text:
                     type: string
+    OperationOutcome:
+      type: object
+      properties:
+        resourceType:
+          type: string
+        text:
+          type: object
+          properties:
+            status:
+              type: string
+            div:
+              type: string
+        issue:
+          type: array
+          items:
+            type: object
+            properties:
+              severity:
+                type: string
+              code:
+                type: string
+              diagnostics:
+                type: string
   securitySchemes:
     bearerAuth:
       type: http

@@ -126,62 +126,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Account_text:
-      required:
-      - div
-      - status
-      type: object
-      properties:
-        status:
-          minLength: 1
-          type: string
-        div:
-          minLength: 1
-          type: string
-    ActivityDefinition_valueCodeableConcept:
-      required:
-      - coding
-      type: object
-      properties:
-        coding:
-          minItems: 1
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/Account_type_coding'
-    Appointment_basedOn:
-      required:
-      - reference
-      properties:
-        reference:
-          minLength: 1
-          type: string
-    Account_meta:
-      required:
-      - tag
-      type: object
-      properties:
-        tag:
-          minItems: 1
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/Account_type_coding'
-    ActivityDefinition_telecom:
-      required:
-      - system
-      - use
-      - value
-      properties:
-        system:
-          minLength: 1
-          type: string
-        value:
-          minLength: 1
-          type: string
-        use:
-          minLength: 1
-          type: string
     Account_type_coding:
       required:
       - code
@@ -271,19 +215,43 @@ components:
             $ref: '#/components/schemas/Appointment_basedOn'
         meta:
           $ref: '#/components/schemas/Account_meta'
-    Location_position:
+    Account_meta:
       required:
-      - altitude
-      - latitude
-      - longitude
+      - tag
       type: object
       properties:
-        longitude:
-          type: number
-        latitude:
-          type: number
-        altitude:
-          type: number
+        tag:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Account_type_coding'
+    ActivityDefinition_telecom:
+      required:
+      - system
+      - use
+      - value
+      properties:
+        system:
+          minLength: 1
+          type: string
+        value:
+          minLength: 1
+          type: string
+        use:
+          minLength: 1
+          type: string
+    ActivityDefinition_valueCodeableConcept:
+      required:
+      - coding
+      type: object
+      properties:
+        coding:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Account_type_coding'
     Error:
       required:
       - text
@@ -323,19 +291,29 @@ components:
               diagnostics:
                 minLength: 1
                 type: string
-    CarePlan_identifier:
-      description: Simple business identifier structure used when only an identifier value is carried in this specification.
-      required:
-      - value
-      properties:
-        value:
-          description: Business identifier value assigned by the source system.
-          minLength: 1
-          type: string
     Account_coverage:
       required:
       - reference
       type: object
+      properties:
+        reference:
+          minLength: 1
+          type: string
+    Account_text:
+      required:
+      - div
+      - status
+      type: object
+      properties:
+        status:
+          minLength: 1
+          type: string
+        div:
+          minLength: 1
+          type: string
+    Appointment_basedOn:
+      required:
+      - reference
       properties:
         reference:
           minLength: 1
@@ -363,6 +341,28 @@ components:
           minLength: 1
           type: string
         country:
+          minLength: 1
+          type: string
+    Location_position:
+      required:
+      - altitude
+      - latitude
+      - longitude
+      type: object
+      properties:
+        longitude:
+          type: number
+        latitude:
+          type: number
+        altitude:
+          type: number
+    CarePlan_identifier:
+      description: Simple business identifier structure used when only an identifier value is carried in this specification.
+      required:
+      - value
+      properties:
+        value:
+          description: Business identifier value assigned by the source system.
           minLength: 1
           type: string
   securitySchemes:

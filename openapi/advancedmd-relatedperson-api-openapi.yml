@@ -140,7 +140,7 @@ paths:
         - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.
 
         - **Practitioners** (using `user/*.read` scope) must provide the `patient` parameter (in the request body) to access another patient''s data.'
-      operationId: RelatedPerson Search using POST
+      operationId: RelatedPersonSearchUsingPOST
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -179,6 +179,8 @@ paths:
                 $ref: '#/components/schemas/Error'
       summary: Related person search using POST
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: RelatedPerson Search using POST
 components:
   schemas:
     Error:

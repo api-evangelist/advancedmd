@@ -77,56 +77,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ExportStatus:
-      type: object
-      properties:
-        status:
-          type: string
-    OperationOutcome:
-      type: object
-      properties:
-        resourceType:
-          type: string
-        text:
-          type: object
-          properties:
-            status:
-              type: string
-            div:
-              type: string
-        issue:
-          type: array
-          items:
-            type: object
-            properties:
-              severity:
-                type: string
-              code:
-                type: string
-              diagnostics:
-                type: string
-    OperationOutcomeWithID:
-      type: object
-      properties:
-        resourceType:
-          type: string
-        id:
-          description: jobId
-          type: string
-        issue:
-          type: array
-          items:
-            type: object
-            properties:
-              severity:
-                type: string
-              code:
-                type: string
-              details:
-                type: object
-                properties:
-                  text:
-                    type: string
     ExportIsReady:
       type: object
       properties:
@@ -156,6 +106,56 @@ components:
                 type: string
               count:
                 type: integer
+    ExportStatus:
+      type: object
+      properties:
+        status:
+          type: string
+    OperationOutcomeWithID:
+      type: object
+      properties:
+        resourceType:
+          type: string
+        id:
+          description: jobId
+          type: string
+        issue:
+          type: array
+          items:
+            type: object
+            properties:
+              severity:
+                type: string
+              code:
+                type: string
+              details:
+                type: object
+                properties:
+                  text:
+                    type: string
+    OperationOutcome:
+      type: object
+      properties:
+        resourceType:
+          type: string
+        text:
+          type: object
+          properties:
+            status:
+              type: string
+            div:
+              type: string
+        issue:
+          type: array
+          items:
+            type: object
+            properties:
+              severity:
+                type: string
+              code:
+                type: string
+              diagnostics:
+                type: string
   securitySchemes:
     bearerAuth:
       type: http

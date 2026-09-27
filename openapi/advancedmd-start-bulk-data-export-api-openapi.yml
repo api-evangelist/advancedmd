@@ -81,6 +81,15 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ExportInfo:
+      type: object
+      properties:
+        status:
+          type: string
+        groupId:
+          type: integer
+        jobId:
+          type: integer
     OperationOutcome:
       type: object
       properties:
@@ -104,15 +113,6 @@ components:
                 type: string
               diagnostics:
                 type: string
-    ExportInfo:
-      type: object
-      properties:
-        status:
-          type: string
-        groupId:
-          type: integer
-        jobId:
-          type: integer
   securitySchemes:
     bearerAuth:
       type: http

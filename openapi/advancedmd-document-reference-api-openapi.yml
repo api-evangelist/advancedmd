@@ -234,7 +234,7 @@ paths:
         - **Practitioners** (using `patient/*.read` scope) can access to only one assigned patient.
 
         - **Practitioners** (using `user/*.read` scope) must provide the `patient` parameter (in the request body) to access another patient''s data.'
-      operationId: DocumentReferences Search using POST
+      operationId: DocumentReferencesSearchUsingPOST
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -281,47 +281,10 @@ paths:
                 $ref: '#/components/schemas/Error'
       summary: Document references search using POST
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: DocumentReferences Search using POST
 components:
   schemas:
-    Error:
-      required:
-      - text
-      - issue
-      type: object
-      properties:
-        resourceType:
-          minLength: 1
-          type: string
-        text:
-          required:
-          - div
-          - status
-          type: object
-          properties:
-            status:
-              minLength: 1
-              type: string
-            div:
-              minLength: 1
-              type: string
-        issue:
-          type: array
-          items:
-            required:
-            - severity
-            - code
-            - diagnostics
-            type: object
-            properties:
-              severity:
-                minLength: 1
-                type: string
-              code:
-                minLength: 1
-                type: string
-              diagnostics:
-                minLength: 1
-                type: string
     DocumentReference:
       x-us-core-profile: http://hl7.org/fhir/us/core/StructureDefinition/us-core-documentreference
       required:
@@ -805,6 +768,45 @@ components:
                     minLength: 1
                     type: string
       description: ''
+    Error:
+      required:
+      - text
+      - issue
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        issue:
+          type: array
+          items:
+            required:
+            - severity
+            - code
+            - diagnostics
+            type: object
+            properties:
+              severity:
+                minLength: 1
+                type: string
+              code:
+                minLength: 1
+                type: string
+              diagnostics:
+                minLength: 1
+                type: string
   securitySchemes:
     bearerAuth:
       type: http

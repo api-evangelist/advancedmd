@@ -987,8 +987,6 @@ apis:
   humanURL: https://fhir.advancedmd.com/fhir/bulk-api
   baseURL: https://providerapi.advancedmd.com
   tags:
-  - AllergyIntolerance
-  tags_raw:
   - Allergy Intolerance
   properties:
   - type: OpenAPI
@@ -1021,8 +1019,6 @@ apis:
   humanURL: https://fhir.advancedmd.com/fhir/bulk-api
   baseURL: https://providerapi.advancedmd.com
   tags:
-  - CarePlan
-  tags_raw:
   - Care plan
   properties:
   - type: OpenAPI
@@ -1055,8 +1051,6 @@ apis:
   humanURL: https://fhir.advancedmd.com/fhir/bulk-api
   baseURL: https://providerapi.advancedmd.com
   tags:
-  - C-CDA
-  tags_raw:
   - CCDA
   properties:
   - type: OpenAPI
@@ -1089,8 +1083,6 @@ apis:
   humanURL: https://fhir.advancedmd.com/fhir/bulk-api
   baseURL: https://providerapi.advancedmd.com
   tags:
-  - DocumentReference
-  tags_raw:
   - Document Reference
   properties:
   - type: OpenAPI
@@ -1123,8 +1115,6 @@ apis:
   humanURL: https://fhir.advancedmd.com/fhir/bulk-api
   baseURL: https://providerapi.advancedmd.com
   tags:
-  - MedicationRequest
-  tags_raw:
   - Medication Request
   properties:
   - type: OpenAPI

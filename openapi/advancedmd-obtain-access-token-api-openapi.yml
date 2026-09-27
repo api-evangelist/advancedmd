@@ -60,13 +60,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Error400oAuth2:
-      type: object
-      properties:
-        error:
-          type: string
-        error_description:
-          type: string
     Token:
       type: object
       properties:
@@ -84,6 +77,13 @@ components:
         scope:
           type: string
           description: authorized scopes based on apps registered scopes
+    Error400oAuth2:
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http

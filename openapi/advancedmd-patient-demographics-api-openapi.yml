@@ -80,19 +80,6 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
-    Too_many_requests:
-      description: 'Too many requests: More details are provided in the response.'
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: QuotaViolation
-              detail:
-                type: string
-                example: 'Too many requests: Please wait and try your request again in about a minute.'
     Unauthorized:
       description: 'Unauthorized: More details are provided in the response.'
       content:
@@ -106,6 +93,19 @@ components:
               detail:
                 type: string
                 example: Invalid API key or bearer token.
+    Too_many_requests:
+      description: 'Too many requests: More details are provided in the response.'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: QuotaViolation
+              detail:
+                type: string
+                example: 'Too many requests: Please wait and try your request again in about a minute.'
   securitySchemes:
     API_Key:
       type: apiKey

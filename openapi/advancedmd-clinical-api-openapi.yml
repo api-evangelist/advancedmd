@@ -432,7 +432,144 @@ paths:
       operationId: getClinicalVitalsigns
       x-operation-id-source: derived
 components:
+  parameters:
+    startDate:
+      name: startDate
+      description: The beginning (m/d/yyyy) of the date range to return data for.
+      in: query
+      required: true
+      x-example: 1/1/2017 or 01/01/2017
+      schema:
+        type: string
+    endDate:
+      name: endDate
+      description: The end (m/d/yyyy) of the date range to return data for.
+      in: query
+      required: true
+      x-example: 5/16/2018 or 05/16/2018
+      schema:
+        type: string
+    patientId:
+      name: patientid
+      description: The patient's unique identifier ("patientid") returned by the authenticate API.
+      in: query
+      required: true
+      x-example: '32745'
+      schema:
+        type: string
   schemas:
+    Order:
+      type: object
+      properties:
+        date:
+          type: string
+        testDescription:
+          type: string
+        loincCode:
+          type: string
+    HealthConcern:
+      type: object
+      properties:
+        concern:
+          type: string
+        date:
+          type: string
+    Allergy:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+        allergyDate:
+          type: string
+        reaction:
+          type: string
+        rxNormId:
+          type: string
+    Result:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        unit:
+          type: string
+        interpretationCode:
+          type: string
+        range:
+          type: string
+        rangeFrom:
+          type: string
+        rangeTo:
+          type: string
+    Provider:
+      type: object
+      properties:
+        npiNumber:
+          type: string
+        address1:
+          type: string
+        address2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+        country:
+          type: string
+        title:
+          type: string
+        lastName:
+          type: string
+        firstName:
+          type: string
+        middleName:
+          type: string
+    Assessment:
+      type: object
+      properties:
+        date:
+          type: string
+        assessment:
+          type: string
+    Medication:
+      type: object
+      properties:
+        rxNormId:
+          type: string
+        name:
+          type: string
+        instructions:
+          type: string
+        quantity:
+          type: string
+        doseForm:
+          type: string
+        date:
+          type: string
+        expirationDate:
+          type: string
+        currentStatus:
+          type: string
+        type:
+          type: string
+    SmokingStatus:
+      type: object
+      properties:
+        value:
+          type: string
+        description:
+          type: string
+        date:
+          type: string
     Procedure:
       type: object
       properties:
@@ -443,6 +580,66 @@ components:
         type:
           type: string
         description:
+          type: string
+    VitalMeasurment:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        metricValue:
+          type: string
+    Problem:
+      type: object
+      properties:
+        code:
+          type: string
+          description: The ICD or SNOMED code representing the problem.
+          example: '219376002'
+        codeSystem:
+          type: string
+          description: The codeset (ICD-9/ICD-10/SNOMED) that the code comes from.
+          example: SNOMED
+        name:
+          type: string
+          description: The full name of the problem.
+          example: 219427009-War injury due to lasers
+        description:
+          type: string
+          description: Description of the problem.
+          example: War injury due to lasers
+        status:
+          type: string
+          description: Problem status (current/historical).
+          example: Current
+        date:
+          type: string
+          description: The codeset (ICD-9/ICD-10/SNOMED) that the code comes from.
+          example: '20180510'
+    ResultSet:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        date:
+          type: string
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Result'
+    Plan:
+      type: object
+      properties:
+        date:
+          type: string
+        key:
+          type: string
+        plan:
+          type: string
+        code:
           type: string
     ImplantedDevice:
       type: object
@@ -473,116 +670,12 @@ components:
           type: string
         date:
           type: string
-    Order:
+    Goal:
       type: object
       properties:
-        date:
-          type: string
-        testDescription:
-          type: string
-        loincCode:
-          type: string
-    Result:
-      type: object
-      properties:
-        code:
-          type: string
-        name:
-          type: string
-        value:
-          type: string
-        unit:
-          type: string
-        interpretationCode:
-          type: string
-        range:
-          type: string
-        rangeFrom:
-          type: string
-        rangeTo:
-          type: string
-    ResultSet:
-      type: object
-      properties:
-        code:
-          type: string
-        name:
+        goalText:
           type: string
         date:
-          type: string
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Result'
-    HealthConcern:
-      type: object
-      properties:
-        concern:
-          type: string
-        date:
-          type: string
-    SmokingStatus:
-      type: object
-      properties:
-        value:
-          type: string
-        description:
-          type: string
-        date:
-          type: string
-    Allergy:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        status:
-          type: string
-        allergyDate:
-          type: string
-        reaction:
-          type: string
-        rxNormId:
-          type: string
-    VitalSign:
-      type: object
-      properties:
-        date:
-          type: string
-        measurements:
-          type: array
-          items:
-            $ref: '#/components/schemas/VitalMeasurment'
-    VitalMeasurment:
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-        metricValue:
-          type: string
-    Medication:
-      type: object
-      properties:
-        rxNormId:
-          type: string
-        name:
-          type: string
-        instructions:
-          type: string
-        quantity:
-          type: string
-        doseForm:
-          type: string
-        date:
-          type: string
-        expirationDate:
-          type: string
-        currentStatus:
-          type: string
-        type:
           type: string
     Immunization:
       type: object
@@ -605,108 +698,15 @@ components:
           type: string
         details:
           type: string
-    Provider:
-      type: object
-      properties:
-        npiNumber:
-          type: string
-        address1:
-          type: string
-        address2:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        zip:
-          type: string
-        country:
-          type: string
-        title:
-          type: string
-        lastName:
-          type: string
-        firstName:
-          type: string
-        middleName:
-          type: string
-    Problem:
-      type: object
-      properties:
-        code:
-          type: string
-          description: The ICD or SNOMED code representing the problem.
-          example: '219376002'
-        codeSystem:
-          type: string
-          description: The codeset (ICD-9/ICD-10/SNOMED) that the code comes from.
-          example: SNOMED
-        name:
-          type: string
-          description: The full name of the problem.
-          example: 219427009-War injury due to lasers
-        description:
-          type: string
-          description: Description of the problem.
-          example: War injury due to lasers
-        status:
-          type: string
-          description: Problem status (current/historical).
-          example: Current
-        date:
-          type: string
-          description: The codeset (ICD-9/ICD-10/SNOMED) that the code comes from.
-          example: '20180510'
-    Assessment:
+    VitalSign:
       type: object
       properties:
         date:
           type: string
-        assessment:
-          type: string
-    Plan:
-      type: object
-      properties:
-        date:
-          type: string
-        key:
-          type: string
-        plan:
-          type: string
-        code:
-          type: string
-    Goal:
-      type: object
-      properties:
-        goalText:
-          type: string
-        date:
-          type: string
-  parameters:
-    startDate:
-      name: startDate
-      description: The beginning (m/d/yyyy) of the date range to return data for.
-      in: query
-      required: true
-      x-example: 1/1/2017 or 01/01/2017
-      schema:
-        type: string
-    patientId:
-      name: patientid
-      description: The patient's unique identifier ("patientid") returned by the authenticate API.
-      in: query
-      required: true
-      x-example: '32745'
-      schema:
-        type: string
-    endDate:
-      name: endDate
-      description: The end (m/d/yyyy) of the date range to return data for.
-      in: query
-      required: true
-      x-example: 5/16/2018 or 05/16/2018
-      schema:
-        type: string
+        measurements:
+          type: array
+          items:
+            $ref: '#/components/schemas/VitalMeasurment'
   responses:
     Too_many_requests:
       description: 'Too many requests: More details are provided in the response.'
