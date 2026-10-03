@@ -106,33 +106,6 @@ components:
                 type: string
               count:
                 type: integer
-    ExportStatus:
-      type: object
-      properties:
-        status:
-          type: string
-    OperationOutcomeWithID:
-      type: object
-      properties:
-        resourceType:
-          type: string
-        id:
-          description: jobId
-          type: string
-        issue:
-          type: array
-          items:
-            type: object
-            properties:
-              severity:
-                type: string
-              code:
-                type: string
-              details:
-                type: object
-                properties:
-                  text:
-                    type: string
     OperationOutcome:
       type: object
       properties:
@@ -156,6 +129,33 @@ components:
                 type: string
               diagnostics:
                 type: string
+    OperationOutcomeWithID:
+      type: object
+      properties:
+        resourceType:
+          type: string
+        id:
+          description: jobId
+          type: string
+        issue:
+          type: array
+          items:
+            type: object
+            properties:
+              severity:
+                type: string
+              code:
+                type: string
+              details:
+                type: object
+                properties:
+                  text:
+                    type: string
+    ExportStatus:
+      type: object
+      properties:
+        status:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http

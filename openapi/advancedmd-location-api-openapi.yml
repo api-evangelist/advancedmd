@@ -126,19 +126,121 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Account_type_coding:
+    Appointment_basedOn:
       required:
-      - code
-      - display
+      - reference
+      properties:
+        reference:
+          minLength: 1
+          type: string
+    Account_meta:
+      required:
+      - tag
+      type: object
+      properties:
+        tag:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Account_type_coding'
+    ActivityDefinition_valueCodeableConcept:
+      required:
+      - coding
+      type: object
+      properties:
+        coding:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Account_type_coding'
+    CarePlan_identifier:
+      description: Simple business identifier structure used when only an identifier value is carried in this specification.
+      required:
+      - value
+      properties:
+        value:
+          description: Business identifier value assigned by the source system.
+          minLength: 1
+          type: string
+    Location_address:
+      required:
+      - city
+      - country
+      - line
+      - postalCode
+      - use
+      type: object
+      properties:
+        use:
+          minLength: 1
+          type: string
+        line:
+          type: array
+          items:
+            properties: {}
+        city:
+          minLength: 1
+          type: string
+        postalCode:
+          minLength: 1
+          type: string
+        country:
+          minLength: 1
+          type: string
+    Error:
+      required:
+      - text
+      - issue
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        issue:
+          type: array
+          items:
+            required:
+            - severity
+            - code
+            - diagnostics
+            type: object
+            properties:
+              severity:
+                minLength: 1
+                type: string
+              code:
+                minLength: 1
+                type: string
+              diagnostics:
+                minLength: 1
+                type: string
+    ActivityDefinition_telecom:
+      required:
       - system
+      - use
+      - value
       properties:
         system:
           minLength: 1
           type: string
-        code:
+        value:
           minLength: 1
           type: string
-        display:
+        use:
           minLength: 1
           type: string
     Location:
@@ -215,134 +317,6 @@ components:
             $ref: '#/components/schemas/Appointment_basedOn'
         meta:
           $ref: '#/components/schemas/Account_meta'
-    Account_meta:
-      required:
-      - tag
-      type: object
-      properties:
-        tag:
-          minItems: 1
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/Account_type_coding'
-    ActivityDefinition_telecom:
-      required:
-      - system
-      - use
-      - value
-      properties:
-        system:
-          minLength: 1
-          type: string
-        value:
-          minLength: 1
-          type: string
-        use:
-          minLength: 1
-          type: string
-    ActivityDefinition_valueCodeableConcept:
-      required:
-      - coding
-      type: object
-      properties:
-        coding:
-          minItems: 1
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/Account_type_coding'
-    Error:
-      required:
-      - text
-      - issue
-      type: object
-      properties:
-        resourceType:
-          minLength: 1
-          type: string
-        text:
-          required:
-          - div
-          - status
-          type: object
-          properties:
-            status:
-              minLength: 1
-              type: string
-            div:
-              minLength: 1
-              type: string
-        issue:
-          type: array
-          items:
-            required:
-            - severity
-            - code
-            - diagnostics
-            type: object
-            properties:
-              severity:
-                minLength: 1
-                type: string
-              code:
-                minLength: 1
-                type: string
-              diagnostics:
-                minLength: 1
-                type: string
-    Account_coverage:
-      required:
-      - reference
-      type: object
-      properties:
-        reference:
-          minLength: 1
-          type: string
-    Account_text:
-      required:
-      - div
-      - status
-      type: object
-      properties:
-        status:
-          minLength: 1
-          type: string
-        div:
-          minLength: 1
-          type: string
-    Appointment_basedOn:
-      required:
-      - reference
-      properties:
-        reference:
-          minLength: 1
-          type: string
-    Location_address:
-      required:
-      - city
-      - country
-      - line
-      - postalCode
-      - use
-      type: object
-      properties:
-        use:
-          minLength: 1
-          type: string
-        line:
-          type: array
-          items:
-            properties: {}
-        city:
-          minLength: 1
-          type: string
-        postalCode:
-          minLength: 1
-          type: string
-        country:
-          minLength: 1
-          type: string
     Location_position:
       required:
       - altitude
@@ -356,13 +330,39 @@ components:
           type: number
         altitude:
           type: number
-    CarePlan_identifier:
-      description: Simple business identifier structure used when only an identifier value is carried in this specification.
+    Account_coverage:
       required:
-      - value
+      - reference
+      type: object
       properties:
-        value:
-          description: Business identifier value assigned by the source system.
+        reference:
+          minLength: 1
+          type: string
+    Account_type_coding:
+      required:
+      - code
+      - display
+      - system
+      properties:
+        system:
+          minLength: 1
+          type: string
+        code:
+          minLength: 1
+          type: string
+        display:
+          minLength: 1
+          type: string
+    Account_text:
+      required:
+      - div
+      - status
+      type: object
+      properties:
+        status:
+          minLength: 1
+          type: string
+        div:
           minLength: 1
           type: string
   securitySchemes:
