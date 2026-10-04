@@ -72,6 +72,28 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    OperationOutcomeWithID:
+      type: object
+      properties:
+        resourceType:
+          type: string
+        id:
+          description: jobId
+          type: string
+        issue:
+          type: array
+          items:
+            type: object
+            properties:
+              severity:
+                type: string
+              code:
+                type: string
+              details:
+                type: object
+                properties:
+                  text:
+                    type: string
     OperationOutcome:
       type: object
       properties:
@@ -95,28 +117,6 @@ components:
                 type: string
               diagnostics:
                 type: string
-    OperationOutcomeWithID:
-      type: object
-      properties:
-        resourceType:
-          type: string
-        id:
-          description: jobId
-          type: string
-        issue:
-          type: array
-          items:
-            type: object
-            properties:
-              severity:
-                type: string
-              code:
-                type: string
-              details:
-                type: object
-                properties:
-                  text:
-                    type: string
     ExportIsCanceled:
       type: object
       properties:

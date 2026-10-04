@@ -105,6 +105,8 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
+    Forbidden:
+      description: 'Forbidden: Generally returned when  invalid credentials are supplied when attempting to authorize the user.'
     Unauthorized:
       description: 'Unauthorized: More details are provided in the response.'
       content:
@@ -131,8 +133,6 @@ components:
               detail:
                 type: string
                 example: 'Too many requests: Please wait and try your request again in about a minute.'
-    Forbidden:
-      description: 'Forbidden: Generally returned when  invalid credentials are supplied when attempting to authorize the user.'
   securitySchemes:
     API_Key:
       type: apiKey

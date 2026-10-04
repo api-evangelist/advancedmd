@@ -126,9 +126,10 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Appointment_basedOn:
+    Account_coverage:
       required:
       - reference
+      type: object
       properties:
         reference:
           minLength: 1
@@ -144,26 +145,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Account_type_coding'
-    ActivityDefinition_valueCodeableConcept:
-      required:
-      - coding
-      type: object
-      properties:
-        coding:
-          minItems: 1
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/Account_type_coding'
-    CarePlan_identifier:
-      description: Simple business identifier structure used when only an identifier value is carried in this specification.
-      required:
-      - value
-      properties:
-        value:
-          description: Business identifier value assigned by the source system.
-          minLength: 1
-          type: string
     Location_address:
       required:
       - city
@@ -228,21 +209,19 @@ components:
               diagnostics:
                 minLength: 1
                 type: string
-    ActivityDefinition_telecom:
+    Location_position:
       required:
-      - system
-      - use
-      - value
+      - altitude
+      - latitude
+      - longitude
+      type: object
       properties:
-        system:
-          minLength: 1
-          type: string
-        value:
-          minLength: 1
-          type: string
-        use:
-          minLength: 1
-          type: string
+        longitude:
+          type: number
+        latitude:
+          type: number
+        altitude:
+          type: number
     Location:
       x-us-core-profile: http://hl7.org/fhir/us/core/StructureDefinition/us-core-location
       required:
@@ -317,25 +296,23 @@ components:
             $ref: '#/components/schemas/Appointment_basedOn'
         meta:
           $ref: '#/components/schemas/Account_meta'
-    Location_position:
-      required:
-      - altitude
-      - latitude
-      - longitude
-      type: object
-      properties:
-        longitude:
-          type: number
-        latitude:
-          type: number
-        altitude:
-          type: number
-    Account_coverage:
+    Appointment_basedOn:
       required:
       - reference
-      type: object
       properties:
         reference:
+          minLength: 1
+          type: string
+    Account_text:
+      required:
+      - div
+      - status
+      type: object
+      properties:
+        status:
+          minLength: 1
+          type: string
+        div:
           minLength: 1
           type: string
     Account_type_coding:
@@ -353,16 +330,39 @@ components:
         display:
           minLength: 1
           type: string
-    Account_text:
+    ActivityDefinition_valueCodeableConcept:
       required:
-      - div
-      - status
+      - coding
       type: object
       properties:
-        status:
+        coding:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Account_type_coding'
+    CarePlan_identifier:
+      description: Simple business identifier structure used when only an identifier value is carried in this specification.
+      required:
+      - value
+      properties:
+        value:
+          description: Business identifier value assigned by the source system.
           minLength: 1
           type: string
-        div:
+    ActivityDefinition_telecom:
+      required:
+      - system
+      - use
+      - value
+      properties:
+        system:
+          minLength: 1
+          type: string
+        value:
+          minLength: 1
+          type: string
+        use:
           minLength: 1
           type: string
   securitySchemes:

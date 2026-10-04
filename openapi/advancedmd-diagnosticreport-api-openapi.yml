@@ -195,45 +195,6 @@ paths:
       x-operation-id-original: DiagnosticReports Search using POST
 components:
   schemas:
-    Error:
-      required:
-      - text
-      - issue
-      type: object
-      properties:
-        resourceType:
-          minLength: 1
-          type: string
-        text:
-          required:
-          - div
-          - status
-          type: object
-          properties:
-            status:
-              minLength: 1
-              type: string
-            div:
-              minLength: 1
-              type: string
-        issue:
-          type: array
-          items:
-            required:
-            - severity
-            - code
-            - diagnostics
-            type: object
-            properties:
-              severity:
-                minLength: 1
-                type: string
-              code:
-                minLength: 1
-                type: string
-              diagnostics:
-                minLength: 1
-                type: string
     DiagnosticReport:
       x-us-core-profiles:
       - http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-lab
@@ -500,6 +461,45 @@ components:
                     minLength: 1
                     type: string
       description: ''
+    Error:
+      required:
+      - text
+      - issue
+      type: object
+      properties:
+        resourceType:
+          minLength: 1
+          type: string
+        text:
+          required:
+          - div
+          - status
+          type: object
+          properties:
+            status:
+              minLength: 1
+              type: string
+            div:
+              minLength: 1
+              type: string
+        issue:
+          type: array
+          items:
+            required:
+            - severity
+            - code
+            - diagnostics
+            type: object
+            properties:
+              severity:
+                minLength: 1
+                type: string
+              code:
+                minLength: 1
+                type: string
+              diagnostics:
+                minLength: 1
+                type: string
   securitySchemes:
     bearerAuth:
       type: http

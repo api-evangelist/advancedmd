@@ -433,70 +433,42 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Immunization:
+    VitalMeasurment:
       type: object
       properties:
-        id:
+        name:
+          type: string
+        value:
+          type: string
+        metricValue:
+          type: string
+    Medication:
+      type: object
+      properties:
+        rxNormId:
           type: string
         name:
           type: string
-        date:
-          type: string
-        status:
+        instructions:
           type: string
         quantity:
           type: string
-        unit:
-          type: string
-        lotNumber:
-          type: string
-        cvxCode:
-          type: string
-        details:
-          type: string
-    Plan:
-      type: object
-      properties:
-        date:
-          type: string
-        key:
-          type: string
-        plan:
-          type: string
-        code:
-          type: string
-    ResultSet:
-      type: object
-      properties:
-        code:
-          type: string
-        name:
+        doseForm:
           type: string
         date:
           type: string
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Result'
-    Order:
-      type: object
-      properties:
-        date:
+        expirationDate:
           type: string
-        testDescription:
-          type: string
-        loincCode:
-          type: string
-    Procedure:
-      type: object
-      properties:
-        date:
-          type: string
-        code:
+        currentStatus:
           type: string
         type:
           type: string
-        description:
+    Assessment:
+      type: object
+      properties:
+        date:
+          type: string
+        assessment:
           type: string
     ImplantedDevice:
       type: object
@@ -527,20 +499,48 @@ components:
           type: string
         date:
           type: string
-    Allergy:
+    Plan:
+      type: object
+      properties:
+        date:
+          type: string
+        key:
+          type: string
+        plan:
+          type: string
+        code:
+          type: string
+    Procedure:
+      type: object
+      properties:
+        date:
+          type: string
+        code:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+    Immunization:
       type: object
       properties:
         id:
           type: string
         name:
           type: string
+        date:
+          type: string
         status:
           type: string
-        allergyDate:
+        quantity:
           type: string
-        reaction:
+        unit:
           type: string
-        rxNormId:
+        lotNumber:
+          type: string
+        cvxCode:
+          type: string
+        details:
           type: string
     Provider:
       type: object
@@ -567,26 +567,27 @@ components:
           type: string
         middleName:
           type: string
-    Medication:
+    Allergy:
       type: object
       properties:
-        rxNormId:
+        id:
           type: string
         name:
           type: string
-        instructions:
+        status:
           type: string
-        quantity:
+        allergyDate:
           type: string
-        doseForm:
+        reaction:
+          type: string
+        rxNormId:
+          type: string
+    Goal:
+      type: object
+      properties:
+        goalText:
           type: string
         date:
-          type: string
-        expirationDate:
-          type: string
-        currentStatus:
-          type: string
-        type:
           type: string
     Problem:
       type: object
@@ -615,24 +616,23 @@ components:
           type: string
           description: The codeset (ICD-9/ICD-10/SNOMED) that the code comes from.
           example: '20180510'
-    Assessment:
+    ResultSet:
       type: object
       properties:
+        code:
+          type: string
+        name:
+          type: string
         date:
           type: string
-        assessment:
-          type: string
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Result'
     HealthConcern:
       type: object
       properties:
         concern:
-          type: string
-        date:
-          type: string
-    Goal:
-      type: object
-      properties:
-        goalText:
           type: string
         date:
           type: string
@@ -645,14 +645,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/VitalMeasurment'
-    VitalMeasurment:
+    Order:
       type: object
       properties:
-        name:
+        date:
           type: string
-        value:
+        testDescription:
           type: string
-        metricValue:
+        loincCode:
           type: string
     SmokingStatus:
       type: object
@@ -682,7 +682,42 @@ components:
           type: string
         rangeTo:
           type: string
+  responses:
+    Too_many_requests:
+      description: 'Too many requests: More details are provided in the response.'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: QuotaViolation
+              detail:
+                type: string
+                example: 'Too many requests: Please wait and try your request again in about a minute.'
+    Unauthorized:
+      description: 'Unauthorized: More details are provided in the response.'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: Unauthorized
+              detail:
+                type: string
+                example: Invalid API key or bearer token.
   parameters:
+    endDate:
+      name: endDate
+      description: The end (m/d/yyyy) of the date range to return data for.
+      in: query
+      required: true
+      x-example: 5/16/2018 or 05/16/2018
+      schema:
+        type: string
     startDate:
       name: startDate
       description: The beginning (m/d/yyyy) of the date range to return data for.
@@ -699,41 +734,6 @@ components:
       x-example: '32745'
       schema:
         type: string
-    endDate:
-      name: endDate
-      description: The end (m/d/yyyy) of the date range to return data for.
-      in: query
-      required: true
-      x-example: 5/16/2018 or 05/16/2018
-      schema:
-        type: string
-  responses:
-    Unauthorized:
-      description: 'Unauthorized: More details are provided in the response.'
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: Unauthorized
-              detail:
-                type: string
-                example: Invalid API key or bearer token.
-    Too_many_requests:
-      description: 'Too many requests: More details are provided in the response.'
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: QuotaViolation
-              detail:
-                type: string
-                example: 'Too many requests: Please wait and try your request again in about a minute.'
   securitySchemes:
     API_Key:
       type: apiKey
