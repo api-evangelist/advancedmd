@@ -49,6 +49,19 @@ image: https://www.advancedmd.com/wp-content/uploads/2025/06/cropped-bird_solid_
 tags:
 - Healthcare
 - United States
+- Electronic Health Records
+- Practice Management
+- Medical Billing
+- FHIR
+- HL7
+- SMART on FHIR
+- US Core
+- Interoperability
+- Revenue Cycle Management
+- Scheduling
+tags_raw:
+- Healthcare
+- United States
 - EHR
 - EMR
 - Practice Management
@@ -987,6 +1000,8 @@ apis:
   humanURL: https://fhir.advancedmd.com/fhir/bulk-api
   baseURL: https://providerapi.advancedmd.com
   tags:
+  - AllergyIntolerance
+  tags_raw:
   - Allergy Intolerance
   properties:
   - type: OpenAPI
@@ -1019,6 +1034,8 @@ apis:
   humanURL: https://fhir.advancedmd.com/fhir/bulk-api
   baseURL: https://providerapi.advancedmd.com
   tags:
+  - CarePlan
+  tags_raw:
   - Care plan
   properties:
   - type: OpenAPI
@@ -1051,6 +1068,8 @@ apis:
   humanURL: https://fhir.advancedmd.com/fhir/bulk-api
   baseURL: https://providerapi.advancedmd.com
   tags:
+  - C-CDA
+  tags_raw:
   - CCDA
   properties:
   - type: OpenAPI
@@ -1083,6 +1102,8 @@ apis:
   humanURL: https://fhir.advancedmd.com/fhir/bulk-api
   baseURL: https://providerapi.advancedmd.com
   tags:
+  - DocumentReference
+  tags_raw:
   - Document Reference
   properties:
   - type: OpenAPI
@@ -1115,6 +1136,8 @@ apis:
   humanURL: https://fhir.advancedmd.com/fhir/bulk-api
   baseURL: https://providerapi.advancedmd.com
   tags:
+  - MedicationRequest
+  tags_raw:
   - Medication Request
   properties:
   - type: OpenAPI
