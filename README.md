@@ -64,43 +64,177 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-AdvancedMD is a cloud practice-management, medical-billing and electronic health record (EHR) software company founded in 1999 and headquartered in South Jordan, Utah. It serves independent ambulatory practices, mental-health and physical-medicine clinics, med spas and medical-billing services across the United States, and has operated as a standalone company again since Francisco Partners acquired it from Global Payments in December 2024.
+AdvancedMD is a cloud practice-management, medical-billing and electronic health record (EHR) software company founded in 1999 and headquartered in South Jordan, Utah, serving independent ambulatory practices, mental-health and physical-medicine clinics, med spas and medical-billing services across the United States. A standalone company again since Francisco Partners acquired it from Global Payments in December 2024, AdvancedMD operates two clearly separated developer surfaces. The first is a public, no-cost HL7 FHIR R4 (4.0.1) read-only API estate published for ONC (g)(10) Cures Act certification at fhir.advancedmd.com, aligned to the US Core 6.1.0 Implementation Guide, authorized with SMART-on-FHIR OAuth 2.0 and covering both single-patient access and FHIR Bulk Data Access group export. The second is a gated proprietary Connect API estate (REST and XML-RPC) plus an ODBC data-access driver, which require a signed Certified API Developer Agreement with licensing and support fees before sandbox or production credentials are issued.
 
-AdvancedMD runs two clearly separated developer surfaces.
+**Areas:** Healthcare · United States · Electronic Health Records · Practice Management · Medical Billing · FHIR · HL7 · SMART on FHIR · US Core · Interoperability · Revenue Cycle Management · Scheduling
 
-**Public regulatory FHIR estate.** The [AdvancedMD FHIR Portal](https://fhir.advancedmd.com/) publishes the ONC (g)(10) Cures Act APIs at no cost: a read-only HL7 FHIR R4 (4.0.1) API aligned to the US Core Implementation Guide STU 6.1.0, a FHIR Bulk Data Access group-export API, and a test-only JWKS helper. Authorization is SMART-on-FHIR OAuth 2.0 — authorization-code with PKCE for single-patient apps, client-credentials with a `private_key_jwt` assertion and `system/*.read` for Bulk. Base URLs are organization-specific under `https://providerapi.advancedmd.com/v1/r4/{orgId}`, and the full customer endpoint directory is published as a FHIR Bundle and a CSV.
+## AdvancedMD on APIs.io
 
-**Gated Connect API estate.** The proprietary Connect APIs (REST and XML-RPC) and a read-only ODBC driver cover patient engagement, scheduling, clinical forms, payments and revenue-cycle management. They require a signed Certified API Developer Agreement, with licensing and support fees, before sandbox or production credentials are issued. No endpoints or specifications are published outside that agreement, so none are catalogued here.
+Everything profiled for AdvancedMD is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/advancedmd/](https://apis.io/providers/advancedmd/)** — or go straight to one of the APIs or properties below.
 
-## APIs
+### APIs (33)
 
-| API | Base URL | Contract |
-| --- | --- | --- |
-| [FHIR Single API (US Core 6.1.0)](https://fhir.advancedmd.com/fhir/single-api) | `https://providerapi.advancedmd.com/v1/r4` | [OpenAPI 3.0.1](openapi/advancedmd-fhir-single-api-openapi.json) · [CapabilityStatement](fhir/advancedmd-fhir-r4-capabilitystatement.json) |
-| [FHIR Bulk API](https://fhir.advancedmd.com/fhir/bulk-api) | `https://providerapi.advancedmd.com` | [OpenAPI 3.0.1](openapi/advancedmd-fhir-bulk-api-openapi.json) |
-| [FHIR Bulk JWKS API](https://fhir.advancedmd.com/fhir/bulk-api) | `https://providerapi.advancedmd.com` | Prose documentation only |
-| [FHIR Endpoint Directory](https://fhir.advancedmd.com/fhir/base-urls) | `https://providerapi.advancedmd.com/v1/r4` | FHIR Bundle at `/endpoints` |
-| [Connect APIs](https://www.advancedmd.com/group-practice/developer-solutions/) | Not published | Gated behind a developer agreement |
+- [AdvancedMD FHIR Bulk JWKS API](https://apis.io/apis/advancedmd/advancedmd-fhir-bulk-jwks-api/) — Developer-portal helper API that mints JWT client assertions for testing the FHIR Bulk Data workflow. Documented as POST /v1/fhir-jwks/token with a…
+- [AdvancedMD FHIR Endpoint Directory](https://apis.io/apis/advancedmd/advancedmd-fhir-endpoint-directory/) — Public, unauthenticated service base URL publication required of ONC-certified API suppliers. GET https://providerapi.advancedmd.com/v1/r4/endpoints returns…
+- [AdvancedMD Connect APIs](https://apis.io/apis/advancedmd/advancedmd-connect-apis/) — AdvancedMD's proprietary partner API family, published in both XML-RPC and REST formats, which lets developers build companion applications that replicate…
+- [AdvancedMD Authentication API](https://apis.io/apis/advancedmd/advancedmd-authentication-api/) — The Authentication API from AdvancedMD — 1 operation(s) for authentication.
+- [AdvancedMD Cancel Bulk Data Export API](https://apis.io/apis/advancedmd/advancedmd-cancel-bulk-data-export-api/) — The Cancel Bulk Data Export API from AdvancedMD — 1 operation(s) for cancel bulk data export.
+- [AdvancedMD Care Team API](https://apis.io/apis/advancedmd/advancedmd-careteam-api/) — The CareTeam API from AdvancedMD — 3 operation(s) for careteam.
+- [AdvancedMD Check Data Export Status API](https://apis.io/apis/advancedmd/advancedmd-check-data-export-status-api/) — The Check Data Export Status API from AdvancedMD — 1 operation(s) for check data export status.
+- [AdvancedMD Clinical API](https://apis.io/apis/advancedmd/advancedmd-clinical-api/) — The Clinical API from AdvancedMD — 15 operation(s) for clinical.
+- [AdvancedMD Condition API](https://apis.io/apis/advancedmd/advancedmd-condition-api/) — The Condition API from AdvancedMD — 3 operation(s) for condition.
+- [AdvancedMD Coverage API](https://apis.io/apis/advancedmd/advancedmd-coverage-api/) — The Coverage API from AdvancedMD — 3 operation(s) for coverage.
+- [AdvancedMD Device API](https://apis.io/apis/advancedmd/advancedmd-device-api/) — The Device API from AdvancedMD — 3 operation(s) for device.
+- [AdvancedMD Diagnostic Report API](https://apis.io/apis/advancedmd/advancedmd-diagnosticreport-api/) — The DiagnosticReport API from AdvancedMD — 3 operation(s) for diagnosticreport.
+- [AdvancedMD Encounter API](https://apis.io/apis/advancedmd/advancedmd-encounter-api/) — The Encounter API from AdvancedMD — 2 operation(s) for encounter.
+- [AdvancedMD Get FHIR Entity API](https://apis.io/apis/advancedmd/advancedmd-get-fhir-entity-api/) — The Get FHIR Entity API from AdvancedMD — 1 operation(s) for get fhir entity.
+- [AdvancedMD Goal API](https://apis.io/apis/advancedmd/advancedmd-goal-api/) — The Goal API from AdvancedMD — 3 operation(s) for goal.
+- [AdvancedMD Immunization API](https://apis.io/apis/advancedmd/advancedmd-immunization-api/) — The Immunization API from AdvancedMD — 3 operation(s) for immunization.
+- [AdvancedMD Location API](https://apis.io/apis/advancedmd/advancedmd-location-api/) — The Location API from AdvancedMD — 2 operation(s) for location.
+- [AdvancedMD Medication Dispense API](https://apis.io/apis/advancedmd/advancedmd-medicationdispense-api/) — The MedicationDispense API from AdvancedMD — 3 operation(s) for medicationdispense.
+- [AdvancedMD Observation API](https://apis.io/apis/advancedmd/advancedmd-observation-api/) — The Observation API from AdvancedMD — 3 operation(s) for observation.
+- [AdvancedMD Obtain Access Token API](https://apis.io/apis/advancedmd/advancedmd-obtain-access-token-api/) — The Obtain Access Token API from AdvancedMD — 1 operation(s) for obtain access token.
+- [AdvancedMD Organization API](https://apis.io/apis/advancedmd/advancedmd-organization-api/) — The Organization API from AdvancedMD — 2 operation(s) for organization.
+- [AdvancedMD Patient API](https://apis.io/apis/advancedmd/advancedmd-patient-api/) — The Patient API from AdvancedMD — 3 operation(s) for patient.
+- [AdvancedMD Patient Demographics API](https://apis.io/apis/advancedmd/advancedmd-patient-demographics-api/) — The Patient Demographics API from AdvancedMD — 1 operation(s) for patient demographics.
+- [AdvancedMD Practitioner API](https://apis.io/apis/advancedmd/advancedmd-practitioner-api/) — The Practitioner API from AdvancedMD — 2 operation(s) for practitioner.
+- [AdvancedMD Procedure API](https://apis.io/apis/advancedmd/advancedmd-procedure-api/) — The Procedure API from AdvancedMD — 3 operation(s) for procedure.
+- [AdvancedMD Provenance API](https://apis.io/apis/advancedmd/advancedmd-provenance-api/) — The Provenance API from AdvancedMD — 1 operation(s) for provenance.
+- [AdvancedMD Related Person API](https://apis.io/apis/advancedmd/advancedmd-relatedperson-api/) — The RelatedPerson API from AdvancedMD — 3 operation(s) for relatedperson.
+- [AdvancedMD Start Bulk Data Export API](https://apis.io/apis/advancedmd/advancedmd-start-bulk-data-export-api/) — The Start Bulk Data Export API from AdvancedMD — 1 operation(s) for start bulk data export.
+- [AdvancedMD Allergy Intolerance API](https://apis.io/apis/advancedmd/advancedmd-allergy-intolerance-api/) — The Allergy Intolerance API from AdvancedMD — 3 operation(s) for allergy intolerance.
+- [AdvancedMD Care plan API](https://apis.io/apis/advancedmd/advancedmd-care-plan-api/) — The Care plan API from AdvancedMD — 3 operation(s) for care plan.
+- [AdvancedMD CCDA API](https://apis.io/apis/advancedmd/advancedmd-ccda-api/) — The CCDA API from AdvancedMD — 1 operation(s) for ccda.
+- [AdvancedMD Document Reference API](https://apis.io/apis/advancedmd/advancedmd-document-reference-api/) — The Document Reference API from AdvancedMD — 4 operation(s) for document reference.
+- [AdvancedMD Medication Request API](https://apis.io/apis/advancedmd/advancedmd-medication-request-api/) — The Medication Request API from AdvancedMD — 3 operation(s) for medication request.
 
-## Harvested artifacts
+### Published properties
 
-- `openapi/advancedmd-fhir-single-api-openapi.json` — OpenAPI 3.0.1, 58 paths, 21 FHIR resource tags
-- `openapi/advancedmd-fhir-bulk-api-openapi.json` — OpenAPI 3.0.1, 4 paths
-- `fhir/advancedmd-fhir-r4-capabilitystatement.json` — FHIR R4 CapabilityStatement, 25 resources, instantiates US Core and Bulk Data
-- `fhir/advancedmd-smart-configuration.json` — SMART-on-FHIR discovery document
-- `fhir/advancedmd-openid-configuration.json` — OpenID Connect discovery document
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Provenance and HTTP statuses for every probe are recorded in [`review.yml`](review.yml).
+#### MCP servers (1)
 
-## Links
+Model Context Protocol servers that expose the API to agents.
 
-- Website — https://www.advancedmd.com/
-- FHIR developer portal — https://fhir.advancedmd.com/
-- Developer portal (Connect APIs) — https://developer.advancedmd.com/
-- Developer solutions — https://www.advancedmd.com/group-practice/developer-solutions/
-- Getting started — https://fhir.advancedmd.com/getting-started
-- Interoperability support — https://www.advancedmd.com/support/interoperability/
-- API connection request — https://www.advancedmd.com/api-connection-request/
-- Status — https://status.advancedmd.com/
-- Pricing — https://www.advancedmd.com/software-pricing/
-- Blog — https://www.advancedmd.com/blog/
+- [advancedmd](https://apis.io/servers/advancedmd/advancedmd/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Advancedmd Agentic Access](https://apis.io/agentic-access/advancedmd/advancedmd-agentic-access/)
+
+#### Collections (3)
+
+Postman and Open Collection request collections.
+
+- [AdvancedMD Application Access APIs](https://apis.io/collections/advancedmd/open-advancedmd-application-access-apis-swagger/)
+- [FHIR Bulk API](https://apis.io/collections/advancedmd/open-advancedmd-fhir-bulk-api/)
+- [FHIR Single API - US Core 6.1.0](https://apis.io/collections/advancedmd/open-advancedmd-fhir-single-api/)
+
+#### Overlays (3)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Advancedmd Application Access Apis Overlay](https://apis.io/overlays/advancedmd/advancedmd-application-access-apis-overlay/)
+- [Advancedmd Fhir Bulk Api Overlay](https://apis.io/overlays/advancedmd/advancedmd-fhir-bulk-api-overlay/)
+- [Advancedmd Fhir Single Api Overlay](https://apis.io/overlays/advancedmd/advancedmd-fhir-single-api-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Advancedmd Authentication](https://apis.io/security/advancedmd/advancedmd-authentication/)
+- [Advancedmd Domain Security](https://apis.io/security/advancedmd/advancedmd-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Advancedmd Scopes](https://apis.io/scopes/advancedmd/advancedmd-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Advancedmd Plans Pricing](https://apis.io/plans/advancedmd/advancedmd-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Advancedmd Rate Limits](https://apis.io/rate-limits/advancedmd/advancedmd-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.advancedmd.com/)
+- [Documentation](https://www.advancedmd.com/group-practice/developer-solutions/)
+- [Getting started](https://fhir.advancedmd.com/getting-started)
+- [API reference](https://fhir.advancedmd.com/fhir/apis)
+- [Pricing](https://www.advancedmd.com/software-pricing/)
+- [Sign up](https://www.advancedmd.com/api-connection-request/)
+- [Support](https://www.advancedmd.com/support/interoperability/)
+- [Blog](https://www.advancedmd.com/blog/)
+- [Security](https://www.advancedmd.com/medical-office-software/security/)
+- [Compliance](https://www.advancedmd.com/ai-information)
+- [Terms of service](https://fhir.advancedmd.com/terms-of-service)
+- [Privacy policy](https://www.advancedmd.com/privacy-notice/)
+- [GitHub](https://github.com/AdvancedMD)
+- [Status](https://status.advancedmd.com/)
+
+## API Evangelist rating
+
+**Kin Score 51.6** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 69.6 |
+| Contract quality | 50.8 |
+| Contract governance | 18.2 |
+| Operational transparency | 28.9 |
+| Developer ergonomics | 32.7 |
+| Access clarity | 73.7 |
+
+**Agent readiness 38.2** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | — |
+
+**Regulatory alignment 48.4** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/advancedmd/](https://apis.io/providers/advancedmd/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for AdvancedMD: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/advancedmd/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
