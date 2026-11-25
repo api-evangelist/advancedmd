@@ -122,7 +122,7 @@ Model Context Protocol servers that expose the API to agents.
 
 Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Advancedmd Agentic Access](https://apis.io/agentic-access/advancedmd/advancedmd-agentic-access/)
+- [AdvancedMD Agentic Access](https://apis.io/agentic-access/advancedmd/advancedmd-agentic-access/)
 
 #### Collections (3)
 
@@ -136,34 +136,47 @@ Postman and Open Collection request collections.
 
 OpenAPI overlays, including conversational phrasing for each operation.
 
-- [Advancedmd Application Access Apis Overlay](https://apis.io/overlays/advancedmd/advancedmd-application-access-apis-overlay/)
-- [Advancedmd Fhir Bulk Api Overlay](https://apis.io/overlays/advancedmd/advancedmd-fhir-bulk-api-overlay/)
-- [Advancedmd Fhir Single Api Overlay](https://apis.io/overlays/advancedmd/advancedmd-fhir-single-api-overlay/)
+- [AdvancedMD Application Access Apis Overlay](https://apis.io/overlays/advancedmd/advancedmd-application-access-apis-overlay/)
+- [AdvancedMD Fhir Bulk Api Overlay](https://apis.io/overlays/advancedmd/advancedmd-fhir-bulk-api-overlay/)
+- [AdvancedMD Fhir Single Api Overlay](https://apis.io/overlays/advancedmd/advancedmd-fhir-single-api-overlay/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [AdvancedMD API Rules](https://apis.io/rules/advancedmd/advancedmd-rules/)
 
 #### Security (2)
 
 Authentication, trust centre, and vulnerability disclosure.
 
-- [Advancedmd Authentication](https://apis.io/security/advancedmd/advancedmd-authentication/)
-- [Advancedmd Domain Security](https://apis.io/security/advancedmd/advancedmd-domain-security/)
+- [AdvancedMD Authentication](https://apis.io/security/advancedmd/advancedmd-authentication/)
+- [AdvancedMD Domain Security](https://apis.io/security/advancedmd/advancedmd-domain-security/)
 
 #### OAuth scopes (1)
 
 The permissions the API asks for.
 
-- [Advancedmd Scopes](https://apis.io/scopes/advancedmd/advancedmd-scopes/)
+- [AdvancedMD Scopes](https://apis.io/scopes/advancedmd/advancedmd-scopes/)
 
-#### Plans and pricing (1)
+#### Plans and pricing (2)
 
 Published plans, tiers and prices.
 
-- [Advancedmd Plans Pricing](https://apis.io/plans/advancedmd/advancedmd-plans-pricing/)
+- [AdvancedMD Plans Pricing](https://apis.io/plans/advancedmd/advancedmd-plans-pricing/)
+- [AdvancedMD Price Estimates](https://apis.io/plans/advancedmd/advancedmd-price-estimates/)
 
 #### Rate limits (1)
 
 Published request limits.
 
-- [Advancedmd Rate Limits](https://apis.io/rate-limits/advancedmd/advancedmd-rate-limits/)
+- [AdvancedMD Rate Limits](https://apis.io/rate-limits/advancedmd/advancedmd-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [AdvancedMD Finops](https://apis.io/finops/advancedmd/advancedmd-finops/)
 
 ## Where to find this API
 
@@ -186,18 +199,18 @@ Links to the company's own pages. This repository publishes no copy of their spe
 
 ## API Evangelist rating
 
-**Kin Score 51.6** — developing · rubric 0.25.0 · scored 2026-10-23
+**Kin Score 55.1** — strong · rubric 0.28.1 · scored 2026-11-21
 
 | Facet | Score |
 |---|---|
 | Discoverability | 69.6 |
 | Contract quality | 50.8 |
-| Contract governance | 18.2 |
-| Operational transparency | 28.9 |
+| Contract governance | 31.8 |
+| Operational transparency | 28.6 |
 | Developer ergonomics | 32.7 |
-| Access clarity | 73.7 |
+| Access clarity | 83.0 |
 
-**Agent readiness 38.2** — agent-ready
+**Agent readiness 38.4** — agent-ready
 
 | Agent-readiness dimension | Result |
 |---|---|
@@ -213,7 +226,7 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Event Surface Described | — |
 | Agent Skills | derived (partial credit) |
 | Well Known Catalog | — |
-| Consent Identity | — |
+| Consent Identity | signal |
 | Agent Card | — |
 | Dry Run Mode | — |
 | Delegated Identity | — |
@@ -222,6 +235,10 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Agentic Commerce | — |
 | Pagination Ratio | — |
 | Operation Distinctiveness | — |
+| MCP Tool Quality | na |
+| Onboarding Descriptor | — |
+| Dns Aid Index | na |
+| Markdown Negotiation | na |
 
 **Regulatory alignment 48.4** — Health
 
